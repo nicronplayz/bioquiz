@@ -221,8 +221,10 @@ footer{
   Loading Quiz…
 </div>
 
+<!-- SPACE BACKGROUND -->
 <canvas id="stars"></canvas>
 
+<!-- QUIZ -->
 <div class="quiz" id="quiz">
   <div class="header">
     <div class="title">Biology • Interactive Quiz</div>
@@ -250,6 +252,8 @@ const lock=document.getElementById("lock");
 const unlockBtn=document.getElementById("unlockBtn");
 const passInput=document.getElementById("passwordInput");
 const lockError=document.getElementById("lockError");
+const loading=document.getElementById("loading");
+const quiz=document.getElementById("quiz");
 
 unlockBtn.onclick=unlock;
 passInput.onkeydown=e=>{if(e.key==="Enter")unlock()};
@@ -265,55 +269,9 @@ function unlock(){
   }
 }
 
-/* ELEMENTS */
-const loading=document.getElementById("loading");
-const quiz=document.getElementById("quiz");
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
-
-/* RESIZE */
-function resize(){
-  canvas.width=innerWidth;
-  canvas.height=innerHeight;
-}
-resize();addEventListener("resize",resize);
-
-/* STARFIELD */
-let stars=[...Array(120)].map(()=>({
-  x:Math.random()*canvas.width,
-  y:Math.random()*canvas.height,
-  r:Math.random()*1.2,
-  s:Math.random()*.2+.05
-}));
-let meteors=[];
-
-(function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#fff";
-  stars.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fill();
-    s.y+=s.s;if(s.y>canvas.height)s.y=0;
-  });
-  if(Math.random()<0.004){
-    meteors.push({x:Math.random()*canvas.width,y:0,v:6,l:80});
-  }
-  meteors.forEach(m=>{
-    ctx.strokeStyle="rgba(255,255,255,.6)";
-    ctx.beginPath();
-    ctx.moveTo(m.x,m.y);
-    ctx.lineTo(m.x-m.l,m.y-m.l);
-    ctx.stroke();
-    m.x+=m.v;m.y+=m.v;
-  });
-  meteors=meteors.filter(m=>m.y<canvas.height);
-  requestAnimationFrame(animate);
-})();
-
-/* QUIZ */
+/* QUIZ LOGIC */
 const qEl=question,oEl=options,fEl=feedback,nEl=next,pEl=progress,dEl=difficulty,rEl=review;
-let quizData=[],i=0,locked=false,answers=[];
+let quizData=[],i=0,locked=false;
 
 function shuffleOptions(q){
   const correct=q.options[q.answer];
@@ -327,7 +285,6 @@ function startApp(){
   setTimeout(()=>{
     loading.style.display="none";
     quiz.style.display="block";
-    resize();
     fetch("questions.json")
       .then(r=>r.json())
       .then(d=>{quizData=d;load();});
@@ -358,7 +315,6 @@ function load(){
 function select(idx){
   if(locked)return;
   locked=true;
-  answers[i]=idx;
   oEl.classList.add("focused");
   [...oEl.children].forEach((o,j)=>j===idx?o.classList.add("focus"):o.classList.add("fade"));
   const q=quizData[i];
@@ -373,22 +329,16 @@ function select(idx){
   setTimeout(()=>nEl.style.display="inline-block",600);
 }
 
-nEl.onclick=()=>{i++;i<quizData.length?load():showReview()};
-
-function showReview(){
-  qEl.textContent="Review";
-  oEl.innerHTML="";
-  fEl.style.display="none";
-  nEl.style.display="none";
-  rEl.style.display="block";
-  rEl.innerHTML="";
-  quizData.forEach((q,idx)=>{
-    rEl.innerHTML+=`<p><b>Q${idx+1}:</b> ${q.question}<br>✔ ${q.options[q.answer]}</p>`;
-  });
-}
+nEl.onclick=()=>{
+  i++;
+  i<quizData.length?load():qEl.textContent="Quiz Completed";
+};
 
 });
 </script>
+
+<!-- SPACE BACKGROUND SCRIPT -->
+<script src="space.js"></script>
 
 </body>
 </html>
