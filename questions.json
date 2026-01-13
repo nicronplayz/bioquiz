@@ -1,92 +1,366 @@
 [
   {
-    "question": "Who discovered the cell in 1665?",
-    "options": ["Robert Hooke", "Antonie van Leeuwenhoek", "Schleiden", "Virchow"],
-    "answer": 0,
-    "explanation": "Robert Hooke observed cork cells under a microscope and coined the term 'cell'.",
-    "fact": "Hooke published his observations in a book called Micrographia.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Who first observed living cells?",
-    "options": ["Antonie van Leeuwenhoek", "Robert Hooke", "Schwann", "Virchow"],
-    "answer": 0,
-    "explanation": "Antonie van Leeuwenhoek observed living cells like bacteria and protozoa.",
-    "fact": "He used simple microscopes with very high magnification.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Which statement is a part of cell theory?",
+    "question": "Which statement led to the modification of the original cell theory?",
     "options": [
-      "All living organisms are composed of cells",
-      "Cells arise spontaneously",
-      "Cells can exist without membranes",
-      "Only plants have cells"
+      "Cells contain organelles",
+      "Living cells can be observed",
+      "Cells arise from pre-existing cells",
+      "Cells contain genetic material"
     ],
-    "answer": 0,
-    "explanation": "Cell theory states that all living organisms are made up of cells.",
-    "fact": "Cell theory was proposed by Schleiden and Schwann.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Which type of cell lacks a well-defined nucleus?",
-    "options": ["Prokaryotic cell", "Eukaryotic cell", "Plant cell", "Animal cell"],
-    "answer": 0,
-    "explanation": "Prokaryotic cells do not have a membrane-bound nucleus.",
-    "fact": "Bacteria are prokaryotic organisms.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Which of the following shows maximum diversity?",
-    "options": ["Cells", "Tissues", "Organs", "Organ systems"],
-    "answer": 0,
-    "explanation": "Cells show the greatest diversity in size, shape, and function.",
-    "fact": "Human nerve cells can be over a meter long.",
+    "answer": 2,
+    "explanation": "Virchow stated that all cells arise from pre-existing cells, modifying the original cell theory.",
+    "fact": "This principle is expressed as 'Omnis cellula e cellula'.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which cell organelle is involved in intracellular transport?",
-    "options": ["Endoplasmic reticulum", "Ribosome", "Lysosome", "Centrosome"],
-    "answer": 0,
-    "explanation": "Endoplasmic reticulum helps in transport of materials within the cell.",
-    "fact": "It forms a network of membranous tubules.",
+    "question": "Which cell type shows the highest surface area to volume ratio?",
+    "options": [
+      "Spherical cell",
+      "Cuboidal cell",
+      "Flattened cell",
+      "Cylindrical cell"
+    ],
+    "answer": 2,
+    "explanation": "Flattened cells maximize surface area, aiding rapid diffusion.",
+    "fact": "Red blood cells show this adaptation functionally.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which organelle is responsible for modification and packaging of proteins?",
-    "options": ["Golgi apparatus", "Ribosome", "Lysosome", "Nucleus"],
-    "answer": 0,
-    "explanation": "Golgi apparatus modifies, packages, and dispatches proteins.",
-    "fact": "It was discovered by Camillo Golgi.",
+    "question": "The fluid mosaic model describes plasma membrane as:",
+    "options": [
+      "Rigid lipid layer",
+      "Protein sheet",
+      "Dynamic lipid bilayer with proteins",
+      "Cellulose-rich structure"
+    ],
+    "answer": 2,
+    "explanation": "Proteins float in a fluid phospholipid bilayer.",
+    "fact": "The model was proposed by Singer and Nicolson in 1972.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which component primarily regulates membrane fluidity in animal cells?",
+    "options": [
+      "Proteins",
+      "Glycolipids",
+      "Cholesterol",
+      "Phospholipids"
+    ],
+    "answer": 2,
+    "explanation": "Cholesterol maintains membrane fluidity under varying temperatures.",
+    "fact": "Cholesterol is absent in plant cell membranes.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Active transport differs from diffusion because it:",
+    "options": [
+      "Occurs without carriers",
+      "Occurs along gradient",
+      "Requires metabolic energy",
+      "Occurs only in plants"
+    ],
+    "answer": 2,
+    "explanation": "Active transport moves substances against concentration gradient using ATP.",
+    "fact": "Carrier proteins are specific for transported molecules.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which structure forms the internal transport system of the cell?",
+    "options": [
+      "Golgi apparatus",
+      "Endoplasmic reticulum",
+      "Lysosome",
+      "Centrosome"
+    ],
+    "answer": 1,
+    "explanation": "ER forms a network of membranous tubules for transport.",
+    "fact": "ER is continuous with the nuclear envelope (conceptual link).",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Rough endoplasmic reticulum is mainly associated with:",
+    "options": [
+      "Lipid synthesis",
+      "Protein synthesis",
+      "ATP formation",
+      "Detoxification"
+    ],
+    "answer": 1,
+    "explanation": "RER has ribosomes attached for protein synthesis.",
+    "fact": "Proteins synthesized here are mostly secretory proteins.",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Smooth endoplasmic reticulum is absent in cells primarily involved in:",
+    "options": [
+      "Lipid synthesis",
+      "Detoxification",
+      "Protein secretion",
+      "Steroid synthesis"
+    ],
+    "answer": 2,
+    "explanation": "Protein secretion requires RER, not SER.",
+    "fact": "SER is abundant in liver cells for detoxification.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which face of Golgi apparatus receives materials from ER?",
+    "options": [
+      "Trans face",
+      "Cis face",
+      "Medial face",
+      "Lateral face"
+    ],
+    "answer": 1,
+    "explanation": "Cis face is the receiving side of Golgi.",
+    "fact": "Golgi apparatus shows structural polarity.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which Golgi face is involved in packaging and dispatch?",
+    "options": [
+      "Cis",
+      "Trans",
+      "Medial",
+      "Intermediate"
+    ],
+    "answer": 1,
+    "explanation": "Trans face releases vesicles to target sites.",
+    "fact": "Golgi modifies proteins by glycosylation.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which organelle shows maximum structural polymorphism?",
+    "options": [
+      "Mitochondria",
+      "Lysosome",
+      "Plastid",
+      "Ribosome"
+    ],
+    "answer": 1,
+    "explanation": "Lysosomes vary in size, shape, and enzyme content.",
+    "fact": "Different types include primary and secondary lysosomes.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Primary lysosomes are formed directly from:",
+    "options": [
+      "ER",
+      "Golgi apparatus",
+      "Mitochondria",
+      "Ribosomes"
+    ],
+    "answer": 1,
+    "explanation": "Golgi apparatus packages enzymes into lysosomes.",
+    "fact": "They contain inactive hydrolytic enzymes.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which process involves digestion of damaged organelles?",
+    "options": [
+      "Heterophagy",
+      "Pinocytosis",
+      "Autophagy",
+      "Exocytosis"
+    ],
+    "answer": 2,
+    "explanation": "Autophagy is self-digestion of cell components.",
+    "fact": "This process maintains cellular health.",
     "difficulty": "Medium"
   },
   {
     "question": "Which organelle is known as the suicidal bag of the cell?",
-    "options": ["Lysosome", "Mitochondria", "Golgi apparatus", "Ribosome"],
-    "answer": 0,
-    "explanation": "Lysosomes contain digestive enzymes that can destroy the cell if released.",
-    "fact": "Lysosomes are part of the endomembrane system.",
+    "options": [
+      "Mitochondria",
+      "Golgi apparatus",
+      "Lysosome",
+      "Peroxisome"
+    ],
+    "answer": 2,
+    "explanation": "Lysosomes can digest the cell if their enzymes are released.",
+    "fact": "This occurs during programmed cell death.",
     "difficulty": "Easy"
   },
   {
-    "question": "Which of the following is NOT a part of the endomembrane system?",
-    "options": ["Mitochondria", "Endoplasmic reticulum", "Golgi apparatus", "Lysosome"],
-    "answer": 0,
-    "explanation": "Mitochondria are not connected to the endomembrane system.",
-    "fact": "Mitochondria have their own DNA.",
+    "question": "Ribosomes are composed mainly of:",
+    "options": [
+      "DNA and protein",
+      "RNA and lipid",
+      "RNA and protein",
+      "Only protein"
+    ],
+    "answer": 2,
+    "explanation": "Ribosomes consist of rRNA and proteins.",
+    "fact": "rRNA forms the structural core of ribosomes.",
     "difficulty": "Medium"
   },
   {
-    "question": "Smooth endoplasmic reticulum is mainly involved in:",
+    "question": "Which ribosomes synthesize cytosolic proteins?",
     "options": [
-      "Lipid synthesis",
-      "Protein synthesis",
-      "Photosynthesis",
-      "Cell division"
+      "Bound ribosomes",
+      "Free ribosomes",
+      "Mitochondrial ribosomes",
+      "Golgi ribosomes"
     ],
-    "answer": 0,
-    "explanation": "Smooth ER is responsible for synthesis of lipids and steroids.",
-    "fact": "It also helps in detoxification of drugs.",
+    "answer": 1,
+    "explanation": "Free ribosomes synthesize proteins used inside cytosol.",
+    "fact": "Both free and bound ribosomes are structurally identical.",
     "difficulty": "Medium"
+  },
+  {
+    "question": "Which structure maintains cell shape and movement?",
+    "options": [
+      "Cell wall",
+      "Cytoskeleton",
+      "Plasma membrane",
+      "Golgi apparatus"
+    ],
+    "answer": 1,
+    "explanation": "Cytoskeleton provides mechanical support and movement.",
+    "fact": "It includes microtubules, microfilaments, and IFs.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Microtubules are mainly composed of:",
+    "options": [
+      "Actin",
+      "Tubulin",
+      "Myosin",
+      "Keratin"
+    ],
+    "answer": 1,
+    "explanation": "Microtubules are polymers of tubulin proteins.",
+    "fact": "They form the spindle apparatus during cell division.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which structure forms the core of cilia and flagella?",
+    "options": [
+      "9+0 arrangement",
+      "9+2 arrangement",
+      "8+1 arrangement",
+      "10+2 arrangement"
+    ],
+    "answer": 1,
+    "explanation": "Axoneme has a 9+2 microtubule arrangement.",
+    "fact": "This arrangement enables motility.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which structure helps in anchoring adjacent cells?",
+    "options": [
+      "Plasmodesmata",
+      "Cell junctions",
+      "Microvilli",
+      "Centrioles"
+    ],
+    "answer": 1,
+    "explanation": "Cell junctions maintain tissue integrity.",
+    "fact": "Tight junctions prevent leakage between cells.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which organelle is NOT part of the endomembrane system?",
+    "options": [
+      "Lysosome",
+      "Golgi apparatus",
+      "Mitochondria",
+      "Endoplasmic reticulum"
+    ],
+    "answer": 2,
+    "explanation": "Mitochondria function independently of endomembrane system.",
+    "fact": "Endomembrane system works in coordination.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which vacuole function is correct?",
+    "options": [
+      "ATP synthesis",
+      "Storage and turgidity",
+      "Protein synthesis",
+      "Photosynthesis"
+    ],
+    "answer": 1,
+    "explanation": "Vacuoles maintain osmotic balance and store materials.",
+    "fact": "Plant vacuoles may occupy up to 90% of cell volume.",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Tonoplast is the membrane of:",
+    "options": [
+      "Nucleus",
+      "Vacuole",
+      "Golgi apparatus",
+      "ER"
+    ],
+    "answer": 1,
+    "explanation": "Tonoplast surrounds the vacuole.",
+    "fact": "It regulates movement of ions into vacuole.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which cell junction allows direct cytoplasmic connection?",
+    "options": [
+      "Tight junction",
+      "Adhering junction",
+      "Gap junction",
+      "Desmosome"
+    ],
+    "answer": 2,
+    "explanation": "Gap junctions allow direct transfer of molecules.",
+    "fact": "They are common in cardiac muscle cells.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which organelle helps in detoxification of drugs?",
+    "options": [
+      "RER",
+      "SER",
+      "Golgi",
+      "Lysosome"
+    ],
+    "answer": 1,
+    "explanation": "SER detoxifies drugs and poisons.",
+    "fact": "Cytochrome P450 enzymes are involved.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which process involves membrane engulfing solid particles?",
+    "options": [
+      "Pinocytosis",
+      "Diffusion",
+      "Phagocytosis",
+      "Osmosis"
+    ],
+    "answer": 2,
+    "explanation": "Phagocytosis involves intake of solid particles.",
+    "fact": "It is common in macrophages.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which component of membrane forms recognition sites?",
+    "options": [
+      "Proteins",
+      "Phospholipids",
+      "Carbohydrates",
+      "Cholesterol"
+    ],
+    "answer": 2,
+    "explanation": "Carbohydrates act as recognition sites on membranes.",
+    "fact": "They occur as glycoproteins and glycolipids.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which statement about ribosomes is correct?",
+    "options": [
+      "Bound ribosomes are permanently attached",
+      "Free ribosomes synthesize secretory proteins",
+      "All ribosomes are structurally similar",
+      "Ribosomes are membrane-bound organelles"
+    ],
+    "answer": 2,
+    "explanation": "Free and bound ribosomes are structurally identical.",
+    "fact": "Their location depends on the protein being synthesized.",
+    "difficulty": "Hard"
   }
 ]
