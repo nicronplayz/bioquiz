@@ -6,9 +6,6 @@
 <title>Biology Quiz</title>
 
 <style>
-/* =========================
-   RESET & TYPOGRAPHY
-========================= */
 * {
   box-sizing: border-box;
   font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
@@ -22,18 +19,14 @@ body {
   overflow-x: hidden;
 }
 
-/* =========================
-   STARFIELD (BACKGROUND)
-========================= */
+/* STARFIELD */
 canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* =========================
-   QUIZ CONTAINER
-========================= */
+/* QUIZ CARD */
 .quiz {
   max-width: 880px;
   margin: 60px auto;
@@ -42,49 +35,33 @@ canvas {
   backdrop-filter: blur(12px);
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow:
-    0 40px 120px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
 }
 
-/* =========================
-   HEADER
-========================= */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 18px;
 }
 
-.title {
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  opacity: 0.9;
-}
+.title { font-weight: 600; opacity: 0.9; }
+.progress { font-size: 0.9rem; opacity: 0.6; }
 
-.progress {
-  font-size: 0.9rem;
-  opacity: 0.6;
-}
-
-/* =========================
-   QUESTION
-========================= */
 .question {
   font-size: clamp(1.25rem, 3vw, 1.9rem);
-  line-height: 1.4;
   margin: 18px 0 30px;
-  font-weight: 500;
 }
 
-/* =========================
-   OPTIONS
-========================= */
+/* OPTIONS */
 .options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 18px;
+}
+
+.options.focused {
+  display: flex;
+  justify-content: center;
 }
 
 .option {
@@ -97,10 +74,7 @@ canvas {
   );
   border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    background 0.15s ease,
-    border-color 0.15s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .option:hover {
@@ -108,30 +82,34 @@ canvas {
   border-color: rgba(140,180,255,0.4);
 }
 
-.option.disabled {
-  opacity: 0.45;
+.option.fade {
+  opacity: 0;
   pointer-events: none;
+  transform: scale(0.9);
 }
 
-/* =========================
-   FEEDBACK
-========================= */
+.option.focus {
+  width: 100%;
+  max-width: 520px;
+  transform: scale(1.05);
+  border-color: rgba(120,180,255,0.6);
+  box-shadow: 0 20px 60px rgba(80,120,255,0.35);
+}
+
+/* FEEDBACK */
 .feedback {
-  margin-top: 26px;
+  margin-top: 22px;
   padding: 20px;
   border-radius: 14px;
   background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
   line-height: 1.6;
   animation: fadeUp 0.3s ease;
 }
 
 .correct { color: #6dffcc; }
-.wrong   { color: #ff8a8a; }
+.wrong { color: #ff8a8a; }
 
-/* =========================
-   BUTTON
-========================= */
 button {
   margin-top: 22px;
   padding: 12px 26px;
@@ -139,34 +117,17 @@ button {
   border: none;
   background: #1f3cff;
   color: white;
-  font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 
-button:hover {
-  background: #3450ff;
-}
-
-/* =========================
-   MOBILE
-========================= */
 @media (max-width: 640px) {
-  .quiz {
-    margin: 20px;
-    padding: 26px;
-  }
-  .options {
-    grid-template-columns: 1fr;
-  }
+  .quiz { margin: 20px; padding: 26px; }
+  .options { grid-template-columns: 1fr; }
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -188,9 +149,7 @@ button:hover {
 </div>
 
 <script>
-/* =========================
-   STARFIELD (MINIMAL)
-========================= */
+/* STARFIELD */
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
@@ -221,9 +180,7 @@ const stars = Array.from({ length: 120 }, () => ({
   requestAnimationFrame(animateStars);
 })();
 
-/* =========================
-   QUIZ LOGIC
-========================= */
+/* QUIZ LOGIC */
 let quiz = [];
 let index = 0;
 let locked = false;
@@ -244,9 +201,12 @@ fetch("questions.json")
 function load() {
   locked = false;
   const q = quiz[index];
+
   qEl.textContent = q.question;
   pEl.textContent = `Question ${index + 1} / ${quiz.length}`;
+
   oEl.innerHTML = "";
+  oEl.classList.remove("focused");
   fEl.style.display = "none";
   nEl.style.display = "none";
 
@@ -264,13 +224,20 @@ function select(i) {
   locked = true;
 
   const q = quiz[index];
-  [...oEl.children].forEach(o => o.classList.add("disabled"));
+  const optionEls = [...oEl.children];
+
+  oEl.classList.add("focused");
+
+  optionEls.forEach((el, idx) => {
+    if (idx === i) el.classList.add("focus");
+    else el.classList.add("fade");
+  });
 
   fEl.style.display = "block";
   fEl.innerHTML =
     i === q.answer
-      ? `<div class="correct"><strong>Correct</strong></div><p>${q.explanation}</p>`
-      : `<div class="wrong"><strong>Incorrect</strong></div>
+      ? `<div class="correct"><strong>✔ Correct</strong></div><p>${q.explanation}</p>`
+      : `<div class="wrong"><strong>✖ Incorrect</strong></div>
          <p><strong>Correct answer:</strong> ${q.options[q.answer]}</p>
          <p>${q.explanation}</p>`;
 
