@@ -6,172 +6,51 @@
 <title>Biology Quiz</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;min-height:100vh;color:#eaf1ff;background:#05070f;overflow:hidden}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: #eaf1ff;
-  background: #05070f;
-  overflow: hidden;
-}
+/* LOADING */
+.loading{position:fixed;inset:0;background:#05070f;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999}
+.loader{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#4dd6ff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ---------- LOADING ---------- */
-.loading {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #0a1028, #02030a);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 999;
-}
+/* STARFIELD */
+canvas{position:fixed;inset:0;z-index:-1}
 
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 3px solid rgba(255,255,255,0.2);
-  border-top-color: #4dd6ff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 18px;
-}
+/* QUIZ CARD */
+.quiz{max-width:880px;margin:60px auto;padding:36px 40px;background:rgba(12,16,32,.78);backdrop-filter:blur(12px);border-radius:20px;border:1px solid rgba(255,255,255,.08);box-shadow:0 40px 120px rgba(0,0,0,.6);display:none}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.title{font-weight:600}
+.meta{display:flex;gap:12px;font-size:.85rem;opacity:.7}
+.question{font-size:clamp(1.25rem,3vw,1.9rem);margin:18px 0 26px}
 
-@keyframes spin { to { transform: rotate(360deg); } }
+/* OPTIONS */
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.options.focused{display:flex;justify-content:center}
+.option{padding:16px 20px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.2s}
+.option:hover{transform:translateY(-2px)}
+.option.fade{opacity:0;pointer-events:none;transform:scale(.9)}
+.option.focus{width:100%;max-width:520px;transform:scale(1.05);box-shadow:0 20px 60px rgba(80,120,255,.35)}
+.label{opacity:.5;margin-right:6px}
 
-/* ---------- STARFIELD ---------- */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
+/* FEEDBACK */
+.feedback{margin-top:22px;padding:20px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);line-height:1.6}
+.correct{color:#6dffcc}.wrong{color:#ff8a8a}
+.fact{margin-top:8px;font-size:.9rem;opacity:.85}
 
-/* ---------- QUIZ ---------- */
-.quiz {
-  max-width: 880px;
-  margin: 60px auto;
-  padding: 36px 40px;
-  background: rgba(12, 16, 32, 0.78);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
-  display: none;
-}
+/* BUTTON */
+button{margin-top:22px;padding:12px 26px;border-radius:12px;border:none;background:#1f3cff;color:white;cursor:pointer;display:none}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
+/* REVIEW */
+.review h3{margin-top:24px}
+.review p{opacity:.85}
 
-.title { font-weight: 600; opacity: 0.9; }
-.progress { font-size: 0.9rem; opacity: 0.6; }
+/* FOOTER */
+footer{text-align:center;font-size:.8rem;opacity:.5;margin:40px 0 20px}
 
-.shuffle {
-  font-size: 0.85rem;
-  cursor: pointer;
-  opacity: 0.7;
-}
-
-.shuffle input { margin-right: 6px; }
-
-.question {
-  font-size: clamp(1.25rem, 3vw, 1.9rem);
-  margin: 18px 0 30px;
-}
-
-/* ---------- OPTIONS ---------- */
-.options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
-
-.options.focused {
-  display: flex;
-  justify-content: center;
-}
-
-.option {
-  padding: 16px 20px;
-  border-radius: 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.06),
-    rgba(255,255,255,0.02)
-  );
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.option:hover { transform: translateY(-2px); }
-
-.option.fade {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.9);
-}
-
-.option.focus {
-  width: 100%;
-  max-width: 520px;
-  transform: scale(1.05);
-  border-color: rgba(120,180,255,0.6);
-  box-shadow: 0 20px 60px rgba(80,120,255,0.35);
-}
-
-/* ---------- FEEDBACK ---------- */
-.feedback {
-  margin-top: 22px;
-  padding: 20px;
-  border-radius: 14px;
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.1);
-  line-height: 1.6;
-  animation: fadeUp 0.3s ease;
-}
-
-.correct { color: #6dffcc; }
-.wrong { color: #ff8a8a; }
-
-.fact {
-  margin-top: 10px;
-  opacity: 0.85;
-  font-size: 0.9rem;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------- NEXT BUTTON ---------- */
-button {
-  margin-top: 22px;
-  padding: 12px 26px;
-  border-radius: 12px;
-  border: none;
-  background: #1f3cff;
-  color: white;
-  font-size: 0.95rem;
-  cursor: pointer;
-  display: none;
-  transition: transform 0.15s ease;
-}
-
-button:hover { transform: scale(1.05); }
-
-/* ---------- MOBILE ---------- */
-@media (max-width: 640px) {
-  .quiz { margin: 20px; padding: 26px; }
-  .options { grid-template-columns: 1fr; }
+@media(max-width:640px){
+.quiz{margin:20px;padding:26px}
+.options{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -180,144 +59,111 @@ button:hover { transform: scale(1.05); }
 
 <div class="loading" id="loading">
   <div class="loader"></div>
-  <div>Loading Quiz…</div>
+  Loading Quiz…
 </div>
 
 <canvas id="stars"></canvas>
 
 <div class="quiz" id="quiz">
   <div class="header">
-    <div>
-      <div class="title">Biology • Interactive Quiz</div>
-      <div class="progress" id="progress"></div>
+    <div class="title">Biology • Interactive Quiz</div>
+    <div class="meta">
+      <span id="progress"></span>
+      <span id="difficulty"></span>
     </div>
-    <label class="shuffle">
-      <input type="checkbox" id="shuffleToggle"> 🔀 Shuffle
-    </label>
   </div>
 
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
   <div class="feedback" id="feedback" style="display:none"></div>
-  <button id="next">Next Question</button>
+  <button id="next">Next</button>
+
+  <div class="review" id="review" style="display:none"></div>
 </div>
 
+<footer>Made by Muntazir</footer>
+
 <script>
-/* ---------- LOADING ---------- */
-setTimeout(() => {
-  document.getElementById("loading").style.display = "none";
-  document.getElementById("quiz").style.display = "block";
-}, 2000);
+/* LOADING */
+setTimeout(()=>{loading.style.display="none";quiz.style.display="block"},2000)
 
-/* ---------- STARFIELD ---------- */
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-function resize(){ canvas.width=innerWidth; canvas.height=innerHeight }
-resize(); addEventListener("resize", resize);
+/* STARFIELD + SHOOTING STARS */
+const c=stars,ctx=c.getContext("2d")
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize();addEventListener("resize",resize)
 
-const stars = Array.from({ length: 120 }, () => ({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  r: Math.random()*1.2,
-  s: Math.random()*0.2+0.05
-}));
+let starsArr=[...Array(120)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.2,s:Math.random()*.2+.05}))
+let meteors=[]
 
-(function animateStars(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#fff";
-  stars.forEach(st=>{
-    ctx.beginPath();
-    ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
-    ctx.fill();
-    st.y+=st.s;
-    if(st.y>canvas.height) st.y=0;
-  });
-  requestAnimationFrame(animateStars);
-})();
+function animate(){
+ctx.clearRect(0,0,c.width,c.height)
+ctx.fillStyle="#fff"
+starsArr.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();s.y+=s.s;if(s.y>c.height)s.y=0})
+if(Math.random()<0.005)meteors.push({x:Math.random()*c.width,y:0,vx:6,vy:6,l:80})
+meteors.forEach(m=>{ctx.strokeStyle="rgba(255,255,255,.6)";ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(m.x-m.l,m.y-m.l);ctx.stroke();m.x+=m.vx;m.y+=m.vy})
+meteors=meteors.filter(m=>m.y<c.height)
+requestAnimationFrame(animate)}
+animate()
 
-/* ---------- QUIZ LOGIC ---------- */
-let quiz=[], index=0, locked=false;
-
-const qEl=document.getElementById("question");
-const oEl=document.getElementById("options");
-const fEl=document.getElementById("feedback");
-const nEl=document.getElementById("next");
-const pEl=document.getElementById("progress");
-const shuffleToggle=document.getElementById("shuffleToggle");
-
-fetch("questions.json")
-  .then(r=>r.json())
-  .then(data=>{
-    quiz=data;
-    if(shuffleToggle.checked) quiz.sort(()=>Math.random()-0.5);
-    load();
-  });
-
-shuffleToggle.onchange=()=>{
-  quiz.sort(()=>Math.random()-0.5);
-  index=0;
-  load();
-};
+/* QUIZ */
+let quizData=[],i=0,locked=false,answers=[]
+fetch("questions.json").then(r=>r.json()).then(d=>{quizData=d;load()})
 
 function load(){
-  locked=false;
-  const q=quiz[index];
+locked=false
+let q=quizData[i]
+question.textContent=q.question
+progress.textContent=`Q ${i+1}/${quizData.length}`
+difficulty.textContent=q.difficulty||""
+options.innerHTML=""
+options.classList.remove("focused")
+feedback.style.display="none"
+next.style.display="none"
 
-  qEl.textContent=q.question;
-  pEl.textContent=`Question ${index+1} / ${quiz.length}`;
-
-  oEl.innerHTML="";
-  oEl.classList.remove("focused");
-  fEl.style.display="none";
-  nEl.style.display="none";
-
-  q.options.forEach((t,i)=>{
-    const d=document.createElement("div");
-    d.className="option";
-    d.textContent=t;
-    d.onclick=()=>select(i);
-    oEl.appendChild(d);
-  });
+q.options.forEach((t,idx)=>{
+let d=document.createElement("div")
+d.className="option"
+d.innerHTML=`<span class="label">${"ABCD"[idx]}.</span>${t}`
+d.onclick=()=>select(idx)
+options.appendChild(d)
+})
 }
 
-function select(i){
-  if(locked) return;
-  locked=true;
-
-  const q=quiz[index];
-  const opts=[...oEl.children];
-  oEl.classList.add("focused");
-
-  opts.forEach((el,idx)=>{
-    idx===i ? el.classList.add("focus") : el.classList.add("fade");
-  });
-
-  let html = i===q.answer
-    ? `<div class="correct"><strong>✔ Correct</strong></div><p>${q.explanation}</p>`
-    : `<div class="wrong"><strong>✖ Incorrect</strong></div>
-       <p><strong>Correct answer:</strong> ${q.options[q.answer]}</p>
-       <p>${q.explanation}</p>`;
-
-  if(q.fact){
-    html += `<div class="fact">💡 Did you know? ${q.fact}</div>`;
-  }
-
-  fEl.innerHTML=html;
-  fEl.style.display="block";
-
-  setTimeout(()=>{ nEl.style.display="inline-block"; },600);
+function select(idx){
+if(locked)return;locked=true
+answers[i]=idx
+options.classList.add("focused")
+[...options.children].forEach((o,j)=>j===idx?o.classList.add("focus"):o.classList.add("fade"))
+let q=quizData[i]
+let html=idx===q.answer?
+`<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`:
+`<div class="wrong"><b>Incorrect</b></div><p><b>Correct:</b> ${q.options[q.answer]}</p><p>${q.explanation}</p>`
+if(q.fact)html+=`<div class="fact">💡 ${q.fact}</div>`
+feedback.innerHTML=html
+feedback.style.display="block"
+setTimeout(()=>next.style.display="inline-block",600)
 }
 
-nEl.onclick=()=>{
-  index++;
-  index<quiz.length ? load() :
-  (qEl.textContent="Quiz completed",
-   oEl.innerHTML="",
-   fEl.innerHTML="You’ve reached the end of the quiz.",
-   fEl.style.display="block",
-   nEl.style.display="none",
-   pEl.textContent="");
-};
+next.onclick=()=>{
+i++
+if(i<quizData.length)load()
+else showReview()
+}
+
+function showReview(){
+question.textContent="Review"
+options.innerHTML=""
+feedback.style.display="none"
+next.style.display="none"
+review.style.display="block"
+review.innerHTML=""
+quizData.forEach((q,idx)=>{
+review.innerHTML+=`
+<h3>Q${idx+1}. ${q.question}</h3>
+<p>Your answer: ${q.options[answers[idx]]||"Not answered"}</p>
+<p>Correct answer: ${q.options[q.answer]}</p>`
+})
+}
 </script>
 
 </body>
