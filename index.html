@@ -16,17 +16,55 @@ body {
   min-height: 100vh;
   color: #eaf1ff;
   background: #05070f;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* STARFIELD */
+/* ================= LOADING SCREEN ================= */
+.loading {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a1028, #02030a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 999;
+  animation: fadeIn 0.6s ease;
+}
+
+.loading h1 {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.loading p {
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: #4dd6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 18px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= STARFIELD ================= */
 canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* QUIZ CARD */
+/* ================= QUIZ ================= */
 .quiz {
   max-width: 880px;
   margin: 60px auto;
@@ -36,6 +74,7 @@ canvas {
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  display: none;
 }
 
 .header {
@@ -79,7 +118,6 @@ canvas {
 
 .option:hover {
   transform: translateY(-2px);
-  border-color: rgba(140,180,255,0.4);
 }
 
 .option.fade {
@@ -110,16 +148,32 @@ canvas {
 .correct { color: #6dffcc; }
 .wrong { color: #ff8a8a; }
 
+/* NEXT BUTTON */
 button {
   margin-top: 22px;
   padding: 12px 26px;
   border-radius: 12px;
   border: none;
-  background: #1f3cff;
   color: white;
+  font-size: 0.95rem;
   cursor: pointer;
+  display: none;
+  transition: transform 0.15s ease;
 }
 
+button.correct {
+  background: linear-gradient(135deg, #00ffb3, #00c6ff);
+}
+
+button.wrong {
+  background: linear-gradient(135deg, #ff4d4d, #ff944d);
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* MOBILE */
 @media (max-width: 640px) {
   .quiz { margin: 20px; padding: 26px; }
   .options { grid-template-columns: 1fr; }
@@ -129,26 +183,43 @@ button {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 </style>
 </head>
 
 <body>
 
+<div class="loading" id="loading">
+  <div class="loader"></div>
+  <h1>Loading Quiz</h1>
+  <p>Preparing your brain for biology 🧠🧬</p>
+</div>
+
 <canvas id="stars"></canvas>
 
-<div class="quiz">
+<div class="quiz" id="quiz">
   <div class="header">
     <div class="title">Biology • Interactive Quiz</div>
     <div class="progress" id="progress"></div>
   </div>
 
-  <div class="question" id="question">Loading…</div>
+  <div class="question" id="question"></div>
   <div class="options" id="options"></div>
   <div class="feedback" id="feedback" style="display:none"></div>
-  <button id="next" style="display:none">Next Question</button>
+  <button id="next">Next Question</button>
 </div>
 
 <script>
+/* LOADING SCREEN */
+setTimeout(() => {
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+}, 2000);
+
 /* STARFIELD */
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
@@ -209,6 +280,7 @@ function load() {
   oEl.classList.remove("focused");
   fEl.style.display = "none";
   nEl.style.display = "none";
+  nEl.className = "";
 
   q.options.forEach((text, i) => {
     const div = document.createElement("div");
@@ -234,12 +306,16 @@ function select(i) {
   });
 
   fEl.style.display = "block";
-  fEl.innerHTML =
-    i === q.answer
-      ? `<div class="correct"><strong>✔ Correct</strong></div><p>${q.explanation}</p>`
-      : `<div class="wrong"><strong>✖ Incorrect</strong></div>
-         <p><strong>Correct answer:</strong> ${q.options[q.answer]}</p>
-         <p>${q.explanation}</p>`;
+
+  if (i === q.answer) {
+    fEl.innerHTML = `<div class="correct"><strong>✔ Correct</strong></div><p>${q.explanation}</p>`;
+    nEl.classList.add("correct");
+  } else {
+    fEl.innerHTML = `<div class="wrong"><strong>✖ Incorrect</strong></div>
+      <p><strong>Correct answer:</strong> ${q.options[q.answer]}</p>
+      <p>${q.explanation}</p>`;
+    nEl.classList.add("wrong");
+  }
 
   nEl.style.display = "inline-block";
 }
