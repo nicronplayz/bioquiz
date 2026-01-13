@@ -46,13 +46,12 @@ canvas{
   z-index:-1;
 }
 
-/* ---------- QUIZ ---------- */
+/* ---------- QUIZ CARD (GLASS) ---------- */
 .quiz{
   max-width:880px;
   margin:60px auto;
   padding:36px 40px;
 
-  /* Glass base */
   background:
     linear-gradient(
       180deg,
@@ -65,14 +64,11 @@ canvas{
   -webkit-backdrop-filter: blur(14px) saturate(120%);
 
   border-radius:22px;
-
-  /* Glass edge */
   border:1px solid rgba(255,255,255,0.12);
 
-  /* Depth + inner glow */
   box-shadow:
-    0 50px 140px rgba(0,0,0,0.65),        /* depth */
-    inset 0 1px 0 rgba(255,255,255,0.18), /* top glass edge */
+    0 50px 140px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.18),
     inset 0 -1px 0 rgba(255,255,255,0.05);
 
   position:relative;
@@ -80,6 +76,23 @@ canvas{
 
   display:none;
 }
+
+.quiz::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(
+    120deg,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0)
+  );
+  opacity:.15;
+}
+
+/* ---------- HEADER ---------- */
 .header{
   display:flex;
   justify-content:space-between;
@@ -90,6 +103,7 @@ canvas{
 .title{font-weight:600}
 .meta{display:flex;gap:12px;font-size:.85rem;opacity:.7}
 
+/* ---------- QUESTION ---------- */
 .question{
   font-size:clamp(1.25rem,3vw,1.9rem);
   margin:18px 0 26px;
@@ -161,10 +175,10 @@ button{
 /* ---------- FOOTER ---------- */
 footer{
   text-align:center;
-  font-size:.45rem;
-  opacity:.25;
-  letter-spacing:.5px;
-  margin:32px 0 16px;
+  font-size:.55rem;
+  opacity:.35;
+  letter-spacing:.4px;
+  margin:18px 0 8px;
   user-select:none;
 }
 
@@ -200,7 +214,6 @@ footer{
   <div class="options" id="options"></div>
   <div class="feedback" id="feedback" style="display:none"></div>
   <button id="next">Next</button>
-  <div id="review" style="display:none"></div>
 </div>
 
 <footer>Made by Muntazir</footer>
@@ -208,10 +221,20 @@ footer{
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
 
+/* ---------- SERVICE WORKER ---------- */
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+
 const loading=document.getElementById("loading");
 const quiz=document.getElementById("quiz");
 
-/* START APP */
+/* ---------- QUIZ STATE ---------- */
+let quizData=[];
+let i=Number(localStorage.getItem("quizIndex")) || 0;
+let locked=false;
+
+/* ---------- START ---------- */
 setTimeout(()=>{
   loading.style.display="none";
   quiz.style.display="block";
@@ -220,19 +243,19 @@ setTimeout(()=>{
     .then(d=>{quizData=d;load();});
 },2000);
 
-/* QUIZ LOGIC */
+/* ---------- ELEMENTS ---------- */
 const qEl=question,oEl=options,fEl=feedback,nEl=next,pEl=progress,dEl=difficulty;
-let quizData=[],i=0,locked=false;
 
+/* ---------- HELPERS ---------- */
 function shuffleOptions(q){
   const correct=q.options[q.answer];
-  q.options=q.options
-    .map(o=>({o,sort:Math.random()}))
+  q.options=q.options.map(o=>({o,sort:Math.random()}))
     .sort((a,b)=>a.sort-b.sort)
     .map(x=>x.o);
   q.answer=q.options.indexOf(correct);
 }
 
+/* ---------- LOAD QUESTION ---------- */
 function load(){
   locked=false;
   const q=quizData[i];
@@ -252,34 +275,58 @@ function load(){
     div.onclick=()=>select(idx);
     oEl.appendChild(div);
   });
+
+  localStorage.setItem("quizIndex",i);
 }
 
+/* ---------- SELECT ---------- */
 function select(idx){
   if(locked)return;
   locked=true;
+
   oEl.classList.add("focused");
   [...oEl.children].forEach((o,j)=>j===idx?o.classList.add("focus"):o.classList.add("fade"));
+
   const q=quizData[i];
+
+  if(idx===q.answer){
+    localStorage.setItem(
+      "correct",
+      Number(localStorage.getItem("correct")||0)+1
+    );
+  }
+
+  localStorage.setItem("total",quizData.length);
+
   let html=idx===q.answer
     ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
     : `<div class="wrong"><b>Incorrect</b></div>
        <p><b>Correct:</b> ${q.options[q.answer]}</p>
        <p>${q.explanation}</p>`;
+
   if(q.fact)html+=`<div class="fact">💡 ${q.fact}</div>`;
+
   fEl.innerHTML=html;
   fEl.style.display="block";
+
   setTimeout(()=>nEl.style.display="inline-block",600);
 }
 
+/* ---------- NEXT ---------- */
 nEl.onclick=()=>{
   i++;
-  i<quizData.length?load():qEl.textContent="Quiz Completed";
+  if(i<quizData.length){
+    load();
+  }else{
+    localStorage.removeItem("quizIndex");
+    location.href="results.html";
+  }
 };
 
 });
 </script>
 
-<!-- SPACE BACKGROUND SCRIPT -->
+<!-- SPACE BACKGROUND -->
 <script src="space.js"></script>
 
 </body>
