@@ -1,6 +1,7 @@
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
+/* ---------- RESIZE ---------- */
 function resize() {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
@@ -9,24 +10,35 @@ resize();
 addEventListener("resize", resize);
 
 /* ======================
+   BLACK HOLE (SUBTLE)
+====================== */
+const blackHole = {
+  x: () => canvas.width * 0.68,
+  y: () => canvas.height * 0.45,
+  r: 46,
+  diskR: 88,
+  angle: 0
+};
+
+/* ======================
    NEBULA BACKDROP
 ====================== */
 let nebulaShift = 0;
 
 function drawNebula() {
-  nebulaShift += 0.0003;
+  nebulaShift += 0.00035;
 
   const g = ctx.createRadialGradient(
-    canvas.width * (0.3 + Math.sin(nebulaShift) * 0.1),
-    canvas.height * (0.4 + Math.cos(nebulaShift) * 0.1),
+    canvas.width * (0.35 + Math.sin(nebulaShift) * 0.08),
+    canvas.height * (0.45 + Math.cos(nebulaShift) * 0.08),
     0,
     canvas.width / 2,
     canvas.height / 2,
     canvas.width
   );
 
-  g.addColorStop(0, "rgba(40,60,140,0.12)");
-  g.addColorStop(0.4, "rgba(20,30,90,0.08)");
+  g.addColorStop(0, "rgba(60,90,200,0.12)");
+  g.addColorStop(0.45, "rgba(30,40,120,0.08)");
   g.addColorStop(1, "rgba(0,0,0,0)");
 
   ctx.fillStyle = g;
@@ -45,9 +57,9 @@ function createStars(count, speed, size) {
   }));
 }
 
-const farStars = createStars(120, 0.05, 0.6);
-const midStars = createStars(80, 0.12, 1);
-const nearStars = createStars(40, 0.25, 1.4);
+const farStars = createStars(130, 0.05, 0.6);
+const midStars = createStars(90, 0.12, 1.0);
+const nearStars = createStars(45, 0.25, 1.4);
 
 function drawStars(stars) {
   ctx.fillStyle = "#ffffff";
@@ -64,7 +76,62 @@ function drawStars(stars) {
 }
 
 /* ======================
-   METEORS (REAL ARCS)
+   BLACK HOLE DRAW
+====================== */
+function drawBlackHole() {
+  const bx = blackHole.x();
+  const by = blackHole.y();
+
+  // Event horizon
+  const core = ctx.createRadialGradient(bx, by, 0, bx, by, blackHole.r);
+  core.addColorStop(0, "#000");
+  core.addColorStop(0.75, "#000");
+  core.addColorStop(1, "rgba(0,0,0,0)");
+
+  ctx.fillStyle = core;
+  ctx.beginPath();
+  ctx.arc(bx, by, blackHole.r, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Accretion disk
+  blackHole.angle += 0.0018;
+
+  ctx.save();
+  ctx.translate(bx, by);
+  ctx.rotate(blackHole.angle);
+
+  const disk = ctx.createLinearGradient(
+    -blackHole.diskR,
+    0,
+    blackHole.diskR,
+    0
+  );
+
+  disk.addColorStop(0, "rgba(255,200,120,0)");
+  disk.addColorStop(0.25, "rgba(255,170,90,0.15)");
+  disk.addColorStop(0.5, "rgba(255,230,160,0.28)");
+  disk.addColorStop(0.75, "rgba(255,170,90,0.15)");
+  disk.addColorStop(1, "rgba(255,200,120,0)");
+
+  ctx.strokeStyle = disk;
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.ellipse(
+    0,
+    0,
+    blackHole.diskR,
+    blackHole.diskR * 0.45,
+    0,
+    0,
+    Math.PI * 2
+  );
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+/* ======================
+   METEORS
 ====================== */
 let meteors = [];
 let lastShower = Date.now();
@@ -75,17 +142,17 @@ function spawnMeteor(shower = false) {
 
   meteors.push({
     x: Math.random() * canvas.width,
-    y: -50,
+    y: -60,
     vx: Math.cos(angle) * speed,
     vy: Math.sin(angle) * speed,
-    len: shower ? 120 : 80,
+    len: shower ? 130 : 85,
     life: 0
   });
 }
 
 function drawMeteors() {
   meteors.forEach(m => {
-    ctx.strokeStyle = "rgba(255,255,255,0.6)";
+    ctx.strokeStyle = "rgba(255,255,255,0.65)";
     ctx.lineWidth = 1.2;
     ctx.beginPath();
     ctx.moveTo(m.x, m.y);
@@ -101,18 +168,16 @@ function drawMeteors() {
   });
 
   meteors = meteors.filter(m =>
-    m.life < 80 &&
-    m.x > -200 &&
-    m.x < canvas.width + 200 &&
-    m.y < canvas.height + 200
+    m.life < 90 &&
+    m.x > -300 &&
+    m.x < canvas.width + 300 &&
+    m.y < canvas.height + 300
   );
 }
 
 /* ======================
    CONSTELLATIONS (RARE)
 ====================== */
-let constellationTimer = 0;
-
 function drawConstellation() {
   if (Math.random() > 0.004) return;
 
@@ -138,6 +203,7 @@ function drawConstellation() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawNebula();
+  drawBlackHole();
 
   drawStars(farStars);
   drawStars(midStars);
