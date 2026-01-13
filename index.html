@@ -6,47 +6,185 @@
 <title>Biology Quiz</title>
 
 <style>
-*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
-body{margin:0;min-height:100vh;color:#eaf1ff;background:#05070f;overflow:hidden}
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+}
 
-/* LOADING */
-.loading{position:fixed;inset:0;background:#05070f;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999}
-.loader{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#4dd6ff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
-@keyframes spin{to{transform:rotate(360deg)}}
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #eaf1ff;
+  background: #05070f;
+  overflow: hidden;
+}
 
-/* STARFIELD */
-canvas{position:fixed;inset:0;z-index:-1}
+/* ---------- LOADING ---------- */
+.loading {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a1028, #02030a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 999;
+}
 
-/* QUIZ */
-.quiz{max-width:880px;margin:60px auto;padding:36px 40px;background:rgba(12,16,32,.78);backdrop-filter:blur(12px);border-radius:20px;border:1px solid rgba(255,255,255,.08);box-shadow:0 40px 120px rgba(0,0,0,.6);display:none}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.title{font-weight:600}
-.meta{display:flex;gap:12px;font-size:.85rem;opacity:.7}
-.question{font-size:clamp(1.25rem,3vw,1.9rem);margin:18px 0 26px}
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: #4dd6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 18px;
+}
 
-/* OPTIONS */
-.options{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.options.focused{display:flex;justify-content:center}
-.option{padding:16px 20px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.2s}
-.option:hover{transform:translateY(-2px)}
-.option.fade{opacity:0;pointer-events:none;transform:scale(.9)}
-.option.focus{width:100%;max-width:520px;transform:scale(1.05);box-shadow:0 20px 60px rgba(80,120,255,.35)}
-.label{opacity:.5;margin-right:6px}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
-/* FEEDBACK */
-.feedback{margin-top:22px;padding:20px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);line-height:1.6}
-.correct{color:#6dffcc}.wrong{color:#ff8a8a}
-.fact{margin-top:8px;font-size:.9rem;opacity:.85}
+/* ---------- STARFIELD ---------- */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
 
-/* BUTTON */
-button{margin-top:22px;padding:12px 26px;border-radius:12px;border:none;background:#1f3cff;color:white;cursor:pointer;display:none}
+/* ---------- QUIZ CARD ---------- */
+.quiz {
+  max-width: 880px;
+  margin: 60px auto;
+  padding: 36px 40px;
+  background: rgba(12, 16, 32, 0.78);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  display: none;
+}
 
-/* FOOTER */
-footer{text-align:center;font-size:.8rem;opacity:.5;margin:40px 0 20px}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
 
-@media(max-width:640px){
-.quiz{margin:20px;padding:26px}
-.options{grid-template-columns:1fr}
+.title { font-weight: 600; }
+.meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.question {
+  font-size: clamp(1.25rem, 3vw, 1.9rem);
+  margin: 18px 0 26px;
+}
+
+/* ---------- OPTIONS ---------- */
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.options.focused {
+  display: flex;
+  justify-content: center;
+}
+
+.option {
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.option:hover { transform: translateY(-2px); }
+
+.option.fade {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+.option.focus {
+  width: 100%;
+  max-width: 520px;
+  transform: scale(1.05);
+  box-shadow: 0 20px 60px rgba(80,120,255,0.35);
+}
+
+.label {
+  opacity: 0.5;
+  margin-right: 6px;
+}
+
+/* ---------- FEEDBACK ---------- */
+.feedback {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+  line-height: 1.6;
+}
+
+.correct { color: #6dffcc; }
+.wrong { color: #ff8a8a; }
+
+.fact {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ---------- BUTTON ---------- */
+button {
+  margin-top: 22px;
+  padding: 12px 26px;
+  border-radius: 12px;
+  border: none;
+  background: #1f3cff;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* ---------- REVIEW ---------- */
+#review p {
+  opacity: 0.85;
+}
+
+/* ---------- FOOTER (SMALLER) ---------- */
+footer {
+  text-align: center;
+  font-size: 0.65rem;
+  opacity: 0.45;
+  letter-spacing: 0.5px;
+  margin: 32px 0 16px;
+  user-select: none;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 640px) {
+  .quiz {
+    margin: 20px;
+    padding: 26px;
+  }
+  .options {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -86,106 +224,141 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("stars");
   const ctx = canvas.getContext("2d");
 
-  /* LOADING */
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  /* ---------- LOADING FIX ---------- */
   setTimeout(() => {
     loading.style.display = "none";
     quiz.style.display = "block";
+    resize(); // 🔧 force full background after loader
   }, 2000);
 
-  /* STARFIELD */
-  function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-  resize();addEventListener("resize",resize);
-
-  let stars=[...Array(120)].map(()=>({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    r:Math.random()*1.2,
-    s:Math.random()*.2+.05
+  /* ---------- STARFIELD + SHOOTING STARS ---------- */
+  let stars = [...Array(120)].map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.2,
+    s: Math.random() * 0.2 + 0.05
   }));
 
-  let meteors=[];
+  let meteors = [];
 
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="#fff";
-    stars.forEach(s=>{
-      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
-      s.y+=s.s;if(s.y>canvas.height)s.y=0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#fff";
+
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      s.y += s.s;
+      if (s.y > canvas.height) s.y = 0;
     });
-    if(Math.random()<0.004) meteors.push({x:Math.random()*canvas.width,y:0,v:6,l:80});
-    meteors.forEach(m=>{
-      ctx.strokeStyle="rgba(255,255,255,.6)";
-      ctx.beginPath();ctx.moveTo(m.x,m.y);ctx.lineTo(m.x-m.l,m.y-m.l);ctx.stroke();
-      m.x+=m.v;m.y+=m.v;
+
+    if (Math.random() < 0.004) {
+      meteors.push({ x: Math.random() * canvas.width, y: 0, v: 6, l: 80 });
+    }
+
+    meteors.forEach(m => {
+      ctx.strokeStyle = "rgba(255,255,255,0.6)";
+      ctx.beginPath();
+      ctx.moveTo(m.x, m.y);
+      ctx.lineTo(m.x - m.l, m.y - m.l);
+      ctx.stroke();
+      m.x += m.v;
+      m.y += m.v;
     });
-    meteors=meteors.filter(m=>m.y<canvas.height);
+
+    meteors = meteors.filter(m => m.y < canvas.height);
     requestAnimationFrame(animate);
   }
+
   animate();
 
-  /* QUIZ LOGIC */
-  const qEl=document.getElementById("question");
-  const oEl=document.getElementById("options");
-  const fEl=document.getElementById("feedback");
-  const nEl=document.getElementById("next");
-  const pEl=document.getElementById("progress");
-  const dEl=document.getElementById("difficulty");
-  const rEl=document.getElementById("review");
+  /* ---------- QUIZ LOGIC ---------- */
+  const qEl = document.getElementById("question");
+  const oEl = document.getElementById("options");
+  const fEl = document.getElementById("feedback");
+  const nEl = document.getElementById("next");
+  const pEl = document.getElementById("progress");
+  const dEl = document.getElementById("difficulty");
+  const rEl = document.getElementById("review");
 
-  let quizData=[],i=0,locked=false,answers=[];
+  let quizData = [], i = 0, locked = false, answers = [];
 
   fetch("questions.json")
-    .then(r=>r.json())
-    .then(d=>{quizData=d;load();})
-    .catch(()=>{qEl.textContent="Failed to load questions";});
+    .then(r => r.json())
+    .then(d => { quizData = d; load(); })
+    .catch(() => { qEl.textContent = "Failed to load questions."; });
 
-  function load(){
-    locked=false;
-    let q=quizData[i];
-    qEl.textContent=q.question;
-    pEl.textContent=`Q ${i+1}/${quizData.length}`;
-    dEl.textContent=q.difficulty||"";
-    oEl.innerHTML="";
+  function load() {
+    locked = false;
+    const q = quizData[i];
+    qEl.textContent = q.question;
+    pEl.textContent = `Q ${i + 1}/${quizData.length}`;
+    dEl.textContent = q.difficulty || "";
+    oEl.innerHTML = "";
     oEl.classList.remove("focused");
-    fEl.style.display="none";
-    nEl.style.display="none";
+    fEl.style.display = "none";
+    nEl.style.display = "none";
 
-    q.options.forEach((t,idx)=>{
-      let d=document.createElement("div");
-      d.className="option";
-      d.innerHTML=`<span class="label">${"ABCD"[idx]}.</span>${t}`;
-      d.onclick=()=>select(idx);
+    q.options.forEach((t, idx) => {
+      const d = document.createElement("div");
+      d.className = "option";
+      d.innerHTML = `<span class="label">${"ABCD"[idx]}.</span>${t}`;
+      d.onclick = () => select(idx);
       oEl.appendChild(d);
     });
   }
 
-  function select(idx){
-    if(locked)return;locked=true;
-    answers[i]=idx;
+  function select(idx) {
+    if (locked) return;
+    locked = true;
+    answers[i] = idx;
     oEl.classList.add("focused");
-    [...oEl.children].forEach((o,j)=>j===idx?o.classList.add("focus"):o.classList.add("fade"));
-    let q=quizData[i];
-    let html=idx===q.answer?
-      `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`:
-      `<div class="wrong"><b>Incorrect</b></div><p><b>Correct:</b> ${q.options[q.answer]}</p><p>${q.explanation}</p>`;
-    if(q.fact) html+=`<div class="fact">💡 ${q.fact}</div>`;
-    fEl.innerHTML=html;
-    fEl.style.display="block";
-    setTimeout(()=>nEl.style.display="inline-block",600);
+
+    [...oEl.children].forEach((o, j) =>
+      j === idx ? o.classList.add("focus") : o.classList.add("fade")
+    );
+
+    const q = quizData[i];
+    let html = idx === q.answer
+      ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
+      : `<div class="wrong"><b>Incorrect</b></div>
+         <p><b>Correct:</b> ${q.options[q.answer]}</p>
+         <p>${q.explanation}</p>`;
+
+    if (q.fact) html += `<div class="fact">💡 ${q.fact}</div>`;
+
+    fEl.innerHTML = html;
+    fEl.style.display = "block";
+    setTimeout(() => nEl.style.display = "inline-block", 600);
   }
 
-  nEl.onclick=()=>{i++; i<quizData.length?load():showReview();};
+  nEl.onclick = () => {
+    i++;
+    if (i < quizData.length) load();
+    else showReview();
+  };
 
-  function showReview(){
-    qEl.textContent="Review";
-    oEl.innerHTML="";
-    fEl.style.display="none";
-    nEl.style.display="none";
-    rEl.style.display="block";
-    rEl.innerHTML="";
-    quizData.forEach((q,idx)=>{
-      rEl.innerHTML+=`<p><b>Q${idx+1}:</b> ${q.question}<br>
-      ✔ ${q.options[q.answer]}</p>`;
+  function showReview() {
+    qEl.textContent = "Review";
+    oEl.innerHTML = "";
+    fEl.style.display = "none";
+    nEl.style.display = "none";
+    rEl.style.display = "block";
+    rEl.innerHTML = "";
+
+    quizData.forEach((q, idx) => {
+      rEl.innerHTML += `
+        <p><b>Q${idx + 1}:</b> ${q.question}<br>
+        ✔ ${q.options[q.answer]}</p>`;
     });
   }
 
