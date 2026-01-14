@@ -11,33 +11,10 @@
 body{
   margin:0;
   min-height:100vh;
+  background:#05070f;
   color:#eaf1ff;
-  background:#05070f;
   overflow-x:hidden;
-  overflow-y:auto;
 }
-
-/* ---------- LOADING ---------- */
-.loading{
-  position:fixed;
-  inset:0;
-  background:#05070f;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-
-.loader{
-  width:48px;height:48px;
-  border:3px solid rgba(255,255,255,.2);
-  border-top-color:#4dd6ff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin-bottom:16px;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- BACKGROUND ---------- */
 canvas{
@@ -46,7 +23,7 @@ canvas{
   z-index:-1;
 }
 
-/* ---------- QUIZ CARD (GLASS) ---------- */
+/* ---------- QUIZ CARD ---------- */
 .quiz{
   max-width:880px;
   margin:60px auto;
@@ -56,18 +33,13 @@ canvas{
     linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),
     rgba(12,16,32,.78);
 
-  backdrop-filter:blur(14px) saturate(120%);
-  -webkit-backdrop-filter:blur(14px) saturate(120%);
-
+  backdrop-filter:blur(14px);
   border-radius:22px;
   border:1px solid rgba(255,255,255,.12);
-
   box-shadow:
     0 50px 140px rgba(0,0,0,.65),
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(255,255,255,.05);
+    inset 0 1px 0 rgba(255,255,255,.18);
 
-  display:none;
 }
 
 /* ---------- HEADER ---------- */
@@ -75,16 +47,40 @@ canvas{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:14px;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
 .title{font-weight:600}
-.meta{display:flex;gap:12px;font-size:.85rem;opacity:.7}
+
+.meta{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-size:.85rem;
+  opacity:.75;
+}
+
+/* ---------- AMBIENT TOGGLE ---------- */
+.ambient-toggle{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:#cfd8ff;
+  font-size:.7rem;
+  padding:6px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.ambient-toggle:hover{
+  background:rgba(255,255,255,.15);
+}
 
 /* ---------- QUESTION ---------- */
 .question{
   font-size:clamp(1.25rem,3vw,1.9rem);
-  margin:18px 0 26px;
+  margin:22px 0 26px;
 }
 
 /* ---------- OPTIONS ---------- */
@@ -92,11 +88,6 @@ canvas{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:18px;
-}
-
-.options.focused{
-  display:flex;
-  justify-content:center;
 }
 
 .option{
@@ -108,17 +99,15 @@ canvas{
   transition:.2s;
 }
 
-.option:hover{transform:translateY(-2px)}
-.option.fade{opacity:0;pointer-events:none;transform:scale(.9)}
-
-.option.focus{
-  width:100%;
-  max-width:520px;
-  transform:scale(1.05);
-  box-shadow:0 20px 60px rgba(80,120,255,.35);
+.option:hover{
+  transform:translateY(-2px);
+  border-color:rgba(140,180,255,.4);
 }
 
-.label{opacity:.5;margin-right:6px}
+.option.disabled{
+  opacity:.45;
+  pointer-events:none;
+}
 
 /* ---------- FEEDBACK ---------- */
 .feedback{
@@ -127,24 +116,21 @@ canvas{
   border-radius:14px;
   background:rgba(0,0,0,.35);
   border:1px solid rgba(255,255,255,.1);
-  line-height:1.6;
-  animation:reveal .35s ease forwards;
+  animation:fadeUp .35s ease;
 }
 
-@keyframes reveal{
-  from{opacity:0;transform:translateY(8px)}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(6px)}
   to{opacity:1;transform:translateY(0)}
 }
 
 .correct{color:#6dffcc}
 .wrong{color:#ff8a8a}
-.fact{margin-top:8px;font-size:.9rem;opacity:.85}
 
 /* ---------- BUTTONS ---------- */
 .actions{
   display:flex;
   gap:12px;
-  flex-wrap:wrap;
   margin-top:22px;
 }
 
@@ -155,28 +141,20 @@ button{
   background:#1f3cff;
   color:white;
   cursor:pointer;
-  display:none;
 }
 
 #skip{
   background:transparent;
+  border:1px solid rgba(255,255,255,.2);
   color:#aab6ff;
-  border:1px solid rgba(255,255,255,.15);
-  display:inline-block;
-}
-
-#skip:hover{
-  background:rgba(255,255,255,.05);
 }
 
 /* ---------- FOOTER ---------- */
 footer{
   text-align:center;
-  font-size:.25rem;
-  opacity:.15;
-  letter-spacing:.4px;
+  font-size:.55rem;
+  opacity:.35;
   margin:18px 0 8px;
-  user-select:none;
 }
 
 @media(max-width:640px){
@@ -188,26 +166,18 @@ footer{
 
 <body>
 
-<!-- LOADING -->
-<div class="loading" id="loading">
-  <div class="loader"></div>
-  Loading Quiz…
-</div>
-
-<!-- SPACE -->
 <canvas id="stars"></canvas>
 
-<!-- QUIZ -->
-<div class="quiz" id="quiz">
+<div class="quiz">
   <div class="header">
-    <div class="title">Biology • Cell</div>
+    <div class="title">Biology • Interactive Quiz</div>
     <div class="meta">
       <span id="progress"></span>
-      <span id="difficulty"></span>
+      <button id="ambientToggle" class="ambient-toggle">🌌 Ambient: ON</button>
     </div>
   </div>
 
-  <div class="question" id="question"></div>
+  <div class="question" id="question">Loading…</div>
   <div class="options" id="options"></div>
   <div class="feedback" id="feedback" style="display:none"></div>
 
@@ -220,113 +190,80 @@ footer{
 <footer>Made by Muntazir</footer>
 
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
+let quizData=[], index=0, locked=false;
 
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("service-worker.js");
-}
+const qEl=question,oEl=options,fEl=feedback,pEl=progress;
+const nextBtn=next, skipBtn=skip;
 
-const loading=document.getElementById("loading");
-const quiz=document.getElementById("quiz");
+/* ---------- LOAD QUESTIONS ---------- */
+fetch("questions.json")
+  .then(r=>r.json())
+  .then(d=>{quizData=d;load();});
 
-let quizData=[];
-let i=Number(localStorage.getItem("quizIndex"))||0;
-let locked=false;
-
-setTimeout(()=>{
-  loading.style.display="none";
-  quiz.style.display="block";
-  fetch("questions.json")
-    .then(r=>r.json())
-    .then(d=>{quizData=d;load();});
-},2000);
-
-const qEl=question,oEl=options,fEl=feedback,nEl=next,pEl=progress,dEl=difficulty;
-const skipBtn=document.getElementById("skip");
-
-function shuffleOptions(q){
-  const correct=q.options[q.answer];
-  q.options=q.options.map(o=>({o,sort:Math.random()}))
-    .sort((a,b)=>a.sort-b.sort)
-    .map(x=>x.o);
-  q.answer=q.options.indexOf(correct);
-}
-
+/* ---------- LOAD ---------- */
 function load(){
   locked=false;
-  const q=quizData[i];
-  shuffleOptions(q);
-
+  const q=quizData[index];
   qEl.textContent=q.question;
-  pEl.textContent=`Q ${i+1}/${quizData.length}`;
-  dEl.textContent=q.difficulty||"";
-
+  pEl.textContent=`Q ${index+1}/${quizData.length}`;
   oEl.innerHTML="";
-  oEl.classList.remove("focused");
   fEl.style.display="none";
-  nEl.style.display="none";
+  nextBtn.style.display="none";
 
-  q.options.forEach((t,idx)=>{
+  q.options.forEach((t,i)=>{
     const div=document.createElement("div");
     div.className="option";
-    div.innerHTML=`<span class="label">${"ABCD"[idx]}.</span>${t}`;
-    div.onclick=()=>select(idx);
+    div.textContent=t;
+    div.onclick=()=>select(i);
     oEl.appendChild(div);
   });
-
-  localStorage.setItem("quizIndex",i);
 }
 
-function select(idx){
-  if(locked)return;
+/* ---------- SELECT ---------- */
+function select(i){
+  if(locked) return;
   locked=true;
+  const q=quizData[index];
+  [...oEl.children].forEach(o=>o.classList.add("disabled"));
 
-  oEl.classList.add("focused");
-  [...oEl.children].forEach((o,j)=>j===idx?o.classList.add("focus"):o.classList.add("fade"));
-
-  const q=quizData[i];
-
-  if(idx===q.answer){
-    localStorage.setItem("correct",Number(localStorage.getItem("correct")||0)+1);
-  }
-  localStorage.setItem("total",quizData.length);
-
-  let html=idx===q.answer
+  fEl.style.display="block";
+  fEl.innerHTML = i===q.answer
     ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
     : `<div class="wrong"><b>Incorrect</b></div>
        <p><b>Correct:</b> ${q.options[q.answer]}</p>
        <p>${q.explanation}</p>`;
 
-  if(q.fact)html+=`<div class="fact">💡 ${q.fact}</div>`;
-
-  fEl.innerHTML=html;
-  fEl.style.display="block";
-
-  setTimeout(()=>nEl.style.display="inline-block",500);
+  nextBtn.style.display="inline-block";
 }
 
-nEl.onclick=()=>{
-  i++;
-  if(i<quizData.length){
-    load();
-  }else{
-    localStorage.removeItem("quizIndex");
-    location.href="results.html";
-  }
+/* ---------- NAV ---------- */
+nextBtn.onclick=()=>{
+  index++;
+  if(index<quizData.length) load();
+  else qEl.textContent="Quiz Completed";
 };
 
 skipBtn.onclick=()=>{
-  if(locked)return;
-  i++;
-  if(i<quizData.length){
-    load();
-  }else{
-    localStorage.removeItem("quizIndex");
-    location.href="results.html";
-  }
+  if(locked) return;
+  index++;
+  if(index<quizData.length) load();
 };
 
-});
+/* ---------- AMBIENT TOGGLE ---------- */
+const ambientBtn=document.getElementById("ambientToggle");
+
+function updateAmbientUI(){
+  const on = localStorage.getItem("ambient") !== "off";
+  ambientBtn.textContent = on ? "🌌 Ambient: ON" : "🌑 Ambient: OFF";
+}
+
+ambientBtn.onclick=()=>{
+  const on = localStorage.getItem("ambient") !== "off";
+  localStorage.setItem("ambient", on ? "off" : "on");
+  updateAmbientUI();
+};
+
+updateAmbientUI();
 </script>
 
 <script src="space.js"></script>
