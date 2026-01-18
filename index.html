@@ -14,7 +14,6 @@ body{
   color:#eaf1ff;
   background:#05070f;
   overflow-x:hidden;
-  overflow-y:auto;
 }
 
 /* LOADING */
@@ -28,7 +27,6 @@ body{
   justify-content:center;
   z-index:999;
 }
-
 .loader{
   width:48px;height:48px;
   border:3px solid rgba(255,255,255,.2);
@@ -48,27 +46,7 @@ canvas{
 }
 
 /* QUIZ CARD */
-
-.header{display:flex;justify-content:space-between;margin-bottom:14px}
-.meta{font-size:.85rem;opacity:.7}
-
-.question{
-  font-size:clamp(1.25rem,3vw,1.9rem);
-  margin:18px 0 26px;
-}
-
-.options{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.options.focused{display:flex;justify-content:center}
-
-.option{
-  padding:16px 20px;
-  border-radius:14px;
-  background:linear-gradient(180deg,rgba(255,25.quiz{
+.quiz{
   position:relative;
   z-index:5;
 
@@ -81,26 +59,48 @@ canvas{
     rgba(12,16,32,.78);
 
   backdrop-filter:blur(14px) saturate(120%);
-  -webkit-backdrop-filter:blur(14px) saturate(120%);
-
   border-radius:22px;
   border:1px solid rgba(255,255,255,.12);
 
   box-shadow:
     0 50px 140px rgba(0,0,0,.65),
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(255,255,255,.05);
+    inset 0 1px 0 rgba(255,255,255,.18);
 
   display:block;
   min-height:280px;
-}5,255,.06),rgba(255,255,255,.02));
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.meta{font-size:.85rem;opacity:.7}
+
+/* QUESTION */
+.question{
+  font-size:clamp(1.25rem,3vw,1.9rem);
+  margin:18px 0 26px;
+}
+
+/* OPTIONS */
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.option{
+  padding:16px 20px;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
   border:1px solid rgba(255,255,255,.1);
   cursor:pointer;
   transition:.2s;
 }
 .option:hover{transform:translateY(-2px)}
-.option.fade{opacity:0;pointer-events:none;transform:scale(.9)}
-.option.focus{width:100%;max-width:520px;transform:scale(1.05)}
+.option.fade{opacity:0;pointer-events:none}
+.option.focus{transform:scale(1.05)}
 
 .feedback{
   margin-top:22px;
@@ -143,33 +143,17 @@ footer{
 
 <canvas id="stars"></canvas>
 
-<div class="header">
-  <div class="title">Biology • Cell Quiz</div>
+<!-- QUIZ -->
+<div class="quiz" id="quiz">
 
-  <div class="meta">
-    <span id="progress"></span>
-    <span id="difficulty"></span>
-
-    <!-- TIMER -->
-    <span id="timer" style="font-weight:600;color:#4dd6ff">20</span>
-    <button id="startTimerBtn"
-      style="
-        padding:4px 10px;
-        border-radius:8px;
-        border:1px solid rgba(255,255,255,.2);
-        background:transparent;
-        color:#aab6ff;
-        cursor:pointer;
-      ">
-      Start
-    </button>
-  </div>
-</div>
-
-  <!-- TIMER UI -->
-  <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-    <div id="timer">20</div>
-    <button id="startTimerBtn">Start</button>
+  <div class="header">
+    <div class="title">Biology • Cell Quiz</div>
+    <div class="meta">
+      <span id="progress"></span>
+      <span id="difficulty"></span>
+      <span id="timer" style="color:#4dd6ff">20</span>
+      <button id="startTimerBtn">Start</button>
+    </div>
   </div>
 
   <div class="question" id="question"></div>
@@ -180,14 +164,12 @@ footer{
     <button id="skip">Skip</button>
     <button id="next">Next</button>
   </div>
+
 </div>
 
 <footer>Made by Muntazir</footer>
 
-<!-- BACKGROUND -->
 <script src="space.js"></script>
-
-<!-- MODULES -->
 <script src="js/sound.js"></script>
 <script src="js/timer.js"></script>
 <script src="js/quiz.js"></script>
