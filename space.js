@@ -1,8 +1,13 @@
+/* =========================
+   COSMIC BACKGROUND ENGINE
+   Parallax Stars + Meteors
+========================= */
+
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
 let w, h;
-function resize(){
+function resize() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
 }
@@ -10,140 +15,125 @@ resize();
 window.addEventListener("resize", resize);
 
 /* =========================
-   AMBIENT TOGGLE STATE
+   STAR LAYERS (PARALLAX)
 ========================= */
-let ambientEnabled = localStorage.getItem("ambient") !== "off";
+
+const layers = [
+  { count: 80, speed: 0.15, size: 0.8 }, // far
+  { count: 50, speed: 0.35, size: 1.2 }, // mid
+  { count: 30, speed: 0.6,  size: 1.8 }  // near
+];
+
+const stars = [];
+
+layers.forEach(layer => {
+  for (let i = 0; i < layer.count; i++) {
+    stars.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: layer.size * (0.6 + Math.random()),
+      s: layer.speed,
+      alpha: 0.4 + Math.random() * 0.6
+    });
+  }
+});
 
 /* =========================
-   STAR LAYERS
+   SHOOTING STARS
 ========================= */
 
-// Far stars (tiny, slow)
-const farStars = Array.from({ length: 120 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 0.8 + 0.2,
-  s: Math.random() * 0.05 + 0.02
-}));
+const meteors = [];
 
-// Mid stars
-const midStars = Array.from({ length: 60 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 1.5 + 0.5,
-  s: Math.random() * 0.15 + 0.05
-}));
-
-// Space dust
-const dust = Array.from({ length: 40 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 8 + 6,
-  s: Math.random() * 0.02 + 0.01
-}));
-
-/* =========================
-   SHOOTING STAR
-========================= */
-let meteor = null;
-let nextMeteor = Date.now() + randomTime();
-
-function randomTime(){
-  return 45000 + Math.random() * 15000; // 45–60s
-}
-
-function spawnMeteor(){
-  meteor = {
-    x: Math.random() * w,
-    y: -50,
-    vx: 6 + Math.random() * 3,
-    vy: 6 + Math.random() * 3,
-    life: 0
-  };
-}
-
-/* =========================
-   DRAW FUNCTIONS
-========================= */
-function drawStars(arr, alpha){
-  ctx.globalAlpha = alpha;
-  ctx.fillStyle = "#fff";
-  arr.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fill();
-    s.y += s.s;
-    if (s.y > h) s.y = 0;
-  });
-  ctx.globalAlpha = 1;
-}
-
-function drawDust(){
-  ctx.fillStyle = "rgba(180,200,255,0.04)";
-  dust.forEach(d => {
-    ctx.beginPath();
-    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-    ctx.fill();
-    d.y += d.s;
-    if (d.y > h) d.y = 0;
+function spawnMeteor(x = Math.random() * w, y = -50, vx = 6, vy = 10) {
+  meteors.push({
+    x,
+    y,
+    vx,
+    vy,
+    life: 0,
+    maxLife: 60 + Math.random() * 20
   });
 }
 
-function drawNebula(){
-  const g = ctx.createRadialGradient(
-    w * 0.8, h * 0.2, 0,
-    w * 0.8, h * 0.2, w * 0.8
-  );
-  g.addColorStop(0, "rgba(120,90,255,0.06)");
-  g.addColorStop(1, "transparent");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, w, h);
-}
+/* Rare random meteor */
+setInterval(() => {
+  if (Math.random() < 0.35) {
+    spawnMeteor(Math.random() * w, -40, 5 + Math.random() * 2, 9);
+  }
+}, 6000);
 
-function drawMeteor(){
-  if (!meteor) return;
-  ctx.strokeStyle = "rgba(200,220,255,0.8)";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(meteor.x, meteor.y);
-  ctx.lineTo(meteor.x - meteor.vx * 4, meteor.y - meteor.vy * 4);
-  ctx.stroke();
+/* Group meteor shower (≈ every 1 min) */
+setInterval(() => {
+  const baseX = Math.random() * w * 0.6;
+  for (let i = 0; i < 4; i++) {
+    setTimeout(() => {
+      spawnMeteor(
+        baseX + Math.random() * 200,
+        -50,
+        6 + Math.random() * 2,
+        10 + Math.random() * 2
+      );
+    }, i * 250);
+  }
+}, 60000);
 
-  meteor.x += meteor.vx;
-  meteor.y += meteor.vy;
-  meteor.life++;
-
-  if (meteor.life > 30) meteor = null;
-}
+/* Bottom meteors (subtle) */
+setInterval(() => {
+  if (Math.random() < 0.3) {
+    spawnMeteor(
+      Math.random() * w,
+      h + 20,
+      -4 - Math.random() * 2,
+      -7 - Math.random() * 2
+    );
+  }
+}, 12000);
 
 /* =========================
-   MAIN LOOP
+   ANIMATION LOOP
 ========================= */
-function animate(){
+
+function animate() {
   ctx.clearRect(0, 0, w, h);
 
-  if (ambientEnabled) {
-    drawNebula();
-    drawStars(farStars, 0.4);
-    drawStars(midStars, 0.7);
-    drawDust();
-
-    if (!meteor && Date.now() > nextMeteor) {
-      spawnMeteor();
-      nextMeteor = Date.now() + randomTime();
+  /* Stars */
+  stars.forEach(s => {
+    s.y += s.s;
+    if (s.y > h) {
+      s.y = -10;
+      s.x = Math.random() * w;
     }
-    drawMeteor();
+
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.fill();
+  });
+
+  /* Meteors */
+  for (let i = meteors.length - 1; i >= 0; i--) {
+    const m = meteors[i];
+    m.x += m.vx;
+    m.y += m.vy;
+    m.life++;
+
+    ctx.beginPath();
+    ctx.moveTo(m.x, m.y);
+    ctx.lineTo(m.x - m.vx * 4, m.y - m.vy * 4);
+    ctx.strokeStyle = "rgba(200,220,255,0.8)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    if (
+      m.life > m.maxLife ||
+      m.x < -100 || m.x > w + 100 ||
+      m.y < -100 || m.y > h + 100
+    ) {
+      meteors.splice(i, 1);
+    }
   }
 
   requestAnimationFrame(animate);
 }
-animate();
 
-/* =========================
-   LISTEN FOR TOGGLE
-========================= */
-window.addEventListener("storage", e => {
-  if (e.key === "ambient") {
-    ambientEnabled = e.newValue !== "off";
-  }
-});
+animate();
