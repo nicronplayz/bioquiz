@@ -1,51 +1,24 @@
 /* =========================
-   SOUND MODULE (UNLOCKED)
+   SOUND MODULE (DIRECT)
 ========================= */
 
-const sounds = {
-  correct: new Audio("sounds/correct.mp3"),
-  wrong: new Audio("sounds/wrong.mp3")
-};
+const correctSound = new Audio("sounds/correct.mp3");
+const wrongSound   = new Audio("sounds/wrong.mp3");
 
-// volumes
-sounds.correct.volume = 0.6;
-sounds.wrong.volume = 0.6;
+correctSound.volume = 0.7;
+wrongSound.volume = 0.7;
 
-let audioUnlocked = false;
-
-/* 🔓 UNLOCK AUDIO ON FIRST USER GESTURE */
-function unlockAudio() {
-  if (audioUnlocked) return;
-  audioUnlocked = true;
-
-  Object.values(sounds).forEach(sound => {
-    sound.play().then(() => {
-      sound.pause();
-      sound.currentTime = 0;
-    }).catch(() => {});
-  });
-
-  document.removeEventListener("pointerdown", unlockAudio);
-}
-
-/* listen for first touch / click */
-document.addEventListener("pointerdown", unlockAudio);
-
-/* =========================
-   PUBLIC PLAY FUNCTIONS
-========================= */
+/* DIRECT PLAY — NO UNLOCK NEEDED */
 function playCorrectSound() {
-  if (!audioUnlocked) return;
-  sounds.correct.currentTime = 0;
-  sounds.correct.play().catch(() => {});
+  correctSound.currentTime = 0;
+  correctSound.play();
 }
 
 function playWrongSound() {
-  if (!audioUnlocked) return;
-  sounds.wrong.currentTime = 0;
-  sounds.wrong.play().catch(() => {});
+  wrongSound.currentTime = 0;
+  wrongSound.play();
 }
 
-/* expose globally */
+/* expose */
 window.playCorrectSound = playCorrectSound;
 window.playWrongSound = playWrongSound;
