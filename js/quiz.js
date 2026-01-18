@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded",()=>{
+// ---------- STATE ----------
+let quizData = [];
+let i = Number(localStorage.getItem("quizIndex")) || 0;
+let locked = false;
 
-/* ---------- ELEMENTS ---------- */
-const loading = document.getElementById("loading");
-const quiz = document.getElementById("quiz");
-
+// ---------- ELEMENTS ----------
 const qEl = document.getElementById("question");
 const oEl = document.getElementById("options");
 const fEl = document.getElementById("feedback");
@@ -12,44 +12,32 @@ const pEl = document.getElementById("progress");
 const dEl = document.getElementById("difficulty");
 const skipBtn = document.getElementById("skip");
 
-/* ---------- STATE ---------- */
-let quizData = [];
-let i = Number(localStorage.getItem("quizIndex")) || 0;
-let locked = false;
+// ---------- LOAD QUESTIONS ----------
+fetch("questions.json")
+  .then(r => r.json())
+  .then(d => {
+    quizData = d;
+    load();
+  });
 
-/* ---------- LOAD DATA ---------- */
-setTimeout(()=>{
-  loading.style.display = "none";
-  quiz.style.display = "block";
-
-  fetch("questions.json")
-    .then(r=>r.json())
-    .then(d=>{
-      quizData = d;
-      load();
-    });
-},2000);
-
-/* ---------- HELPERS ---------- */
+// ---------- UTIL ----------
 function shuffleOptions(q){
   const correct = q.options[q.answer];
   q.options = q.options
-    .map(o=>({o,sort:Math.random()}))
-    .sort((a,b)=>a.sort-b.sort)
-    .map(x=>x.o);
+    .map(o => ({ o, r: Math.random() }))
+    .sort((a, b) => a.r - b.r)
+    .map(x => x.o);
   q.answer = q.options.indexOf(correct);
 }
 
-/* ---------- LOAD QUESTION ---------- */
+// ---------- LOAD QUESTION ----------
 function load(){
-  resetTimer();               // 🔹 timer reset (manual start)
   locked = false;
-
   const q = quizData[i];
   shuffleOptions(q);
 
   qEl.textContent = q.question;
-  pEl.textContent = `Q ${i+1}/${quizData.length}`;
+  pEl.textContent = `Q ${i + 1} / ${quizData.length}`;
   dEl.textContent = q.difficulty || "";
 
   oEl.innerHTML = "";
@@ -57,106 +45,107 @@ function load(){
   fEl.style.display = "none";
   nEl.style.display = "none";
 
-  q.options.forEach((t,idx)=>{
+  q.options.forEach((text, idx) => {
     const div = document.createElement("div");
     div.className = "option";
-    div.innerHTML = `<span class="label">${"ABCD"[idx]}.</span>${t}`;
-    div.onclick = ()=>select(idx);
+    div.innerHTML = `<span class="label">${"ABCD"[idx]}.</span>${text}`;
+    div.onclick = () => select(idx);
     oEl.appendChild(div);
   });
 
   localStorage.setItem("quizIndex", i);
+
+  // 🔑 TIMER RESET (manual start)
+  if (typeof resetTimer === "function") {
+    resetTimer();
+  }
 }
 
-/* ---------- OPTION SELECT ---------- */
+// ---------- OPTION SELECT ----------
 function select(idx){
-  if(locked) return;
-
-  stopTimer();                // 🔹 stop timer on answer
+  if (locked) return;
   locked = true;
 
+  if (typeof stopTimer === "function") {
+    stopTimer();
+  }
+
   oEl.classList.add("focused");
-  [...oEl.children].forEach((o,j)=>{
-    j===idx ? o.classList.add("focus") : o.classList.add("fade");
-  });
+  [...oEl.children].forEach((o, j) =>
+    j === idx ? o.classList.add("focus") : o.classList.add("fade")
+  );
 
   const q = quizData[i];
+  const correct = idx === q.answer;
 
-  if(idx === q.answer){
-    playSound("correct");     // 🔊 correct sound
+  if (correct) {
+    playSound("correct");
     localStorage.setItem(
       "correct",
-      Number(localStorage.getItem("correct")||0)+1
+      Number(localStorage.getItem("correct") || 0) + 1
     );
-  }else{
-    playSound("wrong");       // 🔊 wrong sound
+  } else {
+    playSound("wrong");
   }
 
   localStorage.setItem("total", quizData.length);
 
-  let html = idx===q.answer
+  let html = correct
     ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
     : `<div class="wrong"><b>Incorrect</b></div>
        <p><b>Correct:</b> ${q.options[q.answer]}</p>
        <p>${q.explanation}</p>`;
 
-  if(q.fact){
+  if (q.fact) {
     html += `<div class="fact"><b>Fact:</b> ${q.fact}</div>`;
   }
 
   fEl.innerHTML = html;
   fEl.style.display = "block";
 
-  setTimeout(()=>nEl.style.display="inline-block",400);
+  setTimeout(() => {
+    nEl.style.display = "inline-block";
+  }, 500);
 }
 
-/* ---------- TIMER TIME-UP ---------- */
-window.timeUp = function(){
-  if(locked) return;
+// ---------- TIME UP HANDLER (CALLED BY timer.js) ----------
+function handleTimeUp(){
+  if (locked) return;
   locked = true;
 
-  playSound("wrong");         // 🔊 timeout sound
+  playSound("wrong");
 
   const q = quizData[i];
-
-  oEl.classList.add("focused");
-  [...oEl.children].forEach(o=>o.classList.add("fade"));
 
   fEl.innerHTML = `
     <div class="wrong"><b>Time’s up!</b></div>
     <p><b>Correct:</b> ${q.options[q.answer]}</p>
     <p>${q.explanation}</p>
+    ${q.fact ? `<div class="fact"><b>Fact:</b> ${q.fact}</div>` : ""}
   `;
-
-  if(q.fact){
-    fEl.innerHTML += `<div class="fact"><b>Fact:</b> ${q.fact}</div>`;
-  }
-
   fEl.style.display = "block";
   nEl.style.display = "inline-block";
-};
+}
 
-/* ---------- NEXT ---------- */
-nEl.onclick = ()=>{
+// ---------- NEXT ----------
+nEl.onclick = () => {
   i++;
-  if(i < quizData.length){
+  if (i < quizData.length) {
     load();
-  }else{
+  } else {
     localStorage.removeItem("quizIndex");
     location.href = "results.html";
   }
 };
 
-/* ---------- SKIP ---------- */
-skipBtn.onclick = ()=>{
-  if(locked) return;
+// ---------- SKIP ----------
+skipBtn.onclick = () => {
+  if (locked) return;
   i++;
-  if(i < quizData.length){
+  if (i < quizData.length) {
     load();
-  }else{
+  } else {
     localStorage.removeItem("quizIndex");
     location.href = "results.html";
   }
 };
-
-});
