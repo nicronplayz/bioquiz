@@ -2,40 +2,47 @@ let timeLeft = 20;
 let timerInterval = null;
 let timerStarted = false;
 
-const timerEl = document.getElementById("timer");
-const startBtn = document.getElementById("startTimerBtn");
+document.addEventListener("DOMContentLoaded", () => {
 
-function updateTimer(){
-  timerEl.textContent = timeLeft;
-}
+  const timerEl = document.getElementById("timer");
+  const startBtn = document.getElementById("startTimerBtn");
 
-function startTimer(){
-  if(timerStarted) return;
-  timerStarted = true;
-  startBtn.disabled = true;
+  function updateTimer(){
+    if (timerEl) timerEl.textContent = timeLeft;
+  }
 
-  timerInterval = setInterval(()=>{
-    timeLeft--;
+  window.startTimer = function(){
+    if (timerStarted) return;
+    timerStarted = true;
+    if (startBtn) startBtn.disabled = true;
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimer();
+
+      if (timeLeft <= 0) {
+        stopTimer();
+        if (typeof handleTimeUp === "function") {
+          handleTimeUp();
+        }
+      }
+    }, 1000);
+  };
+
+  window.resetTimer = function(){
+    stopTimer();
+    timerStarted = false;
+    timeLeft = 20;
     updateTimer();
+    if (startBtn) startBtn.disabled = false;
+  };
 
-    if(timeLeft <= 0){
-      stopTimer();
-      timeUp();
-    }
-  },1000);
-}
+  window.stopTimer = function(){
+    clearInterval(timerInterval);
+    timerInterval = null;
+  };
 
-function resetTimer(){
-  stopTimer();
-  timerStarted = false;
-  timeLeft = 20;
+  if (startBtn) startBtn.onclick = startTimer;
+
   updateTimer();
-  startBtn.disabled = false;
-}
-
-function stopTimer(){
-  clearInterval(timerInterval);
-  timerInterval = null;
-}
-
-startBtn.onclick = startTimer;
+});
