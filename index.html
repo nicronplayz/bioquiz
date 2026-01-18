@@ -16,7 +16,7 @@ body{
   overflow-x:hidden;
 }
 
-/* LOADING */
+/* ---------- LOADING ---------- */
 .loading{
   position:fixed;
   inset:0;
@@ -37,7 +37,7 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* BACKGROUND */
+/* ---------- BACKGROUND ---------- */
 canvas{
   position:fixed;
   inset:0;
@@ -45,7 +45,7 @@ canvas{
   pointer-events:none;
 }
 
-/* QUIZ CARD */
+/* ---------- QUIZ CARD ---------- */
 .quiz{
   position:relative;
   z-index:5;
@@ -66,25 +66,59 @@ canvas{
     0 50px 140px rgba(0,0,0,.65),
     inset 0 1px 0 rgba(255,255,255,.18);
 
-  display:block;
   min-height:280px;
 }
 
-/* HEADER */
+/* ---------- HEADER ---------- */
 .header{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   margin-bottom:14px;
 }
-.meta{font-size:.85rem;opacity:.7}
+.meta{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:.85rem;
+  opacity:.8;
+}
 
-/* QUESTION */
+/* ---------- TIMER ---------- */
+.timer-wrap{
+  position:relative;
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.timer-wrap span{
+  position:absolute;
+  font-size:.8rem;
+  font-weight:600;
+  color:#4dd6ff;
+}
+
+.timer-ring circle{
+  fill:none;
+  stroke:#4dd6ff;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-dasharray:113;
+  stroke-dashoffset:0;
+  transform:rotate(-90deg);
+  transform-origin:50% 50%;
+}
+
+/* ---------- QUESTION ---------- */
 .question{
   font-size:clamp(1.25rem,3vw,1.9rem);
   margin:18px 0 26px;
 }
 
-/* OPTIONS */
+/* ---------- OPTIONS ---------- */
 .options{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -102,6 +136,7 @@ canvas{
 .option.fade{opacity:0;pointer-events:none}
 .option.focus{transform:scale(1.05)}
 
+/* ---------- FEEDBACK ---------- */
 .feedback{
   margin-top:22px;
   padding:20px;
@@ -109,12 +144,16 @@ canvas{
   background:rgba(0,0,0,.35);
   border:1px solid rgba(255,255,255,.1);
 }
-
 .correct{color:#6dffcc}
 .wrong{color:#ff8a8a}
 .fact{margin-top:8px;font-size:.9rem;opacity:.85}
 
-.actions{display:flex;gap:12px;margin-top:22px}
+/* ---------- ACTIONS ---------- */
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:22px;
+}
 button{
   padding:12px 26px;
   border-radius:12px;
@@ -125,6 +164,7 @@ button{
   display:none;
 }
 
+/* ---------- FOOTER ---------- */
 footer{
   text-align:center;
   font-size:.35rem;
@@ -136,11 +176,13 @@ footer{
 
 <body>
 
+<!-- LOADER -->
 <div class="loading" id="loading">
   <div class="loader"></div>
   Loading Quiz…
 </div>
 
+<!-- BACKGROUND -->
 <canvas id="stars"></canvas>
 
 <!-- QUIZ -->
@@ -148,10 +190,19 @@ footer{
 
   <div class="header">
     <div class="title">Biology • Cell Quiz</div>
+
     <div class="meta">
       <span id="progress"></span>
       <span id="difficulty"></span>
-      <span id="timer" style="color:#4dd6ff">20</span>
+
+      <!-- TIMER -->
+      <div class="timer-wrap">
+        <svg class="timer-ring" width="44" height="44">
+          <circle cx="22" cy="22" r="18"></circle>
+        </svg>
+        <span id="timer">20</span>
+      </div>
+
       <button id="startTimerBtn">Start</button>
     </div>
   </div>
@@ -169,6 +220,7 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
+<!-- SCRIPTS (ORDER MATTERS) -->
 <script src="space.js"></script>
 <script src="js/sound.js"></script>
 <script src="js/timer.js"></script>
