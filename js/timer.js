@@ -1,67 +1,104 @@
-let timeLeft = 20;
+/* =========================
+   TIMER MODULE (30s)
+========================= */
+
+let timeLeft = 30;
+let totalTime = 30;
 let timerInterval = null;
-let timerStarted = false;
+let running = false;
 
-const timerEl = document.getElementById("timer");
-const startBtn = document.getElementById("startTimerBtn");
-const ring = document.querySelector(".timer-ring circle");
+/* ELEMENTS */
+const timerText = document.getElementById("timer");
+const timerWrap = document.getElementById("timerWrap");
+const timerCircle = document.querySelector(".timer-ring circle");
 
-const FULL_DASH = 113;
+/* SVG CIRCUMFERENCE */
+const CIRCUMFERENCE = 113;
 
-// 🔊 Sounds
-const tickSound = new Audio("sounds/tick.mp3");
-const hurrySound = new Audio("sounds/hurry.mp3");
+/* 🔊 SINGLE TIMER SOUND */
+const timerSound = new Audio("sounds/timer.mp3");
+timerSound.volume = 0.4;
 
-tickSound.volume = 0.35;
-hurrySound.volume = 0.6;
+/* INIT */
+timerCircle.style.strokeDasharray = CIRCUMFERENCE;
+timerCircle.style.strokeDashoffset = 0;
 
-function updateTimerUI(){
-  timerEl.textContent = timeLeft;
+/* =========================
+   UPDATE UI
+========================= */
+function updateTimerUI() {
+  timerText.textContent = timeLeft;
 
-  ring.style.strokeDashoffset =
-    FULL_DASH - (timeLeft / 20) * FULL_DASH;
+  const progress = timeLeft / totalTime;
+  timerCircle.style.strokeDashoffset =
+    CIRCUMFERENCE * (1 - progress);
 
-  ring.style.stroke = timeLeft <= 5 ? "#ff8a8a" : "#4dd6ff";
+  if (timeLeft <= 5) {
+    timerText.style.color = "#ff6b6b";
+    timerCircle.style.stroke = "#ff6b6b";
+  } else {
+    timerText.style.color = "#4dd6ff";
+    timerCircle.style.stroke = "#4dd6ff";
+  }
 }
 
-function startTimer(){
-  if(timerStarted) return;
-  timerStarted = true;
-  startBtn.disabled = true;
+/* =========================
+   START TIMER (CLICK)
+========================= */
+function startTimer() {
+  if (running) return;
 
-  timerInterval = setInterval(()=>{
+  running = true;
+  timerSound.currentTime = 0;
+  timerSound.play().catch(()=>{});
+
+  timerInterval = setInterval(() => {
     timeLeft--;
-
-    tickSound.currentTime = 0;
-    tickSound.play();
-
     updateTimerUI();
 
-    if(timeLeft === 5){
-      hurrySound.play();
+    if (timeLeft > 0) {
+      timerSound.currentTime = 0;
+      timerSound.play().catch(()=>{});
     }
 
-    if(timeLeft <= 0){
+    if (timeLeft <= 0) {
       stopTimer();
-      if(typeof handleTimeUp === "function"){
+      if (typeof handleTimeUp === "function") {
         handleTimeUp();
       }
     }
-  },1000);
+  }, 1000);
 }
 
-function stopTimer(){
+/* =========================
+   STOP TIMER
+========================= */
+function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
+  running = false;
+  timerSound.pause();
+  timerSound.currentTime = 0;
 }
 
-function resetTimer(){
+/* =========================
+   RESET TIMER
+========================= */
+function resetTimer() {
   stopTimer();
-  timerStarted = false;
-  timeLeft = 20;
-  startBtn.disabled = false;
+  timeLeft = totalTime;
   updateTimerUI();
 }
 
-startBtn.onclick = startTimer;
+/* =========================
+   CLICK TO START
+========================= */
+timerWrap.addEventListener("click", startTimer);
+
+/* INITIAL PAINT */
 updateTimerUI();
+
+/* EXPOSE FOR quiz.js */
+window.startTimer = startTimer;
+window.stopTimer = stopTimer;
+window.resetTimer = resetTimer;
