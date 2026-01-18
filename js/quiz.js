@@ -30,8 +30,8 @@ fetch("questions.json")
     loadQuestion();
   })
   .catch(err => {
-    loading.innerText = "Failed to load quiz.";
     console.error(err);
+    loading.innerText = "Failed to load quiz.";
   });
 
 /* =========================
@@ -40,7 +40,9 @@ fetch("questions.json")
 
 function loadQuestion() {
   locked = false;
-  resetTimer(); // reset timer but DO NOT auto start
+
+  // reset timer but DO NOT auto-start
+  if (typeof resetTimer === "function") resetTimer();
 
   const q = quizData[index];
 
@@ -57,15 +59,17 @@ function loadQuestion() {
     option.className = "option";
     option.textContent = text;
 
-    /* 🔊 SOUND FIRES DIRECTLY ON TAP */
+    /* 🔊 SOUND FIRES DIRECTLY ON USER TAP (GUARANTEED) */
     option.onclick = () => {
       if (locked) return;
 
-      if (i === q.answer) {
-        playCorrectSound();
-      } else {
-        playWrongSound();
-      }
+      const sound = new Audio(
+        i === q.answer
+          ? "sounds/correct.mp3"
+          : "sounds/wrong.mp3"
+      );
+      sound.volume = 0.9;
+      sound.play();
 
       selectAnswer(i);
     };
@@ -82,7 +86,7 @@ function selectAnswer(i) {
   if (locked) return;
   locked = true;
 
-  stopTimer();
+  if (typeof stopTimer === "function") stopTimer();
 
   const q = quizData[index];
 
@@ -127,9 +131,12 @@ function handleTimeUp() {
   if (locked) return;
   locked = true;
 
-  playWrongSound();
-
   const q = quizData[index];
+
+  // 🔊 wrong sound on timeout
+  const sound = new Audio("sounds/wrong.mp3");
+  sound.volume = 0.9;
+  sound.play();
 
   [...oEl.children].forEach(opt => opt.classList.add("disabled"));
 
