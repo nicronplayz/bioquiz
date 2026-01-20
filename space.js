@@ -1,139 +1,78 @@
-/* =========================
-   COSMIC BACKGROUND ENGINE
-   Parallax Stars + Meteors
-========================= */
+// ================= SPACE BACKGROUND (AUTO-INJECT) =================
 
-const canvas = document.getElementById("stars");
+// Inject CSS
+const style = document.createElement("style");
+style.textContent = `
+  .space-canvas, .space-nebula {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .space-canvas {
+    z-index: 0;
+  }
+
+  .space-nebula {
+    z-index: 1;
+    background:
+      radial-gradient(800px 600px at 30% 40%, rgba(90,140,255,.06), transparent 60%),
+      radial-gradient(900px 700px at 70% 60%, rgba(180,80,255,.05), transparent 65%);
+    animation: spaceNebulaMove 120s linear infinite;
+  }
+
+  @keyframes spaceNebulaMove {
+    from { transform: translate(0,0); }
+    to   { transform: translate(-200px,150px); }
+  }
+`;
+document.head.appendChild(style);
+
+// Create canvas
+const canvas = document.createElement("canvas");
+canvas.className = "space-canvas";
+document.body.prepend(canvas);
+
+// Create nebula layer
+const nebula = document.createElement("div");
+nebula.className = "space-nebula";
+document.body.prepend(nebula);
+
+// Canvas setup
 const ctx = canvas.getContext("2d");
-
-let w, h;
 function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 resize();
 window.addEventListener("resize", resize);
 
-/* =========================
-   STAR LAYERS (PARALLAX)
-========================= */
+// Star field
+const STAR_COUNT = 140;
+const stars = Array.from({ length: STAR_COUNT }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 1.2 + 0.2,
+  s: Math.random() * 0.25 + 0.05
+}));
 
-const layers = [
-  { count: 80, speed: 0.15, size: 0.8 }, // far
-  { count: 50, speed: 0.35, size: 1.2 }, // mid
-  { count: 30, speed: 0.6,  size: 1.8 }  // near
-];
+function animateStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#ffffff";
 
-const stars = [];
-
-layers.forEach(layer => {
-  for (let i = 0; i < layer.count; i++) {
-    stars.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: layer.size * (0.6 + Math.random()),
-      s: layer.speed,
-      alpha: 0.4 + Math.random() * 0.6
-    });
-  }
-});
-
-/* =========================
-   SHOOTING STARS
-========================= */
-
-const meteors = [];
-
-function spawnMeteor(x = Math.random() * w, y = -50, vx = 6, vy = 10) {
-  meteors.push({
-    x,
-    y,
-    vx,
-    vy,
-    life: 0,
-    maxLife: 60 + Math.random() * 20
-  });
-}
-
-/* Rare random meteor */
-setInterval(() => {
-  if (Math.random() < 0.35) {
-    spawnMeteor(Math.random() * w, -40, 5 + Math.random() * 2, 9);
-  }
-}, 6000);
-
-/* Group meteor shower (≈ every 1 min) */
-setInterval(() => {
-  const baseX = Math.random() * w * 0.6;
-  for (let i = 0; i < 4; i++) {
-    setTimeout(() => {
-      spawnMeteor(
-        baseX + Math.random() * 200,
-        -50,
-        6 + Math.random() * 2,
-        10 + Math.random() * 2
-      );
-    }, i * 250);
-  }
-}, 60000);
-
-/* Bottom meteors (subtle) */
-setInterval(() => {
-  if (Math.random() < 0.3) {
-    spawnMeteor(
-      Math.random() * w,
-      h + 20,
-      -4 - Math.random() * 2,
-      -7 - Math.random() * 2
-    );
-  }
-}, 12000);
-
-/* =========================
-   ANIMATION LOOP
-========================= */
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-
-  /* Stars */
-  stars.forEach(s => {
-    s.y += s.s;
-    if (s.y > h) {
-      s.y = -10;
-      s.x = Math.random() * w;
-    }
-
+  for (const star of stars) {
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
     ctx.fill();
-  });
 
-  /* Meteors */
-  for (let i = meteors.length - 1; i >= 0; i--) {
-    const m = meteors[i];
-    m.x += m.vx;
-    m.y += m.vy;
-    m.life++;
-
-    ctx.beginPath();
-    ctx.moveTo(m.x, m.y);
-    ctx.lineTo(m.x - m.vx * 4, m.y - m.vy * 4);
-    ctx.strokeStyle = "rgba(200,220,255,0.8)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    if (
-      m.life > m.maxLife ||
-      m.x < -100 || m.x > w + 100 ||
-      m.y < -100 || m.y > h + 100
-    ) {
-      meteors.splice(i, 1);
+    star.y += star.s;
+    if (star.y > canvas.height) {
+      star.y = 0;
+      star.x = Math.random() * canvas.width;
     }
   }
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateStars);
 }
 
-animate();
+animateStars();
