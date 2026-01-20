@@ -1,238 +1,250 @@
 [
   {
-    "question": "Which organelle is primarily involved in intracellular transport?",
+    "question": "Increase in size of a cell beyond a limit primarily affects which cellular function?",
     "options": [
-      "Golgi apparatus",
-      "Endoplasmic reticulum",
-      "Lysosome",
-      "Ribosome"
-    ],
-    "answer": 1,
-    "explanation": "Endoplasmic reticulum forms an interconnected network for transport.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Rough endoplasmic reticulum is associated with:",
-    "options": [
-      "Lipid synthesis",
       "Protein synthesis",
-      "Carbohydrate storage",
-      "ATP production"
-    ],
-    "answer": 1,
-    "explanation": "RER contains ribosomes involved in protein synthesis.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Smooth endoplasmic reticulum is abundant in cells involved in:",
-    "options": [
-      "Protein secretion",
-      "Steroid synthesis",
-      "Photosynthesis",
+      "DNA replication",
+      "Exchange of materials",
       "Cell division"
     ],
-    "answer": 1,
-    "explanation": "SER synthesizes lipids and steroids.",
+    "answer": 2,
+    "explanation": "As size increases, surface area to volume ratio decreases, limiting exchange.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which enzyme system of SER is involved in detoxification?",
+    "question": "The term 'cell theory' required modification after discovery of which fact?",
     "options": [
-      "ATP synthase",
-      "Cytochrome P450",
-      "DNA polymerase",
-      "RNA polymerase"
+      "Cells possess nuclei",
+      "Cells arise from pre-existing cells",
+      "Cells contain enzymes",
+      "Cells have membranes"
     ],
     "answer": 1,
-    "explanation": "Cytochrome P450 detoxifies drugs and toxins.",
-    "difficulty": "Hard"
-  },
-  {
-    "question": "Which face of Golgi apparatus receives materials from ER?",
-    "options": [
-      "Trans face",
-      "Cis face",
-      "Medial face",
-      "Lateral face"
-    ],
-    "answer": 1,
-    "explanation": "Cis face is the receiving side of Golgi.",
+    "explanation": "Virchow proposed that new cells arise from existing cells.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which face of Golgi apparatus releases secretory vesicles?",
+    "question": "Which observation best supports the fluid nature of plasma membrane?",
     "options": [
-      "Cis face",
-      "Trans face",
-      "Medial face",
-      "Convex face"
-    ],
-    "answer": 1,
-    "explanation": "Trans face packages and dispatches materials.",
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which modification occurs in Golgi apparatus?",
-    "options": [
-      "Protein synthesis",
-      "Lipid synthesis",
-      "Glycosylation",
-      "ATP production"
+      "Presence of cholesterol",
+      "Asymmetric distribution of proteins",
+      "Lateral movement of proteins",
+      "Bilayer arrangement of lipids"
     ],
     "answer": 2,
-    "explanation": "Golgi modifies proteins by glycosylation.",
+    "explanation": "Lateral movement of proteins supports membrane fluidity.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which organelle shows maximum polymorphism?",
+    "question": "A cell placed in a hypotonic solution will primarily show:",
     "options": [
-      "Mitochondria",
-      "Golgi apparatus",
-      "Lysosome",
-      "Ribosome"
-    ],
-    "answer": 2,
-    "explanation": "Lysosomes vary in size and shape.",
-    "difficulty": "Hard"
-  },
-  {
-    "question": "Primary lysosomes are formed from:",
-    "options": [
-      "ER",
-      "Golgi apparatus",
-      "Ribosomes",
-      "Mitochondria"
+      "Decrease in volume",
+      "Increase in volume",
+      "No change",
+      "Plasmolysis"
     ],
     "answer": 1,
-    "explanation": "Golgi packages enzymes into lysosomes.",
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Autophagy refers to:",
-    "options": [
-      "Digestion of food",
-      "Digestion of other cells",
-      "Digestion of own organelles",
-      "Exocytosis"
-    ],
-    "answer": 2,
-    "explanation": "Autophagy removes damaged cell components.",
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Why are lysosomes called suicidal bags?",
-    "options": [
-      "They store waste",
-      "They contain digestive enzymes",
-      "They produce ATP",
-      "They regulate metabolism"
-    ],
-    "answer": 1,
-    "explanation": "Release of enzymes can digest the cell.",
+    "explanation": "Water enters the cell due to osmosis.",
     "difficulty": "Easy"
   },
   {
-    "question": "Which organelle is NOT part of endomembrane system?",
+    "question": "Which membrane component is responsible for maintaining stability at varying temperatures?",
+    "options": [
+      "Proteins",
+      "Phospholipids",
+      "Carbohydrates",
+      "Cholesterol"
+    ],
+    "answer": 3,
+    "explanation": "Cholesterol buffers membrane fluidity.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Transport of glucose into cells without ATP but via specific proteins occurs by:",
+    "options": [
+      "Simple diffusion",
+      "Active transport",
+      "Facilitated diffusion",
+      "Endocytosis"
+    ],
+    "answer": 2,
+    "explanation": "Facilitated diffusion uses carrier proteins.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which process enables cells to take in large macromolecules?",
+    "options": [
+      "Diffusion",
+      "Osmosis",
+      "Facilitated diffusion",
+      "Endocytosis"
+    ],
+    "answer": 3,
+    "explanation": "Large molecules require vesicular transport.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Receptor-mediated endocytosis differs from pinocytosis because it is:",
+    "options": [
+      "Energy independent",
+      "Non-selective",
+      "Highly specific",
+      "Passive"
+    ],
+    "answer": 2,
+    "explanation": "Receptor-mediated endocytosis is selective.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which feature is common to all membranes of endomembrane system?",
+    "options": [
+      "Identical enzymes",
+      "Functional coordination",
+      "Same permeability",
+      "Same thickness"
+    ],
+    "answer": 1,
+    "explanation": "They function in a coordinated manner.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which organelle is the initial site of synthesis of secretory proteins?",
+    "options": [
+      "Golgi apparatus",
+      "Free ribosome",
+      "Rough ER",
+      "Smooth ER"
+    ],
+    "answer": 2,
+    "explanation": "Secretory proteins are synthesized on RER.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Detoxification of drugs in liver cells is associated mainly with:",
+    "options": [
+      "Rough ER",
+      "Smooth ER",
+      "Golgi apparatus",
+      "Lysosome"
+    ],
+    "answer": 1,
+    "explanation": "SER contains detoxifying enzymes.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "The cis face of Golgi apparatus is functionally related to:",
+    "options": [
+      "Secretion",
+      "Receiving vesicles",
+      "Modification of proteins",
+      "Storage"
+    ],
+    "answer": 1,
+    "explanation": "Cis face receives materials from ER.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "A protein synthesized on ribosome is most likely destined for secretion if it has:",
+    "options": [
+      "Signal peptide",
+      "High molecular weight",
+      "More alpha helices",
+      "Less glycosylation"
+    ],
+    "answer": 0,
+    "explanation": "Signal peptides guide proteins to RER.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Lysosomes show polymorphism because:",
+    "options": [
+      "They lack membrane",
+      "They contain varied enzymes",
+      "They digest different substrates",
+      "They are formed from ER"
+    ],
+    "answer": 2,
+    "explanation": "Lysosomes digest different materials.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Autophagy is particularly important during:",
+    "options": [
+      "Cell division",
+      "Cell growth",
+      "Starvation",
+      "Protein synthesis"
+    ],
+    "answer": 2,
+    "explanation": "Cells recycle components during starvation.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which organelle is absent from the endomembrane system?",
     "options": [
       "ER",
-      "Golgi apparatus",
+      "Golgi",
       "Lysosome",
       "Mitochondria"
     ],
     "answer": 3,
-    "explanation": "Mitochondria function independently.",
+    "explanation": "Mitochondria are functionally independent.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which organelle helps in protein sorting and packaging?",
+    "question": "Free ribosomes differ functionally from bound ribosomes in synthesizing proteins for:",
     "options": [
-      "ER",
-      "Golgi apparatus",
-      "Lysosome",
-      "Ribosome"
-    ],
-    "answer": 1,
-    "explanation": "Golgi sorts and packages proteins.",
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Ribosomes are composed of:",
-    "options": [
-      "DNA and protein",
-      "RNA and lipid",
-      "RNA and protein",
-      "Only protein"
-    ],
-    "answer": 2,
-    "explanation": "Ribosomes consist of rRNA and proteins.",
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Free ribosomes synthesize proteins meant for:",
-    "options": [
+      "Lysosomes",
       "Secretion",
-      "Plasma membrane",
       "Cytosol",
-      "Lysosomes"
+      "Plasma membrane"
     ],
     "answer": 2,
     "explanation": "Free ribosomes produce cytosolic proteins.",
     "difficulty": "Medium"
   },
   {
-    "question": "Bound ribosomes differ from free ribosomes because they:",
+    "question": "Which event occurs earliest during protein secretion?",
     "options": [
-      "Have different structure",
-      "Lack rRNA",
-      "Are attached to ER",
-      "Synthesize different proteins"
-    ],
-    "answer": 2,
-    "explanation": "Bound ribosomes are attached to rough ER.",
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which event occurs first in protein secretion?",
-    "options": [
-      "Golgi modification",
-      "Protein synthesis on RER",
-      "Exocytosis",
-      "Vesicle fusion"
+      "Glycosylation",
+      "Translation on RER",
+      "Vesicle fusion",
+      "Exocytosis"
     ],
     "answer": 1,
-    "explanation": "Proteins are synthesized on RER first.",
+    "explanation": "Protein synthesis is the first step.",
     "difficulty": "Hard"
   },
   {
-    "question": "Vesicles from ER fuse with:",
+    "question": "Vesicles transporting proteins from ER primarily fuse with:",
     "options": [
-      "Lysosome",
+      "Plasma membrane",
       "Golgi apparatus",
-      "Vacuole",
-      "Plasma membrane"
+      "Lysosome",
+      "Vacuole"
     ],
     "answer": 1,
-    "explanation": "Golgi receives vesicles from ER.",
+    "explanation": "Golgi receives ER vesicles.",
     "difficulty": "Medium"
   },
   {
-    "question": "Plant cell vacuole mainly helps in:",
+    "question": "Plant vacuole contributes to cell rigidity by maintaining:",
     "options": [
-      "Protein synthesis",
-      "ATP production",
-      "Turgor maintenance",
-      "Cell division"
+      "pH balance",
+      "Ion gradient",
+      "Turgor pressure",
+      "Metabolism"
     ],
     "answer": 2,
-    "explanation": "Vacuole maintains osmotic balance and turgidity.",
+    "explanation": "Turgor pressure maintains rigidity.",
     "difficulty": "Easy"
   },
   {
-    "question": "The membrane surrounding vacuole is called:",
+    "question": "Which membrane encloses the plant vacuole?",
     "options": [
       "Plasmalemma",
       "Tonoplast",
-      "Mesosome",
+      "Cell wall",
       "Cristae"
     ],
     "answer": 1,
@@ -240,31 +252,31 @@
     "difficulty": "Medium"
   },
   {
-    "question": "Which organelle is involved in intracellular digestion?",
+    "question": "Which component gives ribosomes their catalytic activity?",
     "options": [
-      "Golgi apparatus",
-      "Lysosome",
-      "ER",
-      "Ribosome"
+      "Proteins",
+      "rRNA",
+      "tRNA",
+      "mRNA"
     ],
     "answer": 1,
-    "explanation": "Lysosomes digest macromolecules.",
-    "difficulty": "Easy"
+    "explanation": "rRNA plays catalytic role.",
+    "difficulty": "Hard"
   },
   {
-    "question": "Which system coordinates ER, Golgi and lysosome?",
+    "question": "Which cell type is most likely to show abundant smooth ER?",
     "options": [
-      "Cytoskeleton",
-      "Endomembrane system",
-      "Plasma membrane",
-      "Cell wall"
+      "Neuron",
+      "Hepatocyte",
+      "RBC",
+      "Meristematic cell"
     ],
     "answer": 1,
-    "explanation": "Endomembrane system functions in coordination.",
-    "difficulty": "Medium"
+    "explanation": "Liver cells detoxify substances.",
+    "difficulty": "Hard"
   },
   {
-    "question": "Which organelle modifies proteins for secretion?",
+    "question": "Which organelle modifies proteins by addition of carbohydrate chains?",
     "options": [
       "RER",
       "SER",
@@ -272,31 +284,19 @@
       "Ribosome"
     ],
     "answer": 2,
-    "explanation": "Golgi modifies proteins before secretion.",
+    "explanation": "Golgi performs glycosylation.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which cell shows extensive SER?",
+    "question": "Which statement best describes endomembrane system?",
     "options": [
-      "Neuron",
-      "Muscle cell",
-      "Hepatocyte",
-      "RBC"
+      "Structurally identical organelles",
+      "Independent functioning organelles",
+      "Functionally coordinated organelles",
+      "Energy producing system"
     ],
     "answer": 2,
-    "explanation": "Liver cells have abundant SER for detoxification.",
-    "difficulty": "Hard"
-  },
-  {
-    "question": "Which feature distinguishes endomembrane system?",
-    "options": [
-      "Structural similarity",
-      "Functional coordination",
-      "Identical enzymes",
-      "Same permeability"
-    ],
-    "answer": 1,
-    "explanation": "They work together functionally.",
-    "difficulty": "Hard"
+    "explanation": "They work together in transport and processing.",
+    "difficulty": "Medium"
   }
 ]
