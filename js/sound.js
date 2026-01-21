@@ -1,44 +1,42 @@
+/* ================= SOUND SYSTEM ================= */
+
+/* Preload sounds (IMPORTANT for mobile) */
+const correctSound = new Audio("sounds/correct.mp3");
+const wrongSound   = new Audio("sounds/wrong.mp3");
+
+/* Volume control */
+correctSound.volume = 1;
+wrongSound.volume = 1;
+
+/* Unlock audio on first user interaction (mobile fix) */
 let audioUnlocked = false;
-
-const correctAudio = new Audio("sounds/correct.mp3");
-const wrongAudio   = new Audio("sounds/wrong.mp3");
-const timerAudio   = new Audio("sounds/timer.mp3");
-
-timerAudio.loop = true;
-timerAudio.volume = 0.4;
 
 function unlockAudio() {
   if (audioUnlocked) return;
 
-  [correctAudio, wrongAudio, timerAudio].forEach(a => {
-    a.play().then(() => {
-      a.pause();
-      a.currentTime = 0;
-    }).catch(()=>{});
-  });
+  correctSound.play().then(() => {
+    correctSound.pause();
+    correctSound.currentTime = 0;
+    audioUnlocked = true;
+  }).catch(() => {});
 
-  audioUnlocked = true;
+  wrongSound.play().then(() => {
+    wrongSound.pause();
+    wrongSound.currentTime = 0;
+  }).catch(() => {});
 }
 
-document.addEventListener("click", unlockAudio, { once:true });
-document.addEventListener("touchstart", unlockAudio, { once:true });
+/* Attach unlock to first tap */
+document.addEventListener("click", unlockAudio, { once: true });
+document.addEventListener("touchstart", unlockAudio, { once: true });
 
-window.playCorrectSound = () => {
-  correctAudio.currentTime = 0;
-  correctAudio.play().catch(()=>{});
+/* PUBLIC FUNCTIONS (USED BY quiz.js) */
+window.playCorrectSound = function () {
+  correctSound.currentTime = 0;
+  correctSound.play().catch(() => {});
 };
 
-window.playWrongSound = () => {
-  wrongAudio.currentTime = 0;
-  wrongAudio.play().catch(()=>{});
-};
-
-window.playTimerSound = () => {
-  timerAudio.currentTime = 0;
-  timerAudio.play().catch(()=>{});
-};
-
-window.stopTimerSound = () => {
-  timerAudio.pause();
-  timerAudio.currentTime = 0;
+window.playWrongSound = function () {
+  wrongSound.currentTime = 0;
+  wrongSound.play().catch(() => {});
 };
