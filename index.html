@@ -5,21 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Biology Quiz</title>
 
-<!-- ORBITRON FONT -->
+<!-- ORBITRON -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:"Orbitron", system-ui, sans-serif;
-}
+*{box-sizing:border-box;font-family:"Orbitron",system-ui,sans-serif}
 
-/* BACKGROUND */
 body{
-  margin:0;
-  min-height:100vh;
-  color:#eaf1ff;
-  overflow-x:hidden;
+  margin:0;min-height:100vh;color:#eaf1ff;overflow-x:hidden;
   background:
     radial-gradient(1200px 800px at 20% 10%, #101a3a 0%, transparent 60%),
     radial-gradient(1000px 700px at 80% 90%, #0b2a3f 0%, transparent 55%),
@@ -28,13 +21,9 @@ body{
 
 /* LOADING */
 .loading{
-  position:fixed;
-  inset:0;
-  background:#05070f;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+  position:fixed;inset:0;background:#05070f;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
   z-index:999;
 }
 .loader{
@@ -47,133 +36,59 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* QUIZ CARD */
+/* QUIZ */
 .quiz{
-  position:relative;
-  z-index:5;
-  max-width:880px;
-  margin:60px auto;
-  padding:36px 40px;
+  max-width:880px;margin:60px auto;padding:36px 40px;
   display:none;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02)),
-    rgba(12,16,32,.78);
+  background:rgba(12,16,32,.78);
   backdrop-filter:blur(18px);
   border-radius:22px;
   border:1px solid rgba(120,160,255,.18);
   box-shadow:0 60px 160px rgba(0,0,0,.7);
 }
 
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.meta{
-  display:flex;
-  gap:14px;
-  font-size:.85rem;
-}
+.header{display:flex;justify-content:space-between}
+.meta{display:flex;gap:14px;font-size:.85rem}
 
-/* TIMER */
-.timer-wrap{
-  position:relative;
-  width:46px;
-  height:46px;
-  cursor:pointer;
-}
+.timer-wrap{position:relative;width:46px;height:46px;cursor:pointer}
 .timer-wrap span{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-  color:#4dd6ff;
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  color:#4dd6ff;font-weight:600;
 }
 .timer-ring{transform:rotate(-90deg)}
 .timer-ring circle{
-  fill:none;
-  stroke:#4dd6ff;
-  stroke-width:3;
-  stroke-linecap:round;
-  stroke-dasharray:113;
+  fill:none;stroke:#4dd6ff;stroke-width:3;
+  stroke-dasharray:113;stroke-linecap:round;
 }
 
-/* QUESTION */
-.question{
-  font-size:clamp(1.25rem,3vw,1.9rem);
-  margin:18px 0 26px;
-  font-weight:500;
-  letter-spacing:.3px;
-}
+.question{font-size:clamp(1.25rem,3vw,1.9rem);margin:18px 0 26px}
 
-/* OPTIONS */
-.options{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .option{
-  padding:16px 20px;
-  border-radius:14px;
+  padding:16px 20px;border-radius:14px;
   background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
   border:1px solid rgba(255,255,255,.12);
   cursor:pointer;
-  font-weight:400;
-  letter-spacing:.15px;
 }
-.option.disabled{
-  opacity:.4;
-  pointer-events:none;
-}
+.option.disabled{opacity:.4;pointer-events:none}
 
-/* FEEDBACK */
-.feedback{
-  margin-top:22px;
-  padding:20px;
-  border-radius:14px;
-  background:rgba(0,0,0,.35);
-}
+.feedback{margin-top:22px;padding:20px;border-radius:14px;background:rgba(0,0,0,.35)}
 .correct{color:#6dffcc}
 .wrong{color:#ff8a8a}
-.fact{margin-top:8px;font-size:.85rem}
 
-/* ACTIONS */
-.actions{
-  margin-top:22px;
-  display:flex;
-  gap:12px;
-}
+.actions{margin-top:22px;display:flex;gap:12px}
 button{
-  padding:12px 26px;
-  border-radius:12px;
-  border:none;
-  color:white;
-  cursor:pointer;
-  display:none;
+  padding:12px 26px;border-radius:12px;border:none;color:white;
+  display:none;cursor:pointer;
 }
-
-/* NEXT */
-#next{
-  background:#1f3cff;
-}
-
-/* SKIP */
+#next{background:#1f3cff}
 #skip{
   display:inline-block;
   background:linear-gradient(135deg,#ff3b3b,#ffb347);
-  box-shadow:0 0 18px rgba(255,140,60,.45);
 }
-#skip:hover{filter:brightness(1.1)}
 
-footer{
-  text-align:center;
-  font-size:.35rem;
-  opacity:.25;
-  margin:18px 0 8px;
-}
+footer{text-align:center;font-size:.35rem;opacity:.25;margin:18px 0}
 </style>
 </head>
 
@@ -213,39 +128,36 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
-<!-- BACKGROUND -->
 <script src="space.js"></script>
-
-<!-- MODULES -->
 <script src="sound.js"></script>
 <script src="timer.js"></script>
 
 <script>
-const loading = document.getElementById("loading");
-const quiz = document.getElementById("quiz");
-const qEl = document.getElementById("question");
-const oEl = document.getElementById("options");
-const fEl = document.getElementById("feedback");
-const nEl = document.getElementById("next");
-const skipEl = document.getElementById("skip");
-const pEl = document.getElementById("progress");
-const dEl = document.getElementById("difficulty");
+const loading=document.getElementById("loading");
+const quiz=document.getElementById("quiz");
+const qEl=question,oEl=options,fEl=feedback,nEl=next,skipEl=skip,pEl=progress,dEl=difficulty;
 
 let data=[],idx=0,locked=false;
 
-fetch("questions.json")
-.then(r=>r.json())
+fetch("/questions.json")
+.then(r=>{
+  if(!r.ok) throw new Error("Questions not found");
+  return r.json();
+})
 .then(d=>{
   data=d;
   loading.style.display="none";
   quiz.style.display="block";
   load();
+})
+.catch(e=>{
+  loading.innerHTML="<b>Failed to load questions</b>";
+  console.error(e);
 });
 
 function load(){
   resetTimer();
   locked=false;
-
   nEl.style.display="none";
   skipEl.style.display="inline-block";
   fEl.style.display="none";
@@ -272,34 +184,20 @@ function load(){
 function select(i){
   locked=true;
   resetTimer();
-
   [...oEl.children].forEach(o=>o.classList.add("disabled"));
   const q=data[idx];
 
-  fEl.innerHTML=
-    i===q.answer
-      ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
-      : `<div class="wrong"><b>Incorrect</b></div>
-         <p><b>Correct:</b> ${q.options[q.answer]}</p>
-         <p>${q.explanation}</p>`;
-
-  if(q.fact)fEl.innerHTML+=`<div class="fact">💡 ${q.fact}</div>`;
+  fEl.innerHTML=i===q.answer
+    ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
+    : `<div class="wrong"><b>Incorrect</b></div><p><b>Correct:</b> ${q.options[q.answer]}</p>`;
 
   fEl.style.display="block";
   nEl.style.display="inline-block";
   skipEl.style.display="none";
 }
 
-skipEl.onclick=()=>{
-  resetTimer();
-  idx++;
-  idx<data.length?load():qEl.textContent="Quiz completed!";
-};
-
-nEl.onclick=()=>{
-  idx++;
-  idx<data.length?load():qEl.textContent="Quiz completed!";
-};
+skipEl.onclick=()=>{idx++;idx<data.length?load():qEl.textContent="Quiz completed!"};
+nEl.onclick=()=>{idx++;idx<data.length?load():qEl.textContent="Quiz completed!"};
 </script>
 
 </body>
