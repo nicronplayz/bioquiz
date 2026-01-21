@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Biology Quiz</title>
 
-<!-- QUIZ CARD -->
+<!-- QUIZ CARD (PREMIUM) -->
 <link rel="stylesheet" href="css/quiz-card.css">
 
-<!-- TIMER -->
+<!-- TIMER (COSMIC) -->
 <link rel="stylesheet" href="css/timer.css">
 
 <style>
-/* BASE + BACKGROUND ONLY */
+/* BASE + BACKGROUND */
 *{
   box-sizing:border-box;
   font-family:Inter,system-ui,sans-serif;
@@ -64,7 +64,7 @@ footer{
   <div class="loader"></div>
 </div>
 
-<!-- BACKGROUND -->
+<!-- SPACE BACKGROUND -->
 <canvas id="stars"></canvas>
 
 <!-- QUIZ -->
@@ -79,18 +79,17 @@ footer{
 
       <!-- TIMER -->
       <div class="timer-wrap" id="timerWrap">
-
-        <!-- RING -->
         <svg class="timer-ring" width="56" height="56">
           <circle cx="28" cy="28" r="22"></circle>
         </svg>
 
-        <!-- NUMBER -->
         <span id="timer">15</span>
+
+        <!-- COSMIC CLOCK HAND -->
+        <div class="clock-hand"></div>
 
         <!-- TIME-UP BURST -->
         <div class="timeup-burst" id="timeupBurst"></div>
-
       </div>
     </div>
   </div>
@@ -107,7 +106,7 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
-<!-- SPACE -->
+<!-- BACKGROUND -->
 <script src="space.js"></script>
 
 <script>
@@ -126,9 +125,10 @@ let running  = false;
 const timerEl   = document.getElementById("timer");
 const ring      = document.querySelector(".timer-ring circle");
 const timerWrap = document.getElementById("timerWrap");
+const clockHand = document.querySelector(".clock-hand");
 const burst     = document.getElementById("timeupBurst");
 
-const FULL = 138; // matches new radius
+const FULL = 138; // circumference for r=22
 
 function resetTimer(){
   clearInterval(interval);
@@ -137,7 +137,7 @@ function resetTimer(){
   timerEl.textContent = 15;
   ring.style.strokeDashoffset = 0;
   timerWrap.classList.remove("danger");
-  burst.classList.remove("explode");
+  clockHand.style.transform = "translate(-50%,-100%) rotate(0deg)";
   timerSound.pause();
   timerSound.currentTime = 0;
 }
@@ -150,7 +150,13 @@ timerWrap.onclick = ()=>{
   interval = setInterval(()=>{
     timeLeft--;
     timerEl.textContent = timeLeft;
+
     ring.style.strokeDashoffset = FULL - (timeLeft/15)*FULL;
+
+    /* CLOCK ROTATION */
+    const angle = ((15 - timeLeft) / 15) * 360;
+    clockHand.style.transform =
+      `translate(-50%,-100%) rotate(${angle}deg)`;
 
     /* DANGER MODE */
     if(timeLeft <= 5){
@@ -159,12 +165,12 @@ timerWrap.onclick = ()=>{
       timerWrap.classList.remove("danger");
     }
 
-    /* TIME UP */
     if(timeLeft <= 0){
       clearInterval(interval);
       timerSound.pause();
       timerWrap.classList.remove("danger");
-      burst.classList.add("explode");
+      burst.classList.add("active");
+      setTimeout(()=>burst.classList.remove("active"),600);
       running = false;
     }
   },1000);
