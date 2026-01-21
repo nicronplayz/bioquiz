@@ -1,127 +1,240 @@
 [
   {
-    "question": "Which observation led to the rejection of spontaneous generation and modification of the original cell theory?",
+    "question": "Which modification to the original cell theory became necessary after experimental observations on cell division?",
     "options": [
-      "Discovery of nucleus",
-      "Observation of mitosis",
-      "Cells arise only from pre-existing cells",
-      "Presence of enzymes in cells"
+      "Cells are the smallest living units",
+      "Cells contain genetic material",
+      "New cells arise from pre-existing cells",
+      "Cells perform metabolic activities"
     ],
     "answer": 2,
+    "explanation": "Virchow proposed that cells arise only from pre-existing cells.",
     "difficulty": "Medium"
   },
   {
-    "question": "A spherical cell increases its diameter two times. How does its surface area to volume ratio change?",
+    "question": "A decrease in surface area to volume ratio of a cell will most directly affect its ability to:",
     "options": [
-      "Remains unchanged",
-      "Doubles",
-      "Becomes half",
-      "Becomes one-fourth"
+      "Synthesize proteins",
+      "Exchange materials with surroundings",
+      "Store genetic information",
+      "Maintain internal pH"
     ],
+    "answer": 1,
+    "explanation": "Material exchange depends on surface area relative to volume.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which feature of plasma membrane supports the fluid mosaic model?",
+    "options": [
+      "Rigid bilayer of lipids",
+      "Proteins embedded in lipid matrix",
+      "Presence of cellulose",
+      "Uniform thickness"
+    ],
+    "answer": 1,
+    "explanation": "Proteins float in a fluid phospholipid bilayer.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Selective permeability of plasma membrane is mainly due to:",
+    "options": [
+      "Carbohydrate chains",
+      "Phospholipid bilayer",
+      "Cholesterol",
+      "Glycoproteins"
+    ],
+    "answer": 1,
+    "explanation": "Hydrophobic lipid core restricts polar molecules.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which component of plasma membrane functions primarily in cell recognition?",
+    "options": [
+      "Phospholipids",
+      "Integral proteins",
+      "Carbohydrates",
+      "Cholesterol"
+    ],
+    "answer": 2,
+    "explanation": "Carbohydrates form glycoproteins and glycolipids.",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Membrane fluidity in animal cells is regulated mainly by:",
+    "options": [
+      "Proteins",
+      "Fatty acids",
+      "Cholesterol",
+      "Carbohydrates"
+    ],
+    "answer": 2,
+    "explanation": "Cholesterol prevents membrane from becoming too rigid or too fluid.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Movement of molecules across membrane without energy and without carrier proteins is termed:",
+    "options": [
+      "Active transport",
+      "Facilitated diffusion",
+      "Simple diffusion",
+      "Bulk transport"
+    ],
+    "answer": 2,
+    "explanation": "Simple diffusion depends only on concentration gradient.",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Which transport mechanism requires specific carrier proteins but no ATP?",
+    "options": [
+      "Active transport",
+      "Facilitated diffusion",
+      "Endocytosis",
+      "Osmosis"
+    ],
+    "answer": 1,
+    "explanation": "Facilitated diffusion uses carrier proteins without energy.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Active transport differs from facilitated diffusion because active transport:",
+    "options": [
+      "Occurs down concentration gradient",
+      "Does not involve proteins",
+      "Requires metabolic energy",
+      "Is non-selective"
+    ],
+    "answer": 2,
+    "explanation": "Active transport moves substances against gradient using ATP.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which process involves intake of liquid droplets by a cell?",
+    "options": [
+      "Phagocytosis",
+      "Pinocytosis",
+      "Diffusion",
+      "Osmosis"
+    ],
+    "answer": 1,
+    "explanation": "Pinocytosis is called cell drinking.",
+    "difficulty": "Easy"
+  },
+  {
+    "assertion": "Plasma membrane is described as selectively permeable.",
+    "reason": "It allows movement of some molecules while restricting others based on their nature.",
+    "answer": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "assertion": "Cholesterol is an essential component of all biological membranes.",
+    "reason": "Cholesterol is present in plant and animal cell membranes to regulate fluidity.",
+    "answer": 4,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Simple diffusion across plasma membrane does not require carrier proteins.",
+    "reason": "Diffusion depends on concentration gradient and kinetic energy of molecules.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Facilitated diffusion is faster than simple diffusion under similar conditions.",
+    "reason": "Facilitated diffusion uses specific carrier proteins.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Active transport can move substances against their concentration gradient.",
+    "reason": "Active transport is driven by ATP hydrolysis.",
+    "answer": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "assertion": "Pinocytosis is a non-selective process.",
+    "reason": "Pinocytosis involves uptake of extracellular fluid along with dissolved substances.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Phagocytosis occurs mainly in specialised cells.",
+    "reason": "Only certain cells possess the ability to engulf solid particles.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Endoplasmic reticulum increases the surface area available for metabolic activities.",
+    "reason": "Endoplasmic reticulum forms an extensive network of membranes inside the cell.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Smooth endoplasmic reticulum is more developed in liver cells.",
+    "reason": "Liver cells are actively involved in detoxification of harmful substances.",
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "assertion": "Rough endoplasmic reticulum is absent in cells that do not secrete proteins.",
+    "reason": "Rough ER is involved in synthesis of secretory and membrane proteins.",
     "answer": 3,
     "difficulty": "Hard"
   },
   {
-    "question": "Which characteristic best explains why unicellular organisms are usually microscopic?",
-    "options": [
-      "High metabolic rate",
-      "Limited energy requirement",
-      "Efficient diffusion due to high surface area to volume ratio",
-      "Absence of organelles"
-    ],
-    "answer": 2,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "The fluid mosaic model of plasma membrane was proposed based on which key feature?",
-    "options": [
-      "Uniform distribution of proteins",
-      "Proteins embedded within lipid bilayer",
-      "Presence of rigid lipid layer",
-      "Cellulose reinforcement"
-    ],
-    "answer": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Which factor does NOT influence membrane fluidity?",
-    "options": [
-      "Temperature",
-      "Cholesterol",
-      "Protein concentration",
-      "Fatty acid saturation"
-    ],
-    "answer": 2,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Assertion (A): Simple diffusion across plasma membrane is non-saturable.\nReason (R): It does not involve carrier proteins.",
-    "options": [
-      "Both A and R are true and R explains A",
-      "Both A and R are true but R does not explain A",
-      "A is true but R is false",
-      "A is false but R is true"
-    ],
-    "answer": 0,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which type of transport across membrane shows specificity but no ATP consumption?",
-    "options": [
-      "Active transport",
-      "Simple diffusion",
-      "Facilitated diffusion",
-      "Pinocytosis"
-    ],
-    "answer": 2,
-    "difficulty": "Easy"
-  },
-  {
-    "question": "During phagocytosis, the membrane-bound structure formed around solid particles is called:",
-    "options": [
-      "Endosome",
-      "Food vacuole",
-      "Lysosome",
-      "Phagolysosome"
-    ],
+    "assertion": "Golgi apparatus shows structural polarity.",
+    "reason": "The cis and trans faces of Golgi perform different functions.",
     "answer": 1,
     "difficulty": "Medium"
   },
   {
-    "question": "Which cell type is expected to have maximum number of lysosomes?",
-    "options": [
-      "Neuron",
-      "Muscle cell",
-      "Macrophage",
-      "Red blood cell"
-    ],
-    "answer": 2,
+    "assertion": "Lysosomes are called suicidal bags of the cell.",
+    "reason": "Release of lysosomal enzymes can digest cellular components.",
+    "answer": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "assertion": "Autophagy helps in maintaining cellular homeostasis.",
+    "reason": "It removes damaged or worn-out organelles.",
+    "answer": 1,
     "difficulty": "Medium"
   },
   {
-    "question": "Primary lysosomes differ from secondary lysosomes because primary lysosomes:",
-    "options": [
-      "Contain digested material",
-      "Lack hydrolytic enzymes",
-      "Have not participated in digestion",
-      "Are formed from plasma membrane"
-    ],
-    "answer": 2,
+    "assertion": "Ribosomes are considered part of the endomembrane system.",
+    "reason": "They are involved in protein synthesis associated with ER.",
+    "answer": 4,
     "difficulty": "Hard"
   },
   {
-    "question": "Assertion (A): Lysosomes are absent in mature mammalian RBCs.\nReason (R): Mature RBCs lack endomembrane system.",
+    "assertion": "Plant cell vacuole plays a role in maintaining turgidity.",
+    "reason": "Accumulation of solutes in vacuole draws water by osmosis.",
+    "answer": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Uptake of solid particles by a cell is specifically known as:",
     "options": [
-      "Both A and R are true and R explains A",
-      "Both A and R are true but R does not explain A",
-      "A is true but R is false",
-      "A is false but R is true"
+      "Pinocytosis",
+      "Diffusion",
+      "Phagocytosis",
+      "Facilitated transport"
     ],
-    "answer": 0,
+    "answer": 2,
+    "explanation": "Phagocytosis involves engulfment of solid material.",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Which process is responsible for secretion of enzymes and hormones outside the cell?",
+    "options": [
+      "Endocytosis",
+      "Diffusion",
+      "Exocytosis",
+      "Osmosis"
+    ],
+    "answer": 2,
+    "explanation": "Exocytosis releases substances via vesicle fusion.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which organelle is directly involved in intracellular transport of materials?",
+    "question": "Which organelle forms an extensive internal transport system within the cell?",
     "options": [
       "Golgi apparatus",
       "Endoplasmic reticulum",
@@ -129,193 +242,319 @@
       "Ribosome"
     ],
     "answer": 1,
+    "explanation": "ER consists of interconnected membranous tubules.",
     "difficulty": "Easy"
   },
   {
-    "question": "Rough endoplasmic reticulum appears rough due to presence of:",
+    "question": "Rough endoplasmic reticulum is functionally associated with:",
     "options": [
-      "Vesicles",
-      "Glycoproteins",
-      "Ribosomes",
-      "Cristae"
-    ],
-    "answer": 2,
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Which cellular activity is least likely to be affected by absence of Golgi apparatus?",
-    "options": [
-      "Protein modification",
-      "Vesicle formation",
       "Lipid synthesis",
-      "Packaging of secretory proteins"
-    ],
-    "answer": 2,
-    "difficulty": "Hard"
-  },
-  {
-    "question": "Cis and trans faces of Golgi apparatus differ primarily in terms of:",
-    "options": [
-      "Thickness of membrane",
-      "Direction of vesicle traffic",
-      "Enzyme composition",
-      "Lipid content"
+      "Protein synthesis",
+      "Detoxification",
+      "Storage"
     ],
     "answer": 1,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Assertion (A): Golgi apparatus shows polarity.\nReason (R): Its cis and trans faces perform different functions.",
-    "options": [
-      "Both A and R are true and R explains A",
-      "Both A and R are true but R does not explain A",
-      "A is true but R is false",
-      "A is false but R is true"
-    ],
-    "answer": 0,
+    "explanation": "RER bears ribosomes for protein synthesis.",
     "difficulty": "Easy"
   },
   {
-    "question": "Autophagy is important for cell because it:",
-    "options": [
-      "Produces ATP",
-      "Destroys pathogens",
-      "Removes damaged organelles",
-      "Synthesizes proteins"
-    ],
-    "answer": 2,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which feature distinguishes smooth ER from rough ER?",
-    "options": [
-      "Presence of enzymes",
-      "Connection with nucleus",
-      "Absence of ribosomes",
-      "Tubular shape"
-    ],
-    "answer": 2,
-    "difficulty": "Easy"
-  },
-  {
-    "question": "Smooth endoplasmic reticulum is highly developed in cells involved in:",
+    "question": "Smooth endoplasmic reticulum is abundant in cells involved in:",
     "options": [
       "Protein secretion",
       "Photosynthesis",
-      "Steroid synthesis",
+      "Lipid metabolism",
       "Cell division"
     ],
     "answer": 2,
+    "explanation": "SER synthesizes lipids and steroids.",
     "difficulty": "Medium"
   },
   {
-    "question": "Which membrane movement helps maintain phospholipid asymmetry?",
+    "question": "Detoxification of drugs in liver cells is mainly carried out by:",
     "options": [
-      "Rotation",
-      "Lateral movement",
-      "Flip-flop",
-      "Diffusion"
+      "RER",
+      "Golgi apparatus",
+      "SER",
+      "Lysosome"
     ],
     "answer": 2,
-    "difficulty": "Hard"
+    "explanation": "SER contains detoxifying enzymes.",
+    "difficulty": "Medium"
   },
   {
-    "question": "Ribosomes attached to ER synthesize proteins that are mainly:",
+    "question": "Which face of Golgi apparatus receives transport vesicles from ER?",
     "options": [
-      "Cytosolic",
-      "Nuclear",
-      "Secretory or membrane-bound",
-      "Mitochondrial"
+      "Trans face",
+      "Cis face",
+      "Medial face",
+      "Concave face"
+    ],
+    "answer": 1,
+    "explanation": "Cis face is the receiving side of Golgi.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which Golgi face is involved in packaging and dispatching materials?",
+    "options": [
+      "Cis face",
+      "Medial face",
+      "Trans face",
+      "Convex face"
     ],
     "answer": 2,
+    "explanation": "Trans face releases secretory vesicles.",
     "difficulty": "Medium"
   },
   {
-    "question": "Assertion (A): Ribosomes are not considered part of endomembrane system.\nReason (R): They lack membranous covering.",
-    "options": [
-      "Both A and R are true and R explains A",
-      "Both A and R are true but R does not explain A",
-      "A is true but R is false",
-      "A is false but R is true"
-    ],
-    "answer": 0,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which cell organelle shows maximum functional diversity?",
+    "question": "Which organelle shows maximum structural and functional variability?",
     "options": [
       "Golgi apparatus",
       "Lysosome",
       "Mitochondria",
-      "Endoplasmic reticulum"
+      "Ribosome"
     ],
     "answer": 1,
+    "explanation": "Lysosomes vary based on function and contents.",
     "difficulty": "Hard"
   },
   {
-    "question": "The membrane surrounding plant vacuole is selectively permeable and is called:",
+    "question": "Primary lysosomes are formed by:",
     "options": [
-      "Plasmalemma",
+      "Endoplasmic reticulum",
+      "Golgi apparatus",
+      "Plasma membrane",
+      "Mitochondria"
+    ],
+    "answer": 1,
+    "explanation": "Golgi packages enzymes into lysosomes.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Autophagy refers to digestion of:",
+    "options": [
+      "Extracellular material",
       "Cell wall",
-      "Tonoplast",
-      "Cristae"
+      "Worn-out organelles",
+      "Pathogens only"
     ],
     "answer": 2,
+    "explanation": "Autophagy removes damaged organelles.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Lysosomes are called suicidal bags because they:",
+    "options": [
+      "Produce toxic substances",
+      "Contain digestive enzymes",
+      "Control respiration",
+      "Store wastes"
+    ],
+    "answer": 1,
+    "explanation": "Enzyme release can digest the cell itself.",
     "difficulty": "Easy"
   },
   {
-    "question": "Large central vacuole in plant cell mainly helps in:",
+    "question": "Plant cell vacuole helps mainly in:",
     "options": [
       "Protein synthesis",
-      "Cellular respiration",
-      "Maintaining turgidity",
+      "Maintaining turgor pressure",
+      "ATP generation",
       "Cell division"
     ],
-    "answer": 2,
+    "answer": 1,
+    "explanation": "Vacuole maintains osmotic balance and rigidity.",
     "difficulty": "Easy"
   },
   {
-    "question": "Which mechanism is responsible for bulk transport of materials out of cell?",
+    "question": "The membrane surrounding plant vacuole is known as:",
     "options": [
-      "Endocytosis",
-      "Exocytosis",
-      "Facilitated diffusion",
-      "Osmosis"
+      "Plasmalemma",
+      "Tonoplast",
+      "Cell wall",
+      "Cristae"
     ],
     "answer": 1,
+    "explanation": "Tonoplast is selectively permeable.",
     "difficulty": "Medium"
   },
   {
-    "question": "Assertion (A): Exocytosis is an energy-dependent process.\nReason (R): It involves vesicle fusion with plasma membrane.",
+    "question": "Ribosomes are composed mainly of:",
     "options": [
-      "Both A and R are true and R explains A",
-      "Both A and R are true but R does not explain A",
-      "A is true but R is false",
-      "A is false but R is true"
-    ],
-    "answer": 0,
-    "difficulty": "Medium"
-  },
-  {
-    "question": "Which cellular adaptation helps overcome diffusion limitations in large cells?",
-    "options": [
-      "Increase in volume",
-      "Decrease in surface area",
-      "Folding of membrane",
-      "Reduced metabolic rate"
+      "DNA and protein",
+      "RNA and lipid",
+      "RNA and protein",
+      "Only protein"
     ],
     "answer": 2,
+    "explanation": "rRNA and proteins form ribosomes.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Free ribosomes synthesize proteins that are primarily used in:",
+    "options": [
+      "Secretion",
+      "Lysosomes",
+      "Cytosol",
+      "Plasma membrane"
+    ],
+    "answer": 2,
+    "explanation": "Free ribosomes produce cytosolic proteins.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Bound ribosomes differ from free ribosomes because they:",
+    "options": [
+      "Have different structure",
+      "Lack rRNA",
+      "Are attached to ER",
+      "Synthesize lipids"
+    ],
+    "answer": 2,
+    "explanation": "Bound ribosomes are attached to RER.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which cellular process requires formation of vesicles?",
+    "options": [
+      "Diffusion",
+      "Facilitated diffusion",
+      "Endocytosis",
+      "Osmosis"
+    ],
+    "answer": 2,
+    "explanation": "Endocytosis is vesicle-mediated.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which group of organelles works together in synthesis and transport of proteins?",
+    "options": [
+      "Mitochondria and lysosome",
+      "Ribosome, ER and Golgi",
+      "Vacuole and plastid",
+      "Cell wall and membrane"
+    ],
+    "answer": 1,
+    "explanation": "They form the endomembrane pathway.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which organelle is NOT part of endomembrane system?",
+    "options": [
+      "ER",
+      "Golgi apparatus",
+      "Lysosome",
+      "Mitochondria"
+    ],
+    "answer": 3,
+    "explanation": "Mitochondria function independently.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which feature is common to all components of endomembrane system?",
+    "options": [
+      "Identical enzymes",
+      "Same membrane composition",
+      "Functional coordination",
+      "Same permeability"
+    ],
+    "answer": 2,
+    "explanation": "They coordinate in transport and modification.",
     "difficulty": "Hard"
   },
   {
-    "question": "Which statement best explains why RBCs lack most organelles?",
+    "question": "Protein secretion begins with:",
     "options": [
-      "To reduce size",
-      "To increase surface area",
-      "To maximize oxygen transport",
-      "To avoid immune detection"
+      "Golgi modification",
+      "Translation on RER",
+      "Vesicle formation",
+      "Exocytosis"
+    ],
+    "answer": 1,
+    "explanation": "Secretory proteins are synthesized on RER.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Vesicles transporting proteins from ER first fuse with:",
+    "options": [
+      "Plasma membrane",
+      "Lysosome",
+      "Golgi apparatus",
+      "Vacuole"
     ],
     "answer": 2,
+    "explanation": "Golgi receives transport vesicles from ER.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which transport mechanism is least selective?",
+    "options": [
+      "Active transport",
+      "Facilitated diffusion",
+      "Simple diffusion",
+      "Endocytosis"
+    ],
+    "answer": 2,
+    "explanation": "Simple diffusion lacks specificity.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Bulk transport across membrane is energy dependent because it involves:",
+    "options": [
+      "Carrier proteins",
+      "Vesicle formation",
+      "Diffusion gradient",
+      "Pores"
+    ],
+    "answer": 1,
+    "explanation": "Vesicle formation requires ATP.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which cellular adaptation helps large cells overcome diffusion limitations?",
+    "options": [
+      "Thicker membrane",
+      "Increased volume",
+      "Surface folding",
+      "Reduced metabolism"
+    ],
+    "answer": 2,
+    "explanation": "Folding increases surface area.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which type of cell is expected to show abundant lysosomes?",
+    "options": [
+      "Muscle cell",
+      "Neuron",
+      "Phagocytic cell",
+      "Red blood cell"
+    ],
+    "answer": 2,
+    "explanation": "Phagocytes digest foreign particles.",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which membrane movement maintains lipid asymmetry?",
+    "options": [
+      "Lateral movement",
+      "Rotation",
+      "Flip-flop",
+      "Diffusion"
+    ],
+    "answer": 2,
+    "explanation": "Flip-flop is enzyme mediated.",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which cellular structure primarily determines shape of animal cells?",
+    "options": [
+      "Cell wall",
+      "Vacuole",
+      "Cytoskeleton",
+      "Tonoplast"
+    ],
+    "answer": 2,
+    "explanation": "Cytoskeleton provides mechanical support.",
     "difficulty": "Medium"
   }
 ]
