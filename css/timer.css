@@ -1,142 +1,151 @@
-/* =========================================
-   🌌 COSMIC HUD TIMER — FINAL VERSION
-   ========================================= */
+/* ===============================
+   ⏱️ COSMIC TIMER CORE
+   =============================== */
 
 .timer-wrap{
   position:relative;
   width:56px;
   height:56px;
-  display:grid;
-  place-items:center;
   cursor:pointer;
-  isolation:isolate;
-}
-
-/* ================= RING ================= */
-
-.timer-ring{
-  position:absolute;
-  inset:0;
-  transform:rotate(-90deg);
-  z-index:2;
-}
-
-.timer-ring circle{
-  fill:none;
-  stroke:url(#timerGradient);
-  stroke-width:4;
-  stroke-linecap:round;
-  stroke-dasharray:113;
-  stroke-dashoffset:0;
-
-  transition:stroke-dashoffset .35s linear;
-
-  filter:
-    drop-shadow(0 0 8px rgba(80,180,255,.75))
-    drop-shadow(0 0 20px rgba(80,180,255,.45));
-}
-
-/* ================= CORE ================= */
-
-#timer{
-  position:relative;
-  z-index:3;
-
-  width:38px;
-  height:38px;
-  border-radius:50%;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
+  filter:drop-shadow(0 0 12px rgba(120,180,255,.6));
+}
+
+/* ===============================
+   ⭕ TIMER RING
+   =============================== */
+
+.timer-ring{
+  position:absolute;
+  inset:0;
+  transform:rotate(-90deg);
+}
+
+.timer-ring circle{
+  fill:none;
+  stroke:#4dd6ff;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-dasharray:138;
+  stroke-dashoffset:0;
+
+  filter:
+    drop-shadow(0 0 8px rgba(77,214,255,.8));
+}
+
+/* ===============================
+   🔢 TIMER NUMBER
+   =============================== */
+
+#timer{
+  position:absolute;
   font-size:.9rem;
-  font-weight:700;
-  color:#eaf6ff;
+  font-weight:600;
+  color:#d8f3ff;
+  z-index:3;
+
+  text-shadow:
+    0 0 10px rgba(120,180,255,.9),
+    0 0 20px rgba(120,180,255,.6);
+}
+
+/* ===============================
+   🕒 COSMIC CLOCK HAND
+   =============================== */
+
+.clock-hand{
+  position:absolute;
+  width:2px;
+  height:22px;
 
   background:
-    radial-gradient(circle at 30% 30%,
-      rgba(140,200,255,.5),
-      rgba(15,30,60,.95) 70%);
+    linear-gradient(
+      to top,
+      transparent,
+      #9fe3ff
+    );
+
+  top:50%;
+  left:50%;
+
+  transform-origin:bottom center;
+  transform:translate(-50%,-100%) rotate(0deg);
+
+  border-radius:2px;
 
   box-shadow:
-    inset 0 0 16px rgba(0,0,0,.7),
-    0 0 26px rgba(90,170,255,.55);
+    0 0 12px rgba(120,200,255,.9);
 
-  transition:
-    transform .3s ease,
-    box-shadow .3s ease,
-    color .3s ease;
+  z-index:2;
 }
 
-/* ================= ACTIVE ================= */
+/* ===============================
+   ⚠️ DANGER MODE (LAST 5s)
+   =============================== */
 
-.timer-wrap:active #timer{
-  transform:scale(.94);
+.timer-wrap.danger{
+  animation:dangerPulse .8s infinite;
 }
 
-/* ================= URGENT ================= */
-
-.timer-wrap[data-urgent="true"] #timer{
-  color:#ffdcdc;
-  box-shadow:
-    inset 0 0 18px rgba(0,0,0,.8),
-    0 0 30px rgba(255,80,80,.7);
-  animation:warningPulse 1s infinite;
+.timer-wrap.danger .timer-ring circle{
+  stroke:#ff4d4d;
+  filter:drop-shadow(0 0 10px rgba(255,80,80,.9));
 }
 
-.timer-wrap[data-urgent="true"] .timer-ring circle{
-  stroke:#ff6b6b;
-  filter:
-    drop-shadow(0 0 10px rgba(255,90,90,.8))
-    drop-shadow(0 0 24px rgba(255,90,90,.5));
+.timer-wrap.danger #timer{
+  color:#ffb3b3;
 }
 
-@keyframes warningPulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.12)}
+.timer-wrap.danger .clock-hand{
+  background:
+    linear-gradient(to top, transparent, #ff8a8a);
 }
 
-/* ================= TIME UP ================= */
+/* ===============================
+   💥 TIME-UP BURST
+   =============================== */
 
-.timer-wrap[data-timeup="true"] #timer{
-  animation:timeUpCore .6s ease-out forwards;
-}
-
-.timer-wrap[data-timeup="true"]::after{
-  content:"";
+.timeup-burst{
   position:absolute;
-  inset:-40%;
+  inset:-6px;
   border-radius:50%;
   background:
-    radial-gradient(circle,
-      rgba(255,120,120,.55),
-      transparent 70%);
-  animation:shockwave .7s ease-out forwards;
-  z-index:1;
+    radial-gradient(
+      circle,
+      rgba(255,120,120,.45),
+      transparent 65%
+    );
+
+  opacity:0;
+  transform:scale(.7);
+  pointer-events:none;
 }
 
-@keyframes timeUpCore{
+.timeup-burst.active{
+  animation:burst .6s ease-out;
+}
+
+/* ===============================
+   🎞️ ANIMATIONS
+   =============================== */
+
+@keyframes dangerPulse{
   0%{transform:scale(1)}
-  40%{transform:scale(1.25)}
-  100%{transform:scale(.9); opacity:.7}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
 }
 
-@keyframes shockwave{
-  from{transform:scale(.2); opacity:.9}
-  to{transform:scale(1); opacity:0}
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:720px){
-  .timer-wrap{
-    width:50px;
-    height:50px;
+@keyframes burst{
+  from{
+    opacity:1;
+    transform:scale(.6);
   }
-  #timer{
-    width:34px;
-    height:34px;
-    font-size:.85rem;
+  to{
+    opacity:0;
+    transform:scale(1.6);
   }
 }
