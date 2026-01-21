@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Biology Quiz</title>
 
-<!-- QUIZ CARD DESIGN -->
+<!-- QUIZ CARD -->
 <link rel="stylesheet" href="css/quiz-card.css">
 
+<!-- TIMER (SEPARATE FILE) -->
+<link rel="stylesheet" href="css/timer.css">
+
 <style>
+/* BASE + BACKGROUND ONLY */
 *{
   box-sizing:border-box;
   font-family:Inter,system-ui,sans-serif;
@@ -31,7 +35,6 @@ body{
   inset:0;
   background:#05070f;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
   z-index:999;
@@ -42,7 +45,6 @@ body{
   border-top-color:#4dd6ff;
   border-radius:50%;
   animation:spin 1s linear infinite;
-  margin-bottom:14px;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -60,21 +62,22 @@ footer{
 <!-- LOADING -->
 <div class="loading" id="loading">
   <div class="loader"></div>
-  Loading Quiz…
 </div>
 
+<!-- BACKGROUND -->
 <canvas id="stars"></canvas>
 
 <!-- QUIZ -->
-<div class="quiz" id="quiz" style="display:none">
+<div class="quiz" id="quiz">
 
   <div class="header">
-    <div>Biology • Cell Quiz</div>
+    <div class="title">Biology • Cell Quiz</div>
 
     <div class="meta">
       <span id="progress"></span>
       <span id="difficulty"></span>
 
+      <!-- TIMER -->
       <div class="timer-wrap" id="timerWrap">
         <svg class="timer-ring" width="46" height="46">
           <circle cx="23" cy="23" r="18"></circle>
@@ -96,6 +99,7 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
+<!-- SPACE BACKGROUND -->
 <script src="space.js"></script>
 
 <script>
@@ -111,26 +115,25 @@ let timeLeft = 15;
 let interval = null;
 let running  = false;
 
-const timerWrap = document.getElementById("timerWrap");
 const timerEl   = document.getElementById("timer");
 const ring      = document.querySelector(".timer-ring circle");
-const FULL      = 113;
+const timerWrap = document.getElementById("timerWrap");
+const FULL = 113;
 
 function resetTimer(){
   clearInterval(interval);
-  interval = null;
   running = false;
   timeLeft = 15;
   timerEl.textContent = 15;
   ring.style.strokeDashoffset = 0;
+  timerWrap.classList.remove("danger");
   timerSound.pause();
   timerSound.currentTime = 0;
 }
 
-timerWrap.onclick = () => {
+timerWrap.onclick = ()=>{
   if(running) return;
   running = true;
-
   timerSound.play().catch(()=>{});
 
   interval = setInterval(()=>{
@@ -138,8 +141,18 @@ timerWrap.onclick = () => {
     timerEl.textContent = timeLeft;
     ring.style.strokeDashoffset = FULL - (timeLeft/15)*FULL;
 
+    /* 🔴 DANGER MODE */
+    if(timeLeft <= 5){
+      timerWrap.classList.add("danger");
+    } else {
+      timerWrap.classList.remove("danger");
+    }
+
     if(timeLeft <= 0){
-      resetTimer();
+      clearInterval(interval);
+      timerSound.pause();
+      timerWrap.classList.remove("danger");
+      running = false;
     }
   },1000);
 };
@@ -167,15 +180,9 @@ fetch("questions.json")
   loading.style.display = "none";
   quiz.style.display = "block";
   load();
-})
-.catch(err=>{
-  loading.innerHTML = "Failed to load questions.";
-  console.error(err);
 });
 
 function load(){
-  if(!data[idx]) return;
-
   resetTimer();
   locked = false;
 
@@ -218,15 +225,12 @@ function select(i){
          <p><b>Correct:</b> ${q.options[q.answer]}</p>
          <p>${q.explanation}</p>`;
 
-  if(q.fact) fEl.innerHTML += `<div class="fact">💡 ${q.fact}</div>`;
-
   fEl.style.display = "block";
   nEl.style.display = "inline-block";
   skipEl.style.display = "none";
 }
 
 skipEl.onclick = ()=>{
-  resetTimer();
   idx++;
   idx < data.length ? load() : qEl.textContent = "Quiz completed!";
 };
