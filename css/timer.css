@@ -1,0 +1,53 @@
+/* ===============================
+   TIMER – SPACE HUD MODULE
+   =============================== */
+
+.timer-wrap{
+  position:relative;
+  width:48px;
+  height:48px;
+  cursor:pointer;
+  filter:drop-shadow(0 0 14px rgba(120,220,255,.55));
+}
+
+.timer-wrap span{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  font-size:.85rem;
+  color:#cfefff;
+  text-shadow:0 0 10px rgba(120,220,255,.8);
+  pointer-events:none;
+}
+
+/* SVG */
+.timer-ring{
+  transform:rotate(-90deg);
+}
+
+.timer-ring circle{
+  fill:none;
+  stroke-width:3.2;
+  stroke-linecap:round;
+  stroke-dasharray:113;
+  stroke-dashoffset:0;
+  stroke:url(#timerGradient);
+  transition:stroke-dashoffset .9s linear;
+}
+
+/* LOW TIME WARNING */
+.timer-wrap.danger{
+  filter:drop-shadow(0 0 22px rgba(255,90,90,.9));
+}
+
+.timer-wrap.danger span{
+  color:#ffd6d6;
+  text-shadow:0 0 12px rgba(255,90,90,1);
+}
+
+.timer-wrap.danger circle{
+  stroke:#ff5a5a;
+}
