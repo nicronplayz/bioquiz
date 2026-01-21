@@ -1,153 +1,187 @@
-/* =========================
-   QUIZ CARD – PREMIUM UI
-   ========================= */
+/* ===============================
+   🌌 COSMIC QUIZ CARD (PREMIUM)
+   =============================== */
 
 .quiz{
   position:relative;
   z-index:5;
   max-width:880px;
   margin:60px auto;
-  padding:36px 40px;
-  display:none;
+  padding:38px 42px;
 
+  /* 🌠 DEEP SPACE PANEL */
   background:
-    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.02)),
-    rgba(14,18,40,.85);
+    radial-gradient(600px 400px at 20% 10%, rgba(120,160,255,.18), transparent 60%),
+    radial-gradient(700px 500px at 80% 80%, rgba(180,80,255,.16), transparent 65%),
+    linear-gradient(180deg, rgba(20,26,60,.92), rgba(8,10,22,.96));
 
-  backdrop-filter:blur(18px) saturate(130%);
+  backdrop-filter:blur(22px) saturate(150%);
   border-radius:22px;
-  border:1px solid rgba(120,160,255,.18);
+
+  /* 🌈 COSMIC RIM */
+  border:1px solid rgba(140,180,255,.25);
 
   box-shadow:
-    0 60px 160px rgba(0,0,0,.7),
-    inset 0 1px 0 rgba(255,255,255,.25),
-    inset 0 -1px 0 rgba(0,0,0,.4);
+    0 60px 160px rgba(0,0,0,.85),
+    0 0 80px rgba(120,160,255,.25),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 -40px 80px rgba(0,0,0,.6);
+
+  overflow:hidden;
 }
 
-/* HEADER */
+/* 🌌 STAR NOISE INSIDE CARD */
+.quiz::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.25), transparent),
+    radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,.2), transparent);
+  background-size:300px 300px;
+  opacity:.35;
+  pointer-events:none;
+}
+
+/* 🌀 NEBULA ENERGY LAYER */
+.quiz::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    conic-gradient(
+      from 180deg,
+      transparent,
+      rgba(90,140,255,.12),
+      rgba(200,80,255,.12),
+      transparent
+    );
+  animation:nebulaSpin 120s linear infinite;
+  opacity:.35;
+  pointer-events:none;
+}
+
+@keyframes nebulaSpin{
+  to{transform:rotate(360deg)}
+}
+
+/* ===============================
+   🧭 HEADER HUD STYLE
+   =============================== */
+
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:14px;
-}
-.meta{
-  display:flex;
-  gap:14px;
-  font-size:.85rem;
+  margin-bottom:18px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:.8rem;
   opacity:.9;
 }
 
-/* TIMER */
-.timer-wrap{
-  position:relative;
-  width:46px;
-  height:46px;
-  cursor:pointer;
-}
-.timer-wrap span{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-  color:#4dd6ff;
-  text-shadow:0 0 8px rgba(77,214,255,.6);
-}
-.timer-ring{
-  transform:rotate(-90deg);
-}
-.timer-ring circle{
-  fill:none;
-  stroke:#4dd6ff;
-  stroke-width:3;
-  stroke-linecap:round;
-  stroke-dasharray:113;
-  transition:stroke-dashoffset 1s linear;
-}
+/* ===============================
+   ❓ QUESTION (FOCUS CORE)
+   =============================== */
 
-/* QUESTION */
 .question{
-  font-size:clamp(1.3rem,3vw,1.9rem);
-  margin:18px 0 26px;
-  letter-spacing:.2px;
+  font-size:clamp(1.35rem,3vw,1.9rem);
+  margin:20px 0 28px;
+  line-height:1.45;
+  text-shadow:
+    0 0 12px rgba(120,180,255,.35);
 }
 
-/* OPTIONS */
+/* ===============================
+   🪐 OPTIONS = ENERGY TILES
+   =============================== */
+
 .options{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:18px;
 }
+
 .option{
-  padding:16px 20px;
+  position:relative;
+  padding:18px 22px;
   border-radius:14px;
   cursor:pointer;
 
   background:
-    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-  border:1px solid rgba(255,255,255,.12);
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+    radial-gradient(120% 120% at 50% 0%, rgba(120,160,255,.18), transparent);
+
+  border:1px solid rgba(255,255,255,.18);
 
   transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    border-color .2s ease;
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
 }
+
 .option:hover{
-  transform:translateY(-2px);
+  transform:translateY(-3px);
   border-color:rgba(120,180,255,.6);
-  box-shadow:0 0 18px rgba(120,180,255,.35);
+  box-shadow:
+    0 12px 40px rgba(120,180,255,.35),
+    inset 0 0 0 1px rgba(255,255,255,.12);
 }
+
 .option.disabled{
-  opacity:.4;
+  opacity:.35;
   pointer-events:none;
 }
 
-/* FEEDBACK */
+/* ===============================
+   ✅ FEEDBACK PANEL
+   =============================== */
+
 .feedback{
-  margin-top:22px;
-  padding:20px;
+  margin-top:24px;
+  padding:22px;
   border-radius:14px;
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.1);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.6));
+  border:1px solid rgba(255,255,255,.12);
 }
+
 .correct{color:#6dffcc}
 .wrong{color:#ff8a8a}
 .fact{
-  margin-top:8px;
+  margin-top:10px;
   font-size:.9rem;
   opacity:.85;
 }
 
-/* ACTIONS */
+/* ===============================
+   🚀 ACTION BUTTONS
+   =============================== */
+
 .actions{
-  margin-top:22px;
+  margin-top:24px;
   display:flex;
   gap:12px;
 }
 
-/* BUTTONS */
 button{
-  padding:12px 26px;
+  padding:12px 28px;
   border-radius:12px;
   border:none;
-  color:white;
   cursor:pointer;
   display:none;
 }
 
 /* NEXT */
 #next{
-  background:#1f3cff;
+  background:linear-gradient(135deg,#3b6cff,#1f3cff);
+  box-shadow:0 0 30px rgba(60,120,255,.5);
 }
 
-/* SKIP – RED → GOLD */
+/* SKIP (RED → GOLD) */
 #skip{
   display:inline-block;
   background:linear-gradient(135deg,#ff3b3b,#ffb347);
-  box-shadow:0 0 18px rgba(255,140,60,.45);
-}
-#skip:hover{
-  filter:brightness(1.1);
+  box-shadow:0 0 24px rgba(255,150,60,.55);
 }
