@@ -127,8 +127,7 @@ timerWrap.onclick = ()=>{
     const progress = timeLeft / TOTAL_TIME;
     ring.style.strokeDashoffset = FULL * (1 - progress);
     clockHand.style.transform =
-      `translate(-50%,-100%) rotate(${360 * (1 - progress)}deg)`;
-
+      `translate(-50%,-100%) rotate(${360 * (1 - progress) - 90}deg)`;
     if(timeLeft <= 5){
       timerWrap.classList.add("danger");
     } else {
