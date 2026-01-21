@@ -8,7 +8,7 @@
 <!-- QUIZ CARD -->
 <link rel="stylesheet" href="css/quiz-card.css">
 
-<!-- TIMER (SEPARATE FILE) -->
+<!-- TIMER -->
 <link rel="stylesheet" href="css/timer.css">
 
 <style>
@@ -79,10 +79,18 @@ footer{
 
       <!-- TIMER -->
       <div class="timer-wrap" id="timerWrap">
-        <svg class="timer-ring" width="46" height="46">
-          <circle cx="23" cy="23" r="18"></circle>
+
+        <!-- RING -->
+        <svg class="timer-ring" width="56" height="56">
+          <circle cx="28" cy="28" r="22"></circle>
         </svg>
+
+        <!-- NUMBER -->
         <span id="timer">15</span>
+
+        <!-- TIME-UP BURST -->
+        <div class="timeup-burst" id="timeupBurst"></div>
+
       </div>
     </div>
   </div>
@@ -99,7 +107,7 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
-<!-- SPACE BACKGROUND -->
+<!-- SPACE -->
 <script src="space.js"></script>
 
 <script>
@@ -118,7 +126,9 @@ let running  = false;
 const timerEl   = document.getElementById("timer");
 const ring      = document.querySelector(".timer-ring circle");
 const timerWrap = document.getElementById("timerWrap");
-const FULL = 113;
+const burst     = document.getElementById("timeupBurst");
+
+const FULL = 138; // matches new radius
 
 function resetTimer(){
   clearInterval(interval);
@@ -127,6 +137,7 @@ function resetTimer(){
   timerEl.textContent = 15;
   ring.style.strokeDashoffset = 0;
   timerWrap.classList.remove("danger");
+  burst.classList.remove("explode");
   timerSound.pause();
   timerSound.currentTime = 0;
 }
@@ -141,17 +152,19 @@ timerWrap.onclick = ()=>{
     timerEl.textContent = timeLeft;
     ring.style.strokeDashoffset = FULL - (timeLeft/15)*FULL;
 
-    /* 🔴 DANGER MODE */
+    /* DANGER MODE */
     if(timeLeft <= 5){
       timerWrap.classList.add("danger");
     } else {
       timerWrap.classList.remove("danger");
     }
 
+    /* TIME UP */
     if(timeLeft <= 0){
       clearInterval(interval);
       timerSound.pause();
       timerWrap.classList.remove("danger");
+      burst.classList.add("explode");
       running = false;
     }
   },1000);
