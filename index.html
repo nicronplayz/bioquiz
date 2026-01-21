@@ -9,15 +9,10 @@
 <link rel="stylesheet" href="css/timer.css">
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
-}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
 
 body{
-  margin:0;
-  min-height:100vh;
-  color:#eaf1ff;
+  margin:0;min-height:100vh;color:#eaf1ff;
   background:
     radial-gradient(1200px 800px at 20% 10%, #101a3a 0%, transparent 60%),
     radial-gradient(1000px 700px at 80% 90%, #0b2a3f 0%, transparent 55%),
@@ -25,13 +20,8 @@ body{
 }
 
 .loading{
-  position:fixed;
-  inset:0;
-  background:#05070f;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
+  position:fixed;inset:0;background:#05070f;
+  display:flex;align-items:center;justify-content:center;z-index:999;
 }
 
 .loader{
@@ -41,7 +31,6 @@ body{
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
-
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .feedback{
@@ -53,7 +42,6 @@ body{
   font-weight:600;
   display:none;
 }
-
 .feedback.correct{color:#6dffcc}
 .feedback.wrong{color:#ff8a8a}
 </style>
@@ -68,7 +56,6 @@ body{
 <canvas id="stars"></canvas>
 
 <div class="quiz" id="quiz">
-
   <div class="header">
     <div>Biology • Cell Quiz</div>
     <div class="meta">
@@ -98,145 +85,145 @@ body{
 
 <script>
 /* ================= AUDIO ================= */
-const correctAudio = new Audio("sounds/correct.mp3");
-const wrongAudio   = new Audio("sounds/wrong.mp3");
-const timerSound   = new Audio("sounds/timer.mp3");
-timerSound.loop = true;
-timerSound.volume = 0.4;
+const correctAudio=new Audio("sounds/correct.mp3");
+const wrongAudio=new Audio("sounds/wrong.mp3");
+const timerSound=new Audio("sounds/timer.mp3");
+timerSound.loop=true;timerSound.volume=.4;
 
 /* ================= TIMER ================= */
-let TOTAL_TIME = 15;
-let timeLeft = TOTAL_TIME;
-let interval = null;
-let running = false;
+const TOTAL_TIME=15;
+let timeLeft=TOTAL_TIME,interval=null,running=false;
 
-const timerEl = document.getElementById("timer");
-const ring = document.querySelector(".timer-ring circle");
-const timerWrap = document.getElementById("timerWrap");
-const FULL = 138;
+const timerEl=document.getElementById("timer");
+const ring=document.querySelector(".timer-ring circle");
+const timerWrap=document.getElementById("timerWrap");
+const FULL=138;
 
 function resetTimer(){
   clearInterval(interval);
-  running = false;
-  timeLeft = TOTAL_TIME;
-  timerEl.textContent = TOTAL_TIME;
-  ring.style.strokeDashoffset = 0;
+  running=false;
+  timeLeft=TOTAL_TIME;
+  timerEl.textContent=TOTAL_TIME;
+  ring.style.strokeDashoffset=0;
   timerSound.pause();
-  timerSound.currentTime = 0;
+  timerSound.currentTime=0;
 }
 
-timerWrap.onclick = ()=>{
-  if(running) return;
-  running = true;
+timerWrap.onclick=()=>{
+  if(running)return;
+  running=true;
   timerSound.play().catch(()=>{});
-
-  interval = setInterval(()=>{
+  interval=setInterval(()=>{
     timeLeft--;
-    timerEl.textContent = timeLeft;
-    ring.style.strokeDashoffset = FULL - (timeLeft/TOTAL_TIME)*FULL;
-
-    if(timeLeft <= 0){
+    timerEl.textContent=timeLeft;
+    ring.style.strokeDashoffset=FULL-(timeLeft/TOTAL_TIME)*FULL;
+    if(timeLeft<=0){
       clearInterval(interval);
       timerSound.pause();
-      running = false;
+      running=false;
     }
   },1000);
 };
 
 /* ================= QUIZ ================= */
-const loading = document.getElementById("loading");
-const quiz = document.getElementById("quiz");
-const qEl = document.getElementById("question");
-const oEl = document.getElementById("options");
-const fEl = document.getElementById("feedback");
-const nEl = document.getElementById("next");
-const skipEl = document.getElementById("skip");
-const pEl = document.getElementById("progress");
-const dEl = document.getElementById("difficulty");
+const loading=document.getElementById("loading");
+const quiz=document.getElementById("quiz");
+const qEl=document.getElementById("question");
+const oEl=document.getElementById("options");
+const fEl=document.getElementById("feedback");
+const nEl=document.getElementById("next");
+const skipEl=document.getElementById("skip");
+const pEl=document.getElementById("progress");
+const dEl=document.getElementById("difficulty");
 
-let data = [];
-let idx = 0;
-let locked = false;
+let data=[],idx=0,locked=false;
 
-/* 🔀 SHUFFLE UTILS */
+/* 🔀 SHUFFLE */
 function shuffle(arr){
-  return arr
-    .map(v => ({v, s:Math.random()}))
-    .sort((a,b)=>a.s-b.s)
-    .map(x=>x.v);
+  return arr.map(v=>({v,s:Math.random()}))
+            .sort((a,b)=>a.s-b.s)
+            .map(x=>x.v);
 }
+
+/* 🔒 LOAD FROM LOCALSTORAGE */
+const saved=localStorage.getItem("bioquiz_state");
 
 fetch("questions.json")
 .then(r=>r.json())
 .then(d=>{
-  data = shuffle(d);            // QUESTION SHUFFLE
+  if(saved){
+    const s=JSON.parse(saved);
+    data=s.data;
+    idx=s.idx;
+  }else{
+    data=shuffle(d);
+    saveState();
+  }
   loading.style.display="none";
   quiz.style.display="block";
   load();
 });
 
+/* 💾 SAVE STATE */
+function saveState(){
+  localStorage.setItem("bioquiz_state",JSON.stringify({
+    data,idx
+  }));
+}
+
 function load(){
   resetTimer();
-  locked = false;
+  locked=false;
   fEl.style.display="none";
   nEl.style.display="none";
   skipEl.style.display="inline-block";
 
-  const q = data[idx];
-  qEl.textContent = q.question;
-  pEl.textContent = `Q ${idx+1}/${data.length}`;
-  dEl.textContent = q.difficulty || "";
+  const q=data[idx];
+  qEl.textContent=q.question;
+  pEl.textContent=`Q ${idx+1}/${data.length}`;
+  dEl.textContent=q.difficulty||"";
 
   oEl.innerHTML="";
 
-  // OPTION SHUFFLE (answer-safe)
-  const options = q.options.map((t,i)=>({t,i}));
-  const shuffled = shuffle(options);
-
-  shuffled.forEach((opt,pos)=>{
-    const div = document.createElement("div");
+  const opts=shuffle(q.options.map((t,i)=>({t,i})));
+  opts.forEach((o,pos)=>{
+    const div=document.createElement("div");
     div.className="option";
-    div.innerHTML=`<b>${"ABCD"[pos]}.</b> ${opt.t}`;
+    div.innerHTML=`<b>${"ABCD"[pos]}.</b> ${o.t}`;
     div.onclick=()=>{
-      if(locked) return;
-      select(opt.i, div);
+      if(locked)return;
+      select(o.i,div);
     };
     oEl.appendChild(div);
   });
+
+  saveState();
 }
 
-function select(selectedIndex, selectedDiv){
-  locked = true;
+function select(ans,div){
+  locked=true;
   resetTimer();
 
-  const q = data[idx];
-  const options = [...oEl.children];
+  const q=data[idx];
+  [...oEl.children].forEach(o=>o.classList.add("disabled"));
 
-  options.forEach((opt)=>{
-    opt.classList.add("disabled");
-  });
+  const correct=ans===q.answer;
 
-  const isCorrect = selectedIndex === q.answer;
-
-  if(isCorrect){
-    selectedDiv.style.borderColor="#6dffcc";
-    selectedDiv.style.boxShadow="0 0 12px rgba(109,255,204,.6)";
+  if(correct){
     correctAudio.play().catch(()=>{});
+    div.style.borderColor="#6dffcc";
   }else{
-    selectedDiv.style.borderColor="#ff8a8a";
-    selectedDiv.style.boxShadow="0 0 12px rgba(255,138,138,.6)";
     wrongAudio.play().catch(()=>{});
-
-    options.forEach(opt=>{
-      if(opt.textContent.includes(q.options[q.answer])){
-        opt.style.borderColor="#6dffcc";
-        opt.style.boxShadow="0 0 12px rgba(109,255,204,.6)";
+    div.style.borderColor="#ff8a8a";
+    [...oEl.children].forEach(o=>{
+      if(o.textContent.includes(q.options[q.answer])){
+        o.style.borderColor="#6dffcc";
       }
     });
   }
 
-  fEl.textContent = isCorrect ? "Correct" : "Incorrect";
-  fEl.className = "feedback " + (isCorrect ? "correct" : "wrong");
+  fEl.textContent=correct?"Correct":"Incorrect";
+  fEl.className="feedback "+(correct?"correct":"wrong");
   fEl.style.display="block";
 
   nEl.style.display="inline-block";
@@ -244,13 +231,13 @@ function select(selectedIndex, selectedDiv){
 }
 
 skipEl.onclick=()=>{
-  idx++;
-  idx < data.length ? load() : qEl.textContent="Quiz Completed";
+  idx++;saveState();
+  idx<data.length?load():qEl.textContent="Quiz Completed";
 };
 
 nEl.onclick=()=>{
-  idx++;
-  idx < data.length ? load() : qEl.textContent="Quiz Completed";
+  idx++;saveState();
+  idx<data.length?load():qEl.textContent="Quiz Completed";
 };
 </script>
 
