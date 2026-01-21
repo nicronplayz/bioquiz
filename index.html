@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Biology Quiz</title>
 
-<!-- QUIZ CARD -->
 <link rel="stylesheet" href="css/quiz-card.css">
-
-<!-- TIMER -->
 <link rel="stylesheet" href="css/timer.css">
 
 <style>
@@ -28,7 +25,6 @@ body{
     linear-gradient(180deg,#05070f,#04060c);
 }
 
-/* LOADING */
 .loading{
   position:fixed;
   inset:0;
@@ -58,15 +54,12 @@ footer{
 
 <body>
 
-<!-- LOADING -->
 <div class="loading" id="loading">
   <div class="loader"></div>
 </div>
 
-<!-- SPACE -->
 <canvas id="stars"></canvas>
 
-<!-- QUIZ -->
 <div class="quiz" id="quiz">
 
   <div class="header">
@@ -76,23 +69,17 @@ footer{
       <span id="progress"></span>
       <span id="difficulty"></span>
 
-      <!-- TIMER -->
       <div class="timer-wrap" id="timerWrap">
         <svg class="timer-ring" width="56" height="56">
           <circle cx="28" cy="28" r="22"></circle>
         </svg>
-
         <span id="timer">15</span>
-
-        <div class="clock-hand"></div>
-        <div class="timeup-burst" id="timeupBurst"></div>
       </div>
     </div>
   </div>
 
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
-  <div class="feedback" id="feedback" style="display:none"></div>
 
   <div class="actions">
     <button id="skip">Skip</button>
@@ -105,6 +92,25 @@ footer{
 <script src="space.js"></script>
 
 <script>
+/* ================= SHUFFLING ================= */
+function shuffleArray(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function shuffleOptions(question){
+  const correctValue = question.options[question.answer];
+  shuffleArray(question.options);
+  question.answer = question.options.indexOf(correctValue);
+}
+
+function shuffleAll(data){
+  shuffleArray(data);
+  data.forEach(q => shuffleOptions(q));
+}
+
 /* ================= AUDIO ================= */
 const correctAudio = new Audio("sounds/correct.mp3");
 const wrongAudio   = new Audio("sounds/wrong.mp3");
@@ -112,28 +118,15 @@ const timerSound   = new Audio("sounds/timer.mp3");
 timerSound.loop = true;
 timerSound.volume = 0.4;
 
-/* ================= LOCAL STORAGE INIT ================= */
-if (localStorage.getItem("quiz_index") === null) {
-  localStorage.setItem("quiz_index", "0");
-  localStorage.setItem("quiz_score", "0");
-  localStorage.setItem("quiz_attempted", "0");
-}
-
-let idx = Number(localStorage.getItem("quiz_index"));
-let score = Number(localStorage.getItem("quiz_score"));
-let attempted = Number(localStorage.getItem("quiz_attempted"));
-
 /* ================= TIMER ================= */
 const TOTAL_TIME = 15;
 let timeLeft = TOTAL_TIME;
 let interval = null;
-let running = false;
+let running  = false;
 
-const timerEl = document.getElementById("timer");
-const ring = document.querySelector(".timer-ring circle");
+const timerEl   = document.getElementById("timer");
+const ring      = document.querySelector(".timer-ring circle");
 const timerWrap = document.getElementById("timerWrap");
-const clockHand = document.querySelector(".clock-hand");
-const burst = document.getElementById("timeupBurst");
 const FULL = 138;
 
 function resetTimer(){
@@ -142,40 +135,23 @@ function resetTimer(){
   timeLeft = TOTAL_TIME;
   timerEl.textContent = TOTAL_TIME;
   ring.style.strokeDashoffset = 0;
-  timerWrap.classList.remove("danger");
-  clockHand.style.transform = "translate(-50%,-100%) rotate(0deg)";
   timerSound.pause();
   timerSound.currentTime = 0;
 }
 
-timerWrap.onclick = () => {
-  if (running) return;
+timerWrap.onclick = ()=>{
+  if(running) return;
   running = true;
   timerSound.play().catch(()=>{});
 
   interval = setInterval(()=>{
     timeLeft--;
     timerEl.textContent = timeLeft;
+    ring.style.strokeDashoffset = FULL - (timeLeft / TOTAL_TIME) * FULL;
 
-    ring.style.strokeDashoffset =
-      FULL - (timeLeft / TOTAL_TIME) * FULL;
-
-    const angle = (1 - timeLeft / TOTAL_TIME) * 360;
-    clockHand.style.transform =
-      `translate(-50%,-100%) rotate(${angle}deg)`;
-
-    if (timeLeft <= 5) {
-      timerWrap.classList.add("danger");
-    } else {
-      timerWrap.classList.remove("danger");
-    }
-
-    if (timeLeft <= 0) {
+    if(timeLeft <= 0){
       clearInterval(interval);
       timerSound.pause();
-      timerWrap.classList.remove("danger");
-      burst.classList.add("active");
-      setTimeout(()=>burst.classList.remove("active"),600);
       running = false;
     }
   },1000);
@@ -183,23 +159,24 @@ timerWrap.onclick = () => {
 
 /* ================= QUIZ ================= */
 const loading = document.getElementById("loading");
-const quiz = document.getElementById("quiz");
+const quiz    = document.getElementById("quiz");
 
-const qEl = document.getElementById("question");
-const oEl = document.getElementById("options");
-const fEl = document.getElementById("feedback");
-const nEl = document.getElementById("next");
+const qEl    = document.getElementById("question");
+const oEl    = document.getElementById("options");
+const nEl    = document.getElementById("next");
 const skipEl = document.getElementById("skip");
-const pEl = document.getElementById("progress");
-const dEl = document.getElementById("difficulty");
+const pEl    = document.getElementById("progress");
+const dEl    = document.getElementById("difficulty");
 
 let data = [];
+let idx = 0;
 let locked = false;
 
 fetch("questions.json")
 .then(r => r.json())
 .then(d => {
   data = d;
+  shuffleAll(data);           // ✅ SHUFFLING ENABLED
   loading.style.display = "none";
   quiz.style.display = "block";
   load();
@@ -209,11 +186,8 @@ function load(){
   resetTimer();
   locked = false;
 
-  localStorage.setItem("quiz_index", idx);
-
   nEl.style.display = "none";
   skipEl.style.display = "inline-block";
-  fEl.style.display = "none";
 
   const q = data[idx];
   qEl.textContent = q.question;
@@ -227,69 +201,32 @@ function load(){
     div.className = "option";
     div.innerHTML = `<b>${"ABCD"[i]}.</b> ${t}`;
     div.onclick = ()=>{
-      if (locked) return;
-      i === q.answer ? correctAudio.play() : wrongAudio.play();
-      select(i);
+      if(locked) return;
+      locked = true;
+
+      clearInterval(interval);
+      timerSound.pause();
+      running = false;
+
+      (i === q.answer ? correctAudio : wrongAudio).play().catch(()=>{});
+
+      [...oEl.children].forEach(o=>o.classList.add("disabled"));
+      nEl.style.display = "inline-block";
+      skipEl.style.display = "none";
     };
     oEl.appendChild(div);
   });
 }
 
-function select(i){
-  if (locked) return;
-  locked = true;
-
-  clearInterval(interval);
-  timerSound.pause();
-  timerSound.currentTime = 0;
-  running = false;
-
-  attempted++;
-  localStorage.setItem("quiz_attempted", attempted);
-
-  if (i === data[idx].answer) {
-    score++;
-    localStorage.setItem("quiz_score", score);
-  }
-
-  [...oEl.children].forEach(o => o.classList.add("disabled"));
-
-  const q = data[idx];
-  fEl.innerHTML =
-    i === q.answer
-      ? `<div class="correct"><b>Correct</b></div>`
-      : `<div class="wrong"><b>Incorrect</b></div>
-         <p><b>Correct:</b> ${q.options[q.answer]}</p>`;
-
-  fEl.style.display = "block";
-  nEl.style.display = "inline-block";
-  skipEl.style.display = "none";
-}
-
 skipEl.onclick = ()=>{
-  if (locked) return;
-  attempted++;
-  localStorage.setItem("quiz_attempted", attempted);
   idx++;
-  localStorage.setItem("quiz_index", idx);
-  idx < data.length ? load() : endQuiz();
+  idx < data.length ? load() : qEl.textContent = "Quiz completed!";
 };
 
 nEl.onclick = ()=>{
   idx++;
-  localStorage.setItem("quiz_index", idx);
-  idx < data.length ? load() : endQuiz();
+  idx < data.length ? load() : qEl.textContent = "Quiz completed!";
 };
-
-function endQuiz(){
-  localStorage.clear();
-  qEl.textContent = "Quiz completed!";
-  oEl.innerHTML = "";
-  fEl.innerHTML = `<b>Score:</b> ${score}/${attempted}`;
-  fEl.style.display = "block";
-  nEl.style.display = "none";
-  skipEl.style.display = "none";
-}
 </script>
 
 </body>
