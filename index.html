@@ -5,13 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Biology Quiz</title>
 
+<!-- QUIZ CARD DESIGN (SEPARATE FILE) -->
+<link rel="stylesheet" href="css/quiz-card.css">
+
 <style>
+/* BASE / BACKGROUND ONLY */
 *{
   box-sizing:border-box;
   font-family:Inter,system-ui,sans-serif;
 }
 
-/* BACKGROUND */
 body{
   margin:0;
   min-height:100vh;
@@ -44,152 +47,6 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* QUIZ CARD (PREMIUM) */
-.quiz{
-  position:relative;
-  z-index:5;
-  max-width:880px;
-  margin:60px auto;
-  padding:36px 40px;
-  display:none;
-
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.03)),
-    rgba(10,14,28,.9);
-
-  backdrop-filter:blur(18px);
-  border-radius:22px;
-  border:1px solid rgba(140,180,255,.18);
-
-  box-shadow:
-    0 60px 160px rgba(0,0,0,.75),
-    inset 0 1px 0 rgba(255,255,255,.22),
-    inset 0 -1px 0 rgba(0,0,0,.4);
-}
-
-/* NASA scanline texture */
-.quiz::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,.015),
-    rgba(255,255,255,.015) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  opacity:.15;
-  pointer-events:none;
-}
-
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-.meta{
-  display:flex;
-  gap:14px;
-  font-size:.85rem;
-  opacity:.85;
-}
-
-/* TIMER */
-.timer-wrap{
-  position:relative;
-  width:46px;
-  height:46px;
-  cursor:pointer;
-}
-.timer-wrap span{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-  color:#4dd6ff;
-}
-.timer-ring{transform:rotate(-90deg)}
-.timer-ring circle{
-  fill:none;
-  stroke:#4dd6ff;
-  stroke-width:3;
-  stroke-linecap:round;
-  stroke-dasharray:113;
-  transition:stroke .3s linear;
-}
-
-/* QUESTION */
-.question{
-  font-size:clamp(1.25rem,3vw,1.9rem);
-  margin:18px 0 26px;
-  letter-spacing:.3px;
-}
-
-/* OPTIONS */
-.options{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-.option{
-  padding:16px 20px;
-  border-radius:14px;
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-  border:1px solid rgba(255,255,255,.12);
-  cursor:pointer;
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-.option:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
-}
-.option.disabled{
-  opacity:.45;
-  pointer-events:none;
-}
-
-/* FEEDBACK */
-.feedback{
-  margin-top:22px;
-  padding:20px;
-  border-radius:14px;
-  background:rgba(0,0,0,.35);
-  animation:fadeSlide .25s ease forwards;
-}
-@keyframes fadeSlide{
-  from{opacity:0;transform:translateY(6px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.correct{color:#6dffcc}
-.wrong{color:#ff8a8a}
-.fact{margin-top:8px;font-size:.9rem;opacity:.85}
-
-/* ACTIONS */
-.actions{
-  margin-top:22px;
-  display:flex;
-  gap:12px;
-}
-button{
-  padding:12px 26px;
-  border-radius:12px;
-  border:none;
-  color:white;
-  cursor:pointer;
-  display:none;
-}
-#next{background:#1f3cff}
-#skip{
-  background:linear-gradient(135deg,#ff3b3b,#ffb347);
-  box-shadow:0 0 18px rgba(255,140,60,.45);
-}
-
-/* FOOTER */
 footer{
   text-align:center;
   font-size:.35rem;
@@ -201,19 +58,26 @@ footer{
 
 <body>
 
+<!-- LOADING SCREEN -->
 <div class="loading" id="loading">
   <div class="loader"></div>
   Loading Quiz…
 </div>
 
+<!-- SPACE BACKGROUND -->
 <canvas id="stars"></canvas>
 
+<!-- QUIZ -->
 <div class="quiz" id="quiz">
+
   <div class="header">
     <div>Biology • Cell Quiz</div>
+
     <div class="meta">
       <span id="progress"></span>
       <span id="difficulty"></span>
+
+      <!-- TIMER -->
       <div class="timer-wrap" id="timerWrap">
         <svg class="timer-ring" width="46" height="46">
           <circle cx="23" cy="23" r="18"></circle>
@@ -235,90 +99,101 @@ footer{
 
 <footer>Made by Muntazir</footer>
 
+<!-- BACKGROUND -->
 <script src="space.js"></script>
 
 <script>
-/* AUDIO */
-const correctAudio=new Audio("sounds/correct.mp3");
-const wrongAudio=new Audio("sounds/wrong.mp3");
-const timerSound=new Audio("sounds/timer.mp3");
-timerSound.loop=true;
-timerSound.volume=.4;
+/* ================= AUDIO ================= */
+const correctAudio = new Audio("sounds/correct.mp3");
+const wrongAudio   = new Audio("sounds/wrong.mp3");
+const timerSound   = new Audio("sounds/timer.mp3");
+timerSound.loop = true;
+timerSound.volume = 0.4;
 
-/* TIMER */
-let timeLeft=15,interval=null,running=false;
-const timerEl=document.getElementById("timer");
-const ring=document.querySelector(".timer-ring circle");
-const FULL=113;
+/* ================= TIMER ================= */
+let timeLeft = 15;
+let interval = null;
+let running  = false;
+
+const timerEl = document.getElementById("timer");
+const ring    = document.querySelector(".timer-ring circle");
+const FULL    = 113;
 
 function resetTimer(){
   clearInterval(interval);
-  running=false;
-  timeLeft=15;
-  timerEl.textContent=15;
-  ring.style.strokeDashoffset=0;
-  ring.style.stroke="#4dd6ff";
+  running = false;
+  timeLeft = 15;
+  timerEl.textContent = 15;
+  ring.style.strokeDashoffset = 0;
   timerSound.pause();
-  timerSound.currentTime=0;
+  timerSound.currentTime = 0;
 }
 
-timerWrap.onclick=()=>{
-  if(running)return;
-  running=true;
+timerWrap.onclick = () => {
+  if(running) return;
+  running = true;
   timerSound.play().catch(()=>{});
-  interval=setInterval(()=>{
+
+  interval = setInterval(()=>{
     timeLeft--;
-    timerEl.textContent=timeLeft;
-    ring.style.strokeDashoffset=FULL-(timeLeft/15)*FULL;
+    timerEl.textContent = timeLeft;
+    ring.style.strokeDashoffset = FULL - (timeLeft/15)*FULL;
 
-    if(timeLeft<=5) ring.style.stroke="#ff5c5c";
-    else if(timeLeft<=8) ring.style.stroke="#ffd166";
-    else ring.style.stroke="#4dd6ff";
-
-    if(timeLeft<=0){
+    if(timeLeft <= 0){
       clearInterval(interval);
       timerSound.pause();
-      running=false;
+      running = false;
     }
   },1000);
 };
 
-/* QUIZ */
-const loading=document.getElementById("loading");
-const quiz=document.getElementById("quiz");
-const qEl=question,oEl=options,fEl=feedback,nEl=next,pEl=progress,dEl=difficulty,skipEl=skip;
+/* ================= QUIZ ================= */
+const loading = document.getElementById("loading");
+const quiz    = document.getElementById("quiz");
 
-let data=[],idx=0,locked=false;
+const qEl    = document.getElementById("question");
+const oEl    = document.getElementById("options");
+const fEl    = document.getElementById("feedback");
+const nEl    = document.getElementById("next");
+const skipEl = document.getElementById("skip");
+const pEl    = document.getElementById("progress");
+const dEl    = document.getElementById("difficulty");
+
+let data = [];
+let idx = 0;
+let locked = false;
 
 fetch("questions.json")
-.then(r=>r.json())
-.then(d=>{
-  data=d;
-  loading.style.display="none";
-  quiz.style.display="block";
+.then(r => r.json())
+.then(d => {
+  data = d;
+  loading.style.display = "none";
+  quiz.style.display = "block";
   load();
 });
 
 function load(){
   resetTimer();
-  locked=false;
-  nEl.style.display="none";
-  skipEl.style.display="inline-block";
-  fEl.style.display="none";
+  locked = false;
 
-  const q=data[idx];
-  qEl.textContent=q.question;
-  pEl.textContent=`Q ${idx+1}/${data.length}`;
-  dEl.textContent=q.difficulty||"";
+  nEl.style.display = "none";
+  skipEl.style.display = "inline-block";
+  fEl.style.display = "none";
 
-  oEl.innerHTML="";
+  const q = data[idx];
+  qEl.textContent = q.question;
+  pEl.textContent = `Q ${idx+1}/${data.length}`;
+  dEl.textContent = q.difficulty || "";
+
+  oEl.innerHTML = "";
+
   q.options.forEach((t,i)=>{
-    const div=document.createElement("div");
-    div.className="option";
-    div.innerHTML=`<b>${"ABCD"[i]}.</b> ${t}`;
-    div.onclick=()=>{
-      if(locked)return;
-      (i===q.answer?correctAudio:wrongAudio).play().catch(()=>{});
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerHTML = `<b>${"ABCD"[i]}.</b> ${t}`;
+    div.onclick = ()=>{
+      if(locked) return;
+      (i===q.answer ? correctAudio : wrongAudio).play().catch(()=>{});
       select(i);
     };
     oEl.appendChild(div);
@@ -326,34 +201,41 @@ function load(){
 }
 
 function select(i){
-  locked=true;
-  resetTimer();
+  if(locked) return;
+  locked = true;
+
+  clearInterval(interval);
+  timerSound.pause();
+  timerSound.currentTime = 0;
+  running = false;
+
   [...oEl.children].forEach(o=>o.classList.add("disabled"));
-  const q=data[idx];
 
-  fEl.innerHTML=
+  const q = data[idx];
+  fEl.innerHTML =
     i===q.answer
-    ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
-    : `<div class="wrong"><b>Incorrect</b></div>
-       <p><b>Correct:</b> ${q.options[q.answer]}</p>
-       <p>${q.explanation}</p>`;
+      ? `<div class="correct"><b>Correct</b></div><p>${q.explanation}</p>`
+      : `<div class="wrong"><b>Incorrect</b></div>
+         <p><b>Correct:</b> ${q.options[q.answer]}</p>
+         <p>${q.explanation}</p>`;
 
-  if(q.fact)fEl.innerHTML+=`<div class="fact">💡 ${q.fact}</div>`;
+  if(q.fact) fEl.innerHTML += `<div class="fact">💡 ${q.fact}</div>`;
 
-  fEl.style.display="block";
-  nEl.style.display="inline-block";
-  skipEl.style.display="none";
+  fEl.style.display = "block";
+  nEl.style.display = "inline-block";
+  skipEl.style.display = "none";
 }
 
-skipEl.onclick=()=>{
+skipEl.onclick = ()=>{
+  if(locked) return;
   resetTimer();
   idx++;
-  idx<data.length?load():qEl.textContent="Quiz completed!";
+  idx < data.length ? load() : qEl.textContent = "Quiz completed!";
 };
 
-nEl.onclick=()=>{
+nEl.onclick = ()=>{
   idx++;
-  idx<data.length?load():qEl.textContent="Quiz completed!";
+  idx < data.length ? load() : qEl.textContent = "Quiz completed!";
 };
 </script>
 
