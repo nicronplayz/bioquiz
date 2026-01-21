@@ -1,31 +1,50 @@
-/* ===============================
-   QUIZ CARD – PREMIUM SPACE HUD
-   =============================== */
+/* ==================================================
+   QUIZ CARD – ULTRA PREMIUM SPACE HUD
+   ================================================== */
 
 .quiz{
   position:relative;
   z-index:5;
-  max-width:880px;
+  max-width:900px;
   margin:60px auto;
-  padding:38px 42px;
+  padding:42px 46px;
 
-  border-radius:28px;
+  border-radius:30px;
 
-  /* Deep space glass */
   background:
-    radial-gradient(140% 160% at 15% 10%, rgba(110,160,255,.16), transparent 45%),
-    radial-gradient(140% 160% at 85% 90%, rgba(170,120,255,.18), transparent 50%),
-    linear-gradient(180deg, rgba(18,28,65,.92), rgba(8,12,35,.95));
+    radial-gradient(140% 160% at 12% 8%, rgba(120,170,255,.18), transparent 45%),
+    radial-gradient(140% 160% at 88% 92%, rgba(190,120,255,.22), transparent 52%),
+    linear-gradient(180deg, rgba(16,24,60,.94), rgba(7,10,32,.97));
 
-  backdrop-filter: blur(22px) saturate(120%);
-  border:1px solid rgba(150,180,255,.22);
+  backdrop-filter: blur(24px) saturate(125%);
+  border:1px solid rgba(160,190,255,.25);
 
   box-shadow:
-    0 50px 140px rgba(0,0,0,.75),
-    inset 0 0 0 1px rgba(255,255,255,.05);
+    0 60px 160px rgba(0,0,0,.82),
+    inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* ================= HEADER ================= */
+/* ===== subtle frame glow ===== */
+.quiz::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background:
+    linear-gradient(120deg,
+      transparent 30%,
+      rgba(150,200,255,.12),
+      transparent 70%
+    );
+
+  opacity:.35;
+}
+
+/* ==================================================
+   HEADER
+   ================================================== */
 
 .header{
   display:flex;
@@ -35,8 +54,9 @@
 
 .header > div:first-child{
   font-size:.72rem;
-  letter-spacing:.14em;
+  letter-spacing:.16em;
   opacity:.75;
+  text-transform:uppercase;
 }
 
 .meta{
@@ -47,16 +67,21 @@
   opacity:.85;
 }
 
-/* ================= QUESTION ================= */
+/* ==================================================
+   QUESTION
+   ================================================== */
 
 .question{
-  font-size:clamp(1.35rem,3vw,2rem);
-  margin:22px 0 30px;
-  line-height:1.45;
-  color:#f2f6ff;
+  font-size:clamp(1.4rem,3.1vw,2.05rem);
+  margin:26px 0 32px;
+  line-height:1.48;
+  color:#f4f7ff;
+  text-shadow:0 2px 14px rgba(0,0,0,.55);
 }
 
-/* ================= OPTIONS ================= */
+/* ==================================================
+   OPTIONS
+   ================================================== */
 
 .options{
   display:grid;
@@ -66,7 +91,7 @@
 
 .option{
   position:relative;
-  padding:16px 22px;
+  padding:18px 24px;
   border-radius:18px;
 
   background:
@@ -79,18 +104,36 @@
   cursor:pointer;
 
   transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    border-color .25s ease;
+    transform .28s ease,
+    box-shadow .28s ease,
+    border-color .28s ease;
+}
+
+/* option glow seam */
+.option::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .28s ease;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(160,210,255,.35);
 }
 
 .option:hover{
-  transform:translateY(-2px);
-  border-color:rgba(150,200,255,.45);
+  transform:translateY(-3px);
+  border-color:rgba(160,210,255,.55);
 
   box-shadow:
-    0 0 0 1px rgba(150,200,255,.25),
-    0 14px 36px rgba(90,140,255,.28);
+    0 0 0 1px rgba(160,210,255,.3),
+    0 16px 42px rgba(90,140,255,.35);
+}
+
+.option:hover::after{
+  opacity:1;
 }
 
 .option.disabled{
@@ -98,36 +141,50 @@
   pointer-events:none;
 }
 
-/* ================= FEEDBACK ================= */
+/* ==================================================
+   FEEDBACK
+   ================================================== */
 
 .feedback{
-  margin-top:24px;
-  padding:20px 22px;
-  border-radius:16px;
-  background:rgba(0,0,0,.35);
+  margin-top:26px;
+  padding:22px 24px;
+  border-radius:18px;
+  background:rgba(0,0,0,.36);
 }
 
-.correct{color:#6dffcc}
-.wrong{color:#ff9b9b}
+.correct{
+  color:#6dffcc;
+  text-shadow:0 0 12px rgba(100,255,200,.45);
+}
+
+.wrong{
+  color:#ff9b9b;
+  text-shadow:0 0 12px rgba(255,120,120,.45);
+}
+
 .fact{
   margin-top:10px;
-  font-size:.85rem;
+  font-size:.86rem;
   opacity:.9;
 }
 
-/* ================= ACTIONS ================= */
+/* ==================================================
+   ACTIONS
+   ================================================== */
 
 .actions{
-  margin-top:26px;
+  margin-top:28px;
   display:flex;
   gap:14px;
 }
 
-/* ================= BUTTONS ================= */
+/* ==================================================
+   BUTTONS
+   ================================================== */
 
 button{
-  padding:12px 28px;
-  border-radius:14px;
+  padding:13px 30px;
+  border-radius:16px;
   border:none;
   color:white;
   cursor:pointer;
@@ -138,7 +195,9 @@ button{
 /* NEXT */
 #next{
   background:linear-gradient(135deg,#3f6bff,#2747ff);
-  box-shadow:0 10px 30px rgba(80,120,255,.45);
+  box-shadow:
+    0 12px 34px rgba(80,120,255,.55),
+    inset 0 0 0 1px rgba(255,255,255,.2);
 }
 
 /* SKIP */
@@ -146,21 +205,25 @@ button{
   display:inline-block;
   background:linear-gradient(135deg,#ff4b4b,#ffb84d);
   box-shadow:
-    0 10px 26px rgba(255,120,80,.45),
-    inset 0 0 0 1px rgba(255,255,255,.2);
+    0 12px 30px rgba(255,120,80,.55),
+    inset 0 0 0 1px rgba(255,255,255,.25);
 }
 
-/* ================= TIMER (VISUAL ONLY) ================= */
+/* ==================================================
+   TIMER – FIXED & PREMIUM
+   ================================================== */
 
 .timer-wrap{
   position:relative;
-  width:48px;
-  height:48px;
+  width:50px;
+  height:50px;
   border-radius:50%;
 
+  background:rgba(0,0,0,.35);
+
   box-shadow:
-    0 0 0 1px rgba(120,180,255,.35),
-    0 0 18px rgba(100,160,255,.45);
+    0 0 0 1px rgba(130,190,255,.45),
+    0 0 24px rgba(110,170,255,.55);
 }
 
 .timer-ring{
@@ -170,11 +233,11 @@ button{
 .timer-ring circle{
   fill:none;
   stroke:#6fd3ff;
-  stroke-width:3;
+  stroke-width:3.2;
   stroke-linecap:round;
   stroke-dasharray:113;
 
-  filter:drop-shadow(0 0 6px rgba(120,200,255,.65));
+  filter:drop-shadow(0 0 8px rgba(120,200,255,.8));
 }
 
 .timer-wrap span{
@@ -183,17 +246,20 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
+
   font-weight:600;
-  color:#e6f6ff;
-  text-shadow:0 0 8px rgba(120,200,255,.6);
+  color:#ecf8ff;
+  text-shadow:0 0 10px rgba(120,200,255,.7);
 }
 
-/* ================= RESPONSIVE ================= */
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
 
 @media (max-width:720px){
   .quiz{
-    margin:30px 14px;
-    padding:28px 24px;
+    margin:32px 14px;
+    padding:30px 26px;
   }
 
   .options{
