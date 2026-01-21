@@ -155,9 +155,10 @@ timerWrap.onclick = ()=>{
 
     /* CLOCK ROTATION */
     const angle = ((15 - timeLeft) / 15) * 360;
-    clockHand.style.transform =
-      `translate(-50%,-100%) rotate(${angle}deg)`;
+    const angle = (timeLeft / TOTAL_TIME) * 360;
 
+clockHand.style.transform =
+  `translate(-50%, -100%) rotate(${-angle}deg)`;
     /* DANGER MODE */
     if(timeLeft <= 5){
       timerWrap.classList.add("danger");
