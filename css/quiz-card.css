@@ -1,0 +1,153 @@
+/* =========================
+   QUIZ CARD – PREMIUM UI
+   ========================= */
+
+.quiz{
+  position:relative;
+  z-index:5;
+  max-width:880px;
+  margin:60px auto;
+  padding:36px 40px;
+  display:none;
+
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.02)),
+    rgba(14,18,40,.85);
+
+  backdrop-filter:blur(18px) saturate(130%);
+  border-radius:22px;
+  border:1px solid rgba(120,160,255,.18);
+
+  box-shadow:
+    0 60px 160px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(255,255,255,.25),
+    inset 0 -1px 0 rgba(0,0,0,.4);
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+.meta{
+  display:flex;
+  gap:14px;
+  font-size:.85rem;
+  opacity:.9;
+}
+
+/* TIMER */
+.timer-wrap{
+  position:relative;
+  width:46px;
+  height:46px;
+  cursor:pointer;
+}
+.timer-wrap span{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  color:#4dd6ff;
+  text-shadow:0 0 8px rgba(77,214,255,.6);
+}
+.timer-ring{
+  transform:rotate(-90deg);
+}
+.timer-ring circle{
+  fill:none;
+  stroke:#4dd6ff;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-dasharray:113;
+  transition:stroke-dashoffset 1s linear;
+}
+
+/* QUESTION */
+.question{
+  font-size:clamp(1.3rem,3vw,1.9rem);
+  margin:18px 0 26px;
+  letter-spacing:.2px;
+}
+
+/* OPTIONS */
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.option{
+  padding:16px 20px;
+  border-radius:14px;
+  cursor:pointer;
+
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.12);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
+.option:hover{
+  transform:translateY(-2px);
+  border-color:rgba(120,180,255,.6);
+  box-shadow:0 0 18px rgba(120,180,255,.35);
+}
+.option.disabled{
+  opacity:.4;
+  pointer-events:none;
+}
+
+/* FEEDBACK */
+.feedback{
+  margin-top:22px;
+  padding:20px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.1);
+}
+.correct{color:#6dffcc}
+.wrong{color:#ff8a8a}
+.fact{
+  margin-top:8px;
+  font-size:.9rem;
+  opacity:.85;
+}
+
+/* ACTIONS */
+.actions{
+  margin-top:22px;
+  display:flex;
+  gap:12px;
+}
+
+/* BUTTONS */
+button{
+  padding:12px 26px;
+  border-radius:12px;
+  border:none;
+  color:white;
+  cursor:pointer;
+  display:none;
+}
+
+/* NEXT */
+#next{
+  background:#1f3cff;
+}
+
+/* SKIP – RED → GOLD */
+#skip{
+  display:inline-block;
+  background:linear-gradient(135deg,#ff3b3b,#ffb347);
+  box-shadow:0 0 18px rgba(255,140,60,.45);
+}
+#skip:hover{
+  filter:brightness(1.1);
+}
