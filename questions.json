@@ -330,5 +330,337 @@
     ],
     "answer": 1,
     "difficulty": "Hard"
+  },
+  {
+    "question": "A cell shows frequent formation of coated vesicles near its plasma membrane. This indicates high activity of:",
+    "options": [
+      "Simple diffusion",
+      "Active transport",
+      "Endocytosis",
+      "Osmosis"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which change would most severely disrupt receptor-mediated endocytosis?",
+    "options": [
+      "Decrease in membrane cholesterol",
+      "Loss of clathrin proteins",
+      "Increase in membrane fluidity",
+      "Reduction in ATP levels"
+    ],
+    "answer": 1,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which membrane protein would be most affected by a mutation preventing glycosylation?",
+    "options": [
+      "Structural protein",
+      "Transporter protein",
+      "Receptor protein",
+      "Peripheral protein"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "A decrease in surface area-to-volume ratio would directly limit a cell’s ability to:",
+    "options": [
+      "Store nutrients",
+      "Synthesize proteins",
+      "Exchange materials",
+      "Replicate DNA"
+    ],
+    "answer": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which cellular feature primarily compensates for low diffusion efficiency in large cells?",
+    "options": [
+      "Thicker plasma membrane",
+      "Increased cytoplasmic density",
+      "Membrane infoldings",
+      "Reduced metabolic rate"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which event occurs first during secretion of a protein hormone?",
+    "options": [
+      "Vesicle fusion with plasma membrane",
+      "Protein modification in Golgi",
+      "Translation on rough ER",
+      "Packaging into secretory vesicles"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which factor determines whether a ribosome remains free or becomes bound?",
+    "options": [
+      "Cell type",
+      "mRNA sequence",
+      "Availability of ER",
+      "ATP concentration"
+    ],
+    "answer": 1,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which organelle would be most affected if vesicular transport is blocked?",
+    "options": [
+      "Mitochondria",
+      "Golgi apparatus",
+      "Ribosomes",
+      "Cytoskeleton"
+    ],
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which membrane movement maintains unequal distribution of phospholipids between leaflets?",
+    "options": [
+      "Lateral diffusion",
+      "Rotation",
+      "Flip-flop",
+      "Translocation via enzymes"
+    ],
+    "answer": 3,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which process would continue even if all carrier proteins are inhibited?",
+    "options": [
+      "Active transport",
+      "Facilitated diffusion",
+      "Simple diffusion",
+      "Secondary active transport"
+    ],
+    "answer": 2,
+    "difficulty": "Medium"
+  },
+
+  {
+    "question": "Assertion: Plasma membrane exhibits fluidity. Reason: Lipids and proteins can move laterally within the membrane.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Cholesterol is absent in bacterial membranes. Reason: Bacterial membranes lack sterols.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Facilitated diffusion shows specificity. Reason: It involves carrier proteins with binding sites.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Assertion: Smooth ER is poorly developed in muscle cells. Reason: Muscle cells require calcium storage.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 3,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Assertion: Golgi apparatus modifies proteins. Reason: It adds carbohydrate moieties to proteins.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Lysosomes function optimally at acidic pH. Reason: Their enzymes are adapted to acidic environment.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Autophagy increases during starvation. Reason: Cell recycles its own components for survival.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Ribosomes are part of endomembrane system. Reason: They are attached to rough ER membrane.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 3,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Assertion: Vacuoles help maintain cell shape in plants. Reason: They generate turgor pressure.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 0,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Assertion: Bulk transport is less selective than carrier-mediated transport. Reason: Entire vesicles cross the membrane.",
+    "options": [
+      "Both true and correct explanation",
+      "Both true but not correct explanation",
+      "Assertion true, Reason false",
+      "Assertion false, Reason true"
+    ],
+    "answer": 1,
+    "difficulty": "Hard"
+  },
+
+  {
+    "question": "Which cellular activity would stop immediately if ATP synthesis is inhibited?",
+    "options": [
+      "Simple diffusion",
+      "Facilitated diffusion",
+      "Active transport",
+      "Osmosis"
+    ],
+    "answer": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which organelle contributes directly to membrane biogenesis?",
+    "options": [
+      "Golgi apparatus",
+      "Endoplasmic reticulum",
+      "Lysosome",
+      "Ribosome"
+    ],
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which structural feature allows Golgi to maintain directional transport?",
+    "options": [
+      "Cisternal stacking",
+      "Enzyme compartmentalization",
+      "Structural polarity",
+      "Membrane continuity"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which component primarily determines membrane permeability to ions?",
+    "options": [
+      "Phospholipids",
+      "Integral proteins",
+      "Cholesterol",
+      "Glycolipids"
+    ],
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which cell would show maximum endocytotic activity?",
+    "options": [
+      "Neuron",
+      "Muscle cell",
+      "Macrophage",
+      "Sieve tube cell"
+    ],
+    "answer": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which transport mechanism shows saturation even at high substrate concentration?",
+    "options": [
+      "Simple diffusion",
+      "Osmosis",
+      "Facilitated diffusion",
+      "Passive diffusion"
+    ],
+    "answer": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which cellular structure ensures spatial separation of biochemical reactions?",
+    "options": [
+      "Cytosol",
+      "Membrane-bound organelles",
+      "Ribosomes",
+      "Cytoskeleton"
+    ],
+    "answer": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Which property allows plasma membrane to reseal after minor injury?",
+    "options": [
+      "Rigidity",
+      "Fluidity",
+      "Thickness",
+      "Permeability"
+    ],
+    "answer": 1,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which feature of endomembrane system ensures functional coordination?",
+    "options": [
+      "Structural continuity",
+      "Vesicular trafficking",
+      "Uniform enzyme distribution",
+      "Common origin"
+    ],
+    "answer": 1,
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Which condition would increase frequency of autophagy?",
+    "options": [
+      "Abundant nutrients",
+      "Rapid cell division",
+      "Cellular stress",
+      "High oxygen availability"
+    ],
+    "answer": 2,
+    "difficulty": "Medium"
   }
 ]
