@@ -1,101 +1,126 @@
-/* ===============================
-   🌌 COSMIC QUIZ CARD (PREMIUM)
-   =============================== */
+/* =========================================================
+   QUIZ CARD – SPACE / HUD UI
+   ========================================================= */
 
+/* ---------- QUIZ CARD ---------- */
 .quiz{
   position:relative;
   z-index:5;
   max-width:880px;
-  margin:60px auto;
-  padding:38px 42px;
+  margin:56px auto;
+  padding:34px 38px 36px;
+  border-radius:24px;
 
-  /* 🌠 DEEP SPACE PANEL */
   background:
-    radial-gradient(600px 400px at 20% 10%, rgba(120,160,255,.18), transparent 60%),
-    radial-gradient(700px 500px at 80% 80%, rgba(180,80,255,.16), transparent 65%),
-    linear-gradient(180deg, rgba(20,26,60,.92), rgba(8,10,22,.96));
+    linear-gradient(135deg, rgba(70,120,255,.14), rgba(120,60,255,.08)),
+    radial-gradient(900px 400px at top left, rgba(100,180,255,.12), transparent 60%),
+    rgba(12,16,32,.78);
 
-  backdrop-filter:blur(22px) saturate(150%);
-  border-radius:22px;
-
-  /* 🌈 COSMIC RIM */
-  border:1px solid rgba(140,180,255,.25);
-
+  backdrop-filter: blur(18px) saturate(140%);
+  border:1px solid rgba(130,180,255,.25);
   box-shadow:
-    0 60px 160px rgba(0,0,0,.85),
-    0 0 80px rgba(120,160,255,.25),
-    inset 0 0 0 1px rgba(255,255,255,.05),
-    inset 0 -40px 80px rgba(0,0,0,.6);
+    0 40px 120px rgba(0,0,0,.65),
+    inset 0 0 40px rgba(120,180,255,.06);
 
-  overflow:hidden;
+  animation:cardFade 0.8s ease forwards;
 }
 
-/* 🌌 STAR NOISE INSIDE CARD */
-.quiz::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35), transparent),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,.25), transparent),
-    radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,.2), transparent);
-  background-size:300px 300px;
-  opacity:.35;
-  pointer-events:none;
+@keyframes cardFade{
+  from{opacity:0;transform:translateY(14px) scale(.98)}
+  to{opacity:1;transform:none}
 }
 
-/* 🌀 NEBULA ENERGY LAYER */
-.quiz::after{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background:
-    conic-gradient(
-      from 180deg,
-      transparent,
-      rgba(90,140,255,.12),
-      rgba(200,80,255,.12),
-      transparent
-    );
-  animation:nebulaSpin 120s linear infinite;
-  opacity:.35;
-  pointer-events:none;
-}
-
-@keyframes nebulaSpin{
-  to{transform:rotate(360deg)}
-}
-
-/* ===============================
-   🧭 HEADER HUD STYLE
-   =============================== */
-
+/* ---------- HEADER ---------- */
 .header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  font-size:.8rem;
-  opacity:.9;
+  align-items:flex-start;
+  gap:14px;
 }
 
-/* ===============================
-   ❓ QUESTION (FOCUS CORE)
-   =============================== */
+.header > div:first-child{
+  font-size:.72rem;
+  letter-spacing:.18em;
+  opacity:.75;
+}
+
+/* ---------- META ---------- */
+.meta{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  font-size:.75rem;
+  opacity:.85;
+}
+
+/* =========================================================
+   TIMER – HUD STYLE
+   ========================================================= */
+
+.timer-wrap{
+  position:relative;
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* Number */
+.timer-wrap span{
+  position:absolute;
+  z-index:2;
+  font-weight:600;
+  font-size:.9rem;
+  color:#7fe7ff;
+  text-shadow:
+    0 0 6px rgba(127,231,255,.7),
+    0 0 12px rgba(127,231,255,.4);
+}
+
+/* SVG ring */
+.timer-ring{
+  position:absolute;
+  inset:0;
+  transform:rotate(-90deg);
+  z-index:1;
+}
+
+.timer-ring circle{
+  fill:none; /* FIXES BLACK DOT */
+  stroke:#4dd6ff;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-dasharray:113;
+  stroke-dashoffset:0;
+  filter:drop-shadow(0 0 8px rgba(77,214,255,.6));
+}
+
+/* Running pulse (JS can toggle .active) */
+.timer-wrap.active .timer-ring circle{
+  animation:timerPulse 1.4s infinite alternate;
+}
+
+@keyframes timerPulse{
+  from{filter:drop-shadow(0 0 6px rgba(77,214,255,.6))}
+  to{filter:drop-shadow(0 0 14px rgba(140,230,255,.95))}
+}
+
+/* =========================================================
+   QUESTION
+   ========================================================= */
 
 .question{
-  font-size:clamp(1.35rem,3vw,1.9rem);
-  margin:20px 0 28px;
-  line-height:1.45;
-  text-shadow:
-    0 0 12px rgba(120,180,255,.35);
+  margin:22px 0 28px;
+  font-size:clamp(1.15rem,3.2vw,1.9rem);
+  line-height:1.35;
+  letter-spacing:.2px;
 }
 
-/* ===============================
-   🪐 OPTIONS = ENERGY TILES
-   =============================== */
+/* =========================================================
+   OPTIONS
+   ========================================================= */
 
 .options{
   display:grid;
@@ -105,83 +130,110 @@
 
 .option{
   position:relative;
-  padding:18px 22px;
+  padding:16px 20px;
   border-radius:14px;
   cursor:pointer;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-    radial-gradient(120% 120% at 50% 0%, rgba(120,160,255,.18), transparent);
+    rgba(20,24,44,.8);
 
-  border:1px solid rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.14);
 
   transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    border-color .25s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
 }
 
 .option:hover{
-  transform:translateY(-3px);
-  border-color:rgba(120,180,255,.6);
-  box-shadow:
-    0 12px 40px rgba(120,180,255,.35),
-    inset 0 0 0 1px rgba(255,255,255,.12);
+  transform:translateY(-2px);
+  border-color:rgba(140,210,255,.55);
+  box-shadow:0 0 22px rgba(120,190,255,.35);
 }
 
 .option.disabled{
-  opacity:.35;
+  opacity:.45;
   pointer-events:none;
 }
 
-/* ===============================
-   ✅ FEEDBACK PANEL
-   =============================== */
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
 
 .feedback{
-  margin-top:24px;
-  padding:22px;
+  margin-top:22px;
+  padding:18px 20px;
   border-radius:14px;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.6));
-  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.35);
+  animation:fadeUp .35s ease forwards;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
 }
 
 .correct{color:#6dffcc}
 .wrong{color:#ff8a8a}
 .fact{
-  margin-top:10px;
-  font-size:.9rem;
+  margin-top:8px;
+  font-size:.85rem;
   opacity:.85;
 }
 
-/* ===============================
-   🚀 ACTION BUTTONS
-   =============================== */
+/* =========================================================
+   ACTIONS
+   ========================================================= */
 
 .actions{
-  margin-top:24px;
+  margin-top:22px;
   display:flex;
   gap:12px;
 }
 
 button{
-  padding:12px 28px;
+  padding:12px 26px;
   border-radius:12px;
   border:none;
+  color:white;
   cursor:pointer;
   display:none;
 }
 
 /* NEXT */
 #next{
-  background:linear-gradient(135deg,#3b6cff,#1f3cff);
-  box-shadow:0 0 30px rgba(60,120,255,.5);
+  background:#1f3cff;
+  box-shadow:0 0 16px rgba(80,120,255,.6);
 }
 
-/* SKIP (RED → GOLD) */
+/* SKIP – RED → GOLD */
 #skip{
   display:inline-block;
   background:linear-gradient(135deg,#ff3b3b,#ffb347);
-  box-shadow:0 0 24px rgba(255,150,60,.55);
+  box-shadow:0 0 18px rgba(255,140,60,.45);
+}
+
+#skip:hover{
+  filter:brightness(1.1);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width:720px){
+  .quiz{
+    margin:24px 14px;
+    padding:26px 22px 28px;
+  }
+
+  .options{
+    grid-template-columns:1fr;
+  }
+
+  .timer-wrap{
+    width:42px;
+    height:42px;
+  }
 }
